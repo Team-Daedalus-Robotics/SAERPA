@@ -1,0 +1,6 @@
+[project]
+name = "saerpa-station-data-gateway"
+version = "0.1.0"
+description = "Gateway de dados de estações do SAERPA"
+requires-python = ">=3.13"
+dependencies = []

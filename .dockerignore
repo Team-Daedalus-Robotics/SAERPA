@@ -1,0 +1,9 @@
+.git/
+.aspire/
+.agents/
+**/node_modules/
+**/dist/
+**/.venv/
+**/__pycache__/
+aspire-output/
+.env*

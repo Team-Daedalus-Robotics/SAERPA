@@ -1,0 +1,120 @@
+# SAERPA — Guia do Projeto
+
+Projeto Aspire (AppHost TypeScript) com orquestração local: API FastAPI, três workers
+Python e frontend React/Vite, sobre PostgreSQL com volume persistente.
+
+## Stack
+
+| Camada | Tecnologia |
+|---|---|
+| Orquestração | Aspire CLI 13.6.x, AppHost **TypeScript** (`apphost.mts`) |
+| API | FastAPI + Uvicorn (`addUvicornApp`) |
+| Workers | Python puro (`addPythonApp`), todos com **uv** explícito (`.withUv()`) |
+| Dados | PostgreSQL 18 (container, lifetime persistente + volume nomeado `saerpa-postgres-data`) |
+| Frontend | React 19 + Vite 7 (`addViteApp`) |
+| Gerenciador Python | **uv** (0.11.x) — nunca pip |
+| Gerenciador Node (AppHost/web) | npm |
+
+## Estrutura
+
+```
+apphost.mts              # grafo de recursos (postgres, api, 3 workers, web)
+aspire.config.json       # config do AppHost (language: typescript/nodejs)
+src/
+├── api/                 # FastAPI (uvicorn main:app)
+│   ├── pyproject.toml   # fastapi, uvicorn, sqlalchemy via saerpa-shared
+│   ├── main.py          # re-exporta app.main.app (entrypoint do uvicorn)
+│   └── app/
+│       ├── main.py      # FastAPI() + include_routers
+│       ├── deps.py      # get_session/SessionDep (SessionLocal do shared)
+│       ├── exceptions.py# ConflictError, NotFoundError (domínio)
+│       ├── repositories/# acesso a dados (station_repository, measure_repository)
+│       ├── services/    # regras de aplicação (station_service)
+│       └── controllers/ # rotas finas (status, stations) — mapeiam exceções→HTTP
+├── shared/              # pacote saerpa-shared (instalável, layout src/)
+│   ├── pyproject.toml   # sqlalchemy, psycopg[binary]
+│   ├── src/saerpa_shared/
+│   │   ├── base.py      # Base(DeclarativeBase)
+│   │   ├── engine.py    # engine = create_engine(DATABASE_URL); SessionLocal
+│   │   ├── models/      # Station, Measure (estilo clássico Column(...))
+│   │   └── schemas/     # Pydantic Request/Response (station, measure) — fonte única
+│   └── sql/             # DDL manual, versionado (001_station.sql, 002_measure.sql)
+├── nasa_event_worker/   # worker: eventos NASA (placeholder, loop + print)
+├── station_data_gateway/# worker: gateway de estações (placeholder)
+├── suggestion_worker/   # worker: sugestões (placeholder)
+└── web/                 # React/Vite; proxy /api → services__api__http__0
+```
+
+## Grafo de dependências (AppHost)
+
+`postgres` → (`database` saerpa) → **workers** → **api** (wait for workers) → **web** (wait for api)
+
+- API e workers recebem `DATABASE_URL` via `database.uriExpression()`.
+- API aguarda os 3 workers (`waitFor`); web aguarda a API e publica como
+  `publishAsStaticWebsite` (proxy `/api` em produção).
+- Portas **sempre gerenciadas** pelo Aspire (env `PORT`) — nunca fixas.
+- Deployment Docker Compose foi **removido** por decisão — somente run local por ora.
+
+## Banco de dados
+
+- **Sem migrations** (decisão do time): DDL é SQL manual versionado em `src/shared/sql/`
+  numerado (`001_*.sql`, `002_*.sql`...).
+- Tabelas atuais: `station` (id, unique_identifier UNIQUE, created_at),
+  `measure` (id, station_id FK→station CASCADE, type, sensor_name, measurement_unit, data_type)
+  e `event` (id, timestamp, station_id FK→station CASCADE, measure_id FK→measure CASCADE,
+  measure_type, value).
+- Entidades no `saerpa_shared/models/` **devem espelhar** o DDL — qualquer mudança de
+  tabela exige atualizar o `.sql` e a model juntos.
+
+## Convenções de código
+
+- **SQLAlchemy no estilo clássico** (`id = Column(Integer, primary_key=True)`), não
+  `Mapped[...]`/`mapped_column`.
+- **Toda entidade deve ter `created_at` e `deleted`** (soft delete; `deleted = Column(Boolean, default=False)`).
+- Base e conexão: `from saerpa_shared.base import Base`, `from saerpa_shared.engine import engine, SessionLocal`.
+- **Pydantic: sufixos `Request`/`Response`** (nunca `In`/`Out`). Schemas vivem em
+  `saerpa_shared/schemas/` (fonte única p/ API e workers). Responses de entidade usam
+  `model_config = ConfigDict(from_attributes=True)`.
+- Nomes em **inglês** (código, tabelas, colunas). Textos de UI em pt-BR.
+- FastAPI: rotas em camada fina; regra de sessão via `Depends` (`SessionDep`), rollback em erro.
+- **Camadas da api**: `controllers/` (rotas, mapeiam `ConflictError`/`NotFoundError`→HTTP)
+  → `services/` (regras, commit/rollback) → `repositories/` (queries) → `saerpa_shared.models`.
+- Sem comentários decorativos; código autoexplicativo.
+
+## Comandos
+
+```powershell
+# Validar AppHost (lint + typecheck)
+npm run build
+
+# Subir/parar tudo (dashboard incluso)
+npm run aspire:start
+aspire stop --non-interactive --apphost C:\projetos\SAERPA\apphost.mts
+
+# Esperar recurso / status
+aspire wait <recurso> --non-interactive
+aspire describe --format Json --non-interactive
+
+# Python (sempre dentro do diretório do serviço)
+uv sync
+uv add --editable ../shared        # usar saerpa-shared num serviço
+python -m py_compile <arquivos>
+
+# Aplicar DDL manual (com DATABASE_URL do painel exportado)
+psql "$DATABASE_URL" -f src/shared/sql/001_station.sql -f src/shared/sql/002_measure.sql
+```
+
+## Requisitos
+
+- Node ^20.19 / ^22.13 / >=24 (npm global: `@microsoft/aspire-cli`)
+- uv 0.11+ no PATH (os venvs são criados em `src/*/.venv`, ignorados pelo git)
+- Docker Desktop/Engine rodando (Postgres é container com lifetime persistente)
+
+## Gotchas conhecidos
+
+- Instaladores dos recursos Python podem falhar se o `.venv` pré-existente não
+  satisfizer `requires-python` — recriar com `uv sync` no diretório resolve.
+- `engine.py` importa falhando sem `DATABASE_URL` (o Aspire injeta nos recursos).
+- Volume persistente + senha regenerada = erro de autenticação do Postgres: remover
+  container e volume (`docker volume rm saerpa-postgres-data`) e reiniciar.
+- Skills Aspire do projeto ficam em `.agents/skills/` — seguem-se as versões locais.

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.aspire/
+aspire-output/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*

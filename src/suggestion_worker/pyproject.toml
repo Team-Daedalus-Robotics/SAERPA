@@ -1,0 +1,6 @@
+[project]
+name = "saerpa-suggestion-worker"
+version = "0.1.0"
+description = "Worker de sugestões do SAERPA"
+requires-python = ">=3.13"
+dependencies = []
