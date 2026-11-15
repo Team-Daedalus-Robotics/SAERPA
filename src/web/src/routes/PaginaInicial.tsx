@@ -1,6 +1,7 @@
 import { getRouteApi } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Ajuda from '../components/Ajuda';
+import AnalisesCard from '../components/AnalisesCard';
 import LocationPicker from '../components/LocationPicker';
 import MapView, { type BaseLayer, type MapTarget } from '../components/MapView';
 import PlantouCard from '../components/PlantouCard';
@@ -309,7 +310,7 @@ export default function PaginaInicial() {
             <button className="back-btn" onClick={() => escolherEstado(null)}>
               <Icone nome="voltar" tamanho={20} /> Início
             </button>
-          ) : <span className="marca" aria-hidden="true"><Icone nome="broto" tamanho={22} /></span>}
+          ) : <img className="marca" src="/logo.png" alt="" width={36} height={36} />}
         </div>
         <div className="title">
           <h1>SAERPA</h1>
@@ -475,6 +476,7 @@ export default function PaginaInicial() {
               </div>
             </>
           )}
+          <AnalisesCard />
         </div>
       </main>
 

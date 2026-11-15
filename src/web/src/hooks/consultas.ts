@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { loadMunicipios } from '../data/locations';
 import { apagarArea, criarArea, listarAreas, renomearArea, salvarHistorico, trocarDePropriedade } from '../services/areas';
+import { buscarAnalises } from '../services/analises';
 import { buscarCatalogo } from '../services/catalogo';
 import { celulaDaNasa } from '../lib/nasa';
 import { buscarClima } from '../services/clima';
@@ -8,6 +9,7 @@ import type { Area, Historico, LatLng, Municipio } from '../types';
 
 const CHAVES = {
   catalogo: ['catalogo'] as const,
+  analises: ['analises'] as const,
   municipios: (uf: string | undefined) => ['municipios', uf] as const,
   areas: (codigoIbge: number | undefined) => ['areas', codigoIbge] as const,
   clima: (latitudeDaCelula: number | undefined, longitudeDaCelula: number | undefined) => ['clima', latitudeDaCelula, longitudeDaCelula] as const,
@@ -15,6 +17,11 @@ const CHAVES = {
 
 export function useCatalogo() {
   return useQuery({ queryKey: CHAVES.catalogo, queryFn: buscarCatalogo, staleTime: Infinity });
+}
+
+/** Últimas análises do suggestion_worker; confere de novo a cada minuto porque o worker grava sozinho */
+export function useAnalises() {
+  return useQuery({ queryKey: CHAVES.analises, queryFn: () => buscarAnalises(), refetchInterval: 60 * 1000 });
 }
 
 export function useMunicipios(uf: string | undefined) {

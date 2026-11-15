@@ -6,7 +6,7 @@ from sqlalchemy import inspect, select
 from sqlalchemy.exc import SQLAlchemyError
 
 from saerpa_shared.engine import SessionLocal
-from saerpa_shared.models import Measure, Recommendation
+from saerpa_shared.models import Crop, Event, Measure, Recommendation, SatelliteObservation
 
 
 def recommendation_schema_ready() -> bool:
@@ -42,6 +42,9 @@ def save_recommendation(
     criteria: Mapping[str, Any] | list[Any] | None,
     state: str | dict[str, Any] | list[Any],
     response: Mapping[str, Any],
+    event_ids: list[int] | None = None,
+    satellite_observation_ids: list[int] | None = None,
+    crop_ids: list[int] | None = None,
 ) -> None:
     recommendation = Recommendation(
         type=question_type,
@@ -67,6 +70,18 @@ def save_recommendation(
         if measure_ids:
             recommendation.observation = session.scalars(
                 select(Measure).where(Measure.id.in_(measure_ids))
+            ).all()
+        if event_ids:
+            recommendation.events = session.scalars(
+                select(Event).where(Event.id.in_(event_ids))
+            ).all()
+        if satellite_observation_ids:
+            recommendation.satellite_observations = session.scalars(
+                select(SatelliteObservation).where(SatelliteObservation.id.in_(satellite_observation_ids))
+            ).all()
+        if crop_ids:
+            recommendation.crops = session.scalars(
+                select(Crop).where(Crop.id.in_(crop_ids))
             ).all()
         session.add(recommendation)
 

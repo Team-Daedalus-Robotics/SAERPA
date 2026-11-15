@@ -85,6 +85,7 @@ def target_crop() -> dict | None:
     if crop is None:
         return None
     return {
+        "crop_id": crop.id,
         "name": crop.name,
         "planting_type": crop.planting_type,
         "harvest_days_min": crop.harvest_days_min,

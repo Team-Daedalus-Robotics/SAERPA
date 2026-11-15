@@ -18,6 +18,12 @@ from saerpa_shared.schemas.field import (
 )
 from saerpa_shared.schemas.measure import MeasureResponse
 from saerpa_shared.schemas.property import PropertyRequest, PropertyResponse
+from saerpa_shared.schemas.recommendation import (
+    RecommendationMeasureResponse,
+    RecommendationOptionResponse,
+    RecommendationPlantingResponse,
+    RecommendationResponse,
+)
 from saerpa_shared.schemas.station import StationRequest, StationResponse
 from saerpa_shared.schemas.station_data import (
     MeasureDataRequest,
@@ -46,6 +52,10 @@ __all__ = [
     "MeasureDataRequest",
     "MeasureDataResponse",
     "MeasureResponse",
+    "RecommendationMeasureResponse",
+    "RecommendationOptionResponse",
+    "RecommendationPlantingResponse",
+    "RecommendationResponse",
     "StationDataRequest",
     "StationDataResponse",
     "StationRequest",

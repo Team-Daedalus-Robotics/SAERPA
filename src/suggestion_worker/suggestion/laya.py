@@ -27,6 +27,9 @@ def evaluate_choice(
     criteria: ChoiceCriteria,
     question_id: str = "answer",
     timeout: float = 60,
+    event_ids: list[int] | None = None,
+    satellite_observation_ids: list[int] | None = None,
+    crop_ids: list[int] | None = None,
 ) -> dict[str, Any]:
     """Choose from caller-provided options using the supplied state."""
     if not isinstance(criteria, Mapping) or not criteria:
@@ -41,6 +44,9 @@ def evaluate_choice(
         criteria=dict(criteria),
         question_id=question_id,
         timeout=timeout,
+        event_ids=event_ids,
+        satellite_observation_ids=satellite_observation_ids,
+        crop_ids=crop_ids,
     )
 
 
@@ -50,6 +56,9 @@ def evaluate_score(
     state: DecisionState,
     question_id: str = "answer",
     timeout: float = 60,
+    event_ids: list[int] | None = None,
+    satellite_observation_ids: list[int] | None = None,
+    crop_ids: list[int] | None = None,
 ) -> dict[str, Any]:
     """Score the caller-provided state against caller-provided ordered levels."""
     if not question.strip():
@@ -66,6 +75,9 @@ def evaluate_score(
         criteria=list(answers),
         question_id=question_id,
         timeout=timeout,
+        event_ids=event_ids,
+        satellite_observation_ids=satellite_observation_ids,
+        crop_ids=crop_ids,
     )
 
 
@@ -98,6 +110,9 @@ def _evaluate_decision(
     criteria: ChoiceCriteria | ScoreCriteria | NoulCriteria | None,
     question_id: str,
     timeout: float,
+    event_ids: list[int] | None = None,
+    satellite_observation_ids: list[int] | None = None,
+    crop_ids: list[int] | None = None,
 ) -> dict[str, Any]:
     """Send one typed decision request and return its complete answer."""
     if not question_id.strip():
@@ -133,5 +148,8 @@ def _evaluate_decision(
         criteria=question_spec.get("criteria"),
         state=state,
         response=answer,
+        event_ids=event_ids,
+        satellite_observation_ids=satellite_observation_ids,
+        crop_ids=crop_ids,
     )
     return answer

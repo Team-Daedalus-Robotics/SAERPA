@@ -34,6 +34,7 @@ def planting_month_candidates(month: int, region: str) -> list[dict]:
         crops = session.scalars(statement).unique().all()
     return [
         {
+            "crop_id": crop.id,
             "name": crop.name,
             "botanical_family": crop.botanical_family,
             "crop_group": crop.crop_group,
@@ -59,6 +60,7 @@ def latest_plantings(limit: int = 10) -> list[dict]:
         plantings = session.scalars(statement).all()
     return [
         {
+            "crop_id": planting.crop.id,
             "field_id": planting.field_id,
             "field_name": planting.field.name,
             "crop_name": planting.crop.name,
