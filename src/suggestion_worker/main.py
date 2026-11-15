@@ -8,3 +8,5 @@ print("suggestion_worker iniciado.", flush=True)
 while True:
     print("Nenhuma sugestão para processar.", flush=True)
     time.sleep(SCAN_SECONDS)
+
+#criar função de chamda do modelo para cada rotação:

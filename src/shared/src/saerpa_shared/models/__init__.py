@@ -5,6 +5,7 @@ from saerpa_shared.models.field import Field
 from saerpa_shared.models.measure import Measure
 from saerpa_shared.models.planting import Planting
 from saerpa_shared.models.property import Property
+from saerpa_shared.models.recommendation import Recommendation
 from saerpa_shared.models.rotation_rule import RotationRule
 from saerpa_shared.models.station import Station
 
@@ -16,6 +17,7 @@ __all__ = [
     "Measure",
     "Planting",
     "Property",
+    "Recommendation",
     "RotationRule",
     "Station",
 ]
