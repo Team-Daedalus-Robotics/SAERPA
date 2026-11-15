@@ -101,7 +101,7 @@ export default function SugestoesCard({ entrada, clima, climaCarregando, climaCo
           <span className="stat-titulo"><Icone nome="gota" tamanho={18} /> Umidade do solo e clima</span>
           <span className="chip-fonte">NASA</span>
         </div>
-        {climaCarregando && !clima && <p className="hint">Buscando os dados da NASA para este local…</p>}
+        {climaCarregando && !clima && <p className="hint">Buscando os dados da NASA para este local… A primeira vez pode levar alguns segundos.</p>}
         {climaComErro && !clima && (
           <>
             <p className="hint">Não foi possível buscar os dados da NASA agora.</p>

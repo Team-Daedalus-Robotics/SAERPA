@@ -36,18 +36,18 @@ src/
 │   ├── alembic.ini
 │   ├── data/            # planilha Embrapa + crop_classification.json (fontes do catálogo)
 │   ├── scripts/         # import_embrapa.py → gera seed/crops.json
-│   ├── migrations/      # Alembic (env.py lê DATABASE_URL; 0001_initial, 0002_crop_catalog)
+│   ├── migrations/      # Alembic (env.py lê DATABASE_URL; 0001_initial ... 0006_climate_cell)
 │   └── src/saerpa_shared/
 │       ├── base.py      # Base(DeclarativeBase)
 │       ├── engine.py    # engine = create_engine(DATABASE_URL); SessionLocal
 │       ├── migrator.py  # run_migrations() (alembic upgrade head)
 │       ├── seeder.py    # seed_crops(): grava o catálogo da Embrapa (idempotente, por slug)
 │       ├── nasa_power.py# cliente da NASA POWER (horário) + célula da grade MERRA-2 (0,5° x 0,625°)
-│       ├── climate.py   # refresh_climate_events(): grava dados reais da NASA em `event` (1 estação virtual por célula)
+│       ├── climate.py   # (usado só pelo worker) process_pending_cells(): grava dados da NASA em `event`, 1 estação virtual por célula
 │       ├── seed/        # crops.json (GERADO por scripts/import_embrapa.py)
 │       ├── models/      # Station, Measure, Event, Property, Crop, CropPlantingWindow, Field, Planting, RotationRule
 │       └── schemas/     # Pydantic Request/Response (station, measure) — fonte única
-├── nasa_event_worker/   # worker: eventos NASA (placeholder, loop + print)
+├── nasa_event_worker/   # worker: busca a NASA POWER das células pedidas (`climate_cell`) e grava em `event`
 ├── station_data_gateway/# worker: gateway de estações (placeholder)
 ├── suggestion_worker/   # worker: sugestões (placeholder)
 └── web/                 # React/Vite + TanStack Query/Router (Field Shift); proxy /api → services__api__http__0
@@ -89,11 +89,17 @@ src/
   guarda o id da propriedade por cidade. `property.lat/lng` começa na sede do município e, a partir da
   primeira área, passa a ser o **centro das áreas** (PostGIS `ST_Centroid`, ponderado pelo tamanho),
   recalculado ao criar/apagar área; sem áreas restantes, mantém o último ponto.
-- **Clima real (NASA POWER)**: `GET /api/climate?lat=&lng=` calcula a célula da NASA do ponto, busca na NASA o
-  que falta (primeira vez: 30 dias, por hora), grava em `event` e responde com umidade do solo, temperaturas,
-  umidade do ar e chuva. Cada célula é uma estação virtual `nasa-power-lat<±lat>_lng<±lng>` (medidas
-  `soil_moisture` %, `soil_temperature`, `air_temperature`, `air_humidity`, `rainfall` mm/h; `sensor_name`
-  `NASA POWER <variável>`). NASA fora do ar: lugar já guardado responde do banco; lugar novo dá 502.
+- **Quem grava em `event`**: SOMENTE o `station_data_gateway` e os workers. **A API nunca grava em `event`**
+  (nem cria estações/medidas); ela só lê e, no máximo, registra pedidos em outras tabelas.
+- **Clima real (NASA POWER)**: `GET /api/climate?lat=&lng=` calcula a célula da NASA do ponto (grade MERRA-2,
+  0,5° x 0,625°), registra o pedido em `climate_cell` e **só lê** o que já está em `event`. Respostas: `200` com
+  umidade do solo, temperaturas, umidade do ar e chuva; `202 {"status":"pending"}` quando o worker ainda não
+  buscou a célula (o app tenta de novo a cada 3 s); `502` se a NASA falhou há menos de 60 s e não há dados.
+  Quem busca e grava é o **`nasa_event_worker`** (`saerpa_shared.climate`): a cada `CLIMATE_POLL_SECONDS` (padrão 3 s; o ciclo de observações de satélite usa `NASA_EVENT_POLL_SECONDS`)
+  atende até 3 células pedidas, traz 30 dias por hora na primeira vez, atualiza a cada 6 h as
+  células pedidas nos últimos 30 dias e, se a NASA falhar, tenta de novo após 60 s (erro em `climate_cell`).
+  Cada célula é uma estação virtual `nasa-power-lat<±lat>_lng<±lng>` (medidas `soil_moisture` %,
+  `soil_temperature`, `air_temperature`, `air_humidity`, `rainfall` mm/h; `sensor_name` `NASA POWER <variável>`).
 - Sensores simulados (demonstração): `src/shared/scripts/simulate_sensor_events.py` simula o que DHT11, DS18B20 e
   Capacitive Soil Moisture v2.0 enviariam (a partir de dados reais da NASA, baixados por `fetch_nasa_power.py`,
   cópia em `src/shared/data/nasa_power/`; a chuva entra da NASA) e **envia os pacotes ao `station_data_gateway`**

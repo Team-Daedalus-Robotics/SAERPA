@@ -1,6 +1,7 @@
 from saerpa_shared.schemas.climate import (
     ClimateCellResponse,
     ClimateMetricResponse,
+    ClimatePendingResponse,
     ClimateResponse,
     DailyValueResponse,
     RainfallResponse,
@@ -28,6 +29,7 @@ from saerpa_shared.schemas.station_data import (
 __all__ = [
     "ClimateCellResponse",
     "ClimateMetricResponse",
+    "ClimatePendingResponse",
     "ClimateResponse",
     "DailyValueResponse",
     "RainfallResponse",

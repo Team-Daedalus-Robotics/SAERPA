@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from typing import Literal
 
 from pydantic import BaseModel
 
@@ -39,3 +40,8 @@ class ClimateResponse(BaseModel):
     air_temperature_celsius: ClimateMetricResponse
     air_humidity_percent: ClimateMetricResponse
     rainfall: RainfallResponse
+
+
+class ClimatePendingResponse(BaseModel):
+    status: Literal["pending"] = "pending"
+    retry_after_seconds: int
