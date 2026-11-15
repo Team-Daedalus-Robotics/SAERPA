@@ -2,7 +2,7 @@
 
 QUEM GRAVA: somente o nasa_event_worker (a API apenas lê `event` e registra em `climate_cell` quais
 células foram pedidas). Cada célula (ver nasa_power.GridCell) vira uma estação
-`nasa-power-lat<±lat>_lng<±lng>` com 5 medidas. Na primeira vez a célula recebe 30 dias; depois só
+`nasa-power-lat<±lat>_lng<±lng>` com 6 medidas. Na primeira vez a célula recebe 30 dias; depois só
 entra o que a NASA publicou de novo.
 """
 import threading
@@ -43,6 +43,7 @@ CLIMATE_MEASURES = [
     ClimateMeasure("air_temperature", "NASA POWER T2M", "°C", "T2M", 1, 2),
     ClimateMeasure("air_humidity", "NASA POWER RH2M", "%", "RH2M", 1, 1),
     ClimateMeasure("rainfall", "NASA POWER PRECTOTCORR", "mm/h", "PRECTOTCORR", 1, 2),
+    ClimateMeasure("wind_speed", "NASA POWER WS2M", "m/s", "WS2M", 1, 2),
 ]
 
 CLIMATE_MEASURE_TYPES = tuple(climate_measure.type for climate_measure in CLIMATE_MEASURES)

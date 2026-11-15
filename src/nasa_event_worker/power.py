@@ -1,4 +1,4 @@
-"""Busca diária de umidade do solo na NASA POWER e grava em satellite_observation."""
+"""Busca diária de variáveis meteorológicas e de umidade do solo na NASA POWER, gravando em satellite_observation."""
 import json
 import urllib.error
 import urllib.parse
@@ -39,6 +39,14 @@ class SatelliteVariable:
 POWER_VARIABLES = {
     "GWETTOP": SatelliteVariable("soil_moisture_surface", "surface", "adimensional_0_1"),
     "GWETROOT": SatelliteVariable("soil_moisture_root_zone", "0-100 cm", "adimensional_0_1"),
+    "T2M": SatelliteVariable("air_temperature", "2 m", "celsius"),
+    "T2M_MAX": SatelliteVariable("air_temperature_max", "2 m", "celsius"),
+    "T2M_MIN": SatelliteVariable("air_temperature_min", "2 m", "celsius"),
+    "TSOIL1": SatelliteVariable("soil_temperature", "0-10 cm", "celsius"),
+    "RH2M": SatelliteVariable("air_humidity", "2 m", "percent"),
+    "PRECTOTCORR": SatelliteVariable("rainfall", "surface", "millimeter_per_day"),
+    "WS2M": SatelliteVariable("wind_speed", "2 m", "meter_per_second"),
+    "ALLSKY_SFC_SW_DWN": SatelliteVariable("solar_irradiance", "surface", "megajoule_per_square_meter_per_day"),
 }
 
 

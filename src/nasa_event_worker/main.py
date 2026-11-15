@@ -22,17 +22,20 @@ def load_properties() -> list[tuple[float, float]]:
         rows = session.execute(
             select(Property.lat, Property.lng).where(Property.deleted == False).distinct()  # noqa: E712
         ).all()
-    return list(rows)
+    properties = list(rows)
+    print(f"[diag] Propriedades ativas para busca de satélite: {len(properties)}.", flush=True)
+    return properties # pyright: ignore[reportReturnType]
 
 
 def refresh_power(latitude: float, longitude: float) -> None:
     cell = nasa_power.snap_to_grid_cell(latitude, longitude)
     with SessionLocal() as session:
         count = power_module.refresh_power_observations(session, cell, latitude, longitude, backfill_days=BACKFILL_DAYS)
-    print(f"POWER {cell.identifier}: {count} registros de umidade do solo gravados.", flush=True)
+    print(f"POWER {cell.identifier}: {count} registros de satélite gravados.", flush=True)
 
 
 def refresh_smap(latitude: float, longitude: float) -> None:
+    print(f"[diag] SMAP {latitude:.4f},{longitude:.4f}: iniciando consulta ao AppEEARS.", flush=True)
     with SessionLocal() as session:
         count = smap_module.refresh_smap_observations(session, latitude, longitude, backfill_days=BACKFILL_DAYS)
     print(f"SMAP {latitude:.4f},{longitude:.4f}: {count} registros de umidade do solo gravados.", flush=True)
@@ -45,10 +48,20 @@ def refresh_location(latitude: float, longitude: float) -> None:
             refresh_smap(latitude, longitude)
         except smap_module.SmapError as error:
             print(f"SMAP {latitude:.4f},{longitude:.4f} indisponível: {error}", flush=True)
+    else:
+        print(
+            "[diag] SMAP ignorado: EARTHDATA_USER/EARTHDATA_PASS não chegaram no worker "
+            "(parâmetro sem valor no Aspire?). Veja o painel em Parameters.",
+            flush=True,
+        )
 
 
 def refresh_satellite_observations() -> None:
-    for latitude, longitude in load_properties():
+    properties = load_properties()
+    if not properties:
+        print("[diag] Nenhuma propriedade no banco; nada a buscar.", flush=True)
+        return
+    for latitude, longitude in properties:
         try:
             refresh_location(latitude, longitude)
         except nasa_power.NasaPowerError as error:
@@ -64,6 +77,11 @@ def refresh_climate_events() -> None:
 
 
 print("nasa_event_worker iniciado.", flush=True)
+print(
+    f"[diag] EARTHDATA_USER definido: {bool(os.environ.get('EARTHDATA_USER'))}; "
+    f"EARTHDATA_PASS definido: {bool(os.environ.get('EARTHDATA_PASS'))}.",
+    flush=True,
+)
 
 next_satellite_cycle = 0.0
 waiting_for_database = False
@@ -71,8 +89,13 @@ while True:
     try:
         refresh_climate_events()
         if time.monotonic() >= next_satellite_cycle:
+            print("[diag] Ciclo de satélite começando (POWER + SMAP).", flush=True)
             refresh_satellite_observations()
             next_satellite_cycle = time.monotonic() + POLL_SECONDS
+            print(
+                f"[diag] Próximo ciclo de satélite em {int(POLL_SECONDS / 60)} min.",
+                flush=True,
+            )
         waiting_for_database = False
     except SQLAlchemyError as error:
         if not waiting_for_database:

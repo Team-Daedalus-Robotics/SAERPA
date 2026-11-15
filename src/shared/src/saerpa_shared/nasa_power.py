@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from datetime import date, datetime, timezone
 
 API_URL = "https://power.larc.nasa.gov/api/temporal/hourly/point"
-PARAMETERS = ("T2M", "RH2M", "PRECTOTCORR", "GWETTOP", "TSOIL1")
+PARAMETERS = ("T2M", "RH2M", "PRECTOTCORR", "GWETTOP", "TSOIL1", "WS2M")
 GRID_LATITUDE_STEP = 0.5
 GRID_LONGITUDE_STEP = 0.625
 MISSING_VALUE = -999
