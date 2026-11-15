@@ -40,7 +40,38 @@ const stationDataGateway = await builder
   .withEnvironment('DATABASE_URL', await database.uriExpression());
 const suggestionWorker = await builder
   .addPythonApp('suggestion-worker', './src/suggestion_worker', 'main.py')
-  .withUv();
+  .withUv()
+  .withReference(database)
+  .waitFor(database)
+  .withEnvironment('DATABASE_URL', await database.uriExpression())
+  .withEnvironment(
+    'API_KEY',
+    await builder.addParameter('laya-api-key', {
+      value: process.env.API_KEY ?? process.env.TYPESAFE_API_KEY,
+      secret: true,
+    }),
+  )
+  .withEnvironment(
+    'BASE_URL',
+    await builder.addParameter('laya-base-url', {
+      value: process.env.BASE_URL ?? process.env.TYPESAFE_BASE_URL ?? 'http://localhost:11435',
+    }),
+  )
+  .withEnvironment(
+    'DECIDE_URL',
+    await builder.addParameter('laya-decide-url', {
+      value:
+        process.env.DECIDE_URL ??
+        `${process.env.BASE_URL ?? process.env.TYPESAFE_BASE_URL ?? 'http://localhost:11435'}/api/decide`,
+    }),
+  )
+  .withEnvironment(
+    'MODEL',
+    await builder.addParameter('laya-model', {
+      value: process.env.MODEL ?? process.env.TYPESAFE_DEFAULT_MODEL ?? 'laya:multilingual',
+    }),
+  )
+  .withEnvironment('QUERY_LIMIT', process.env.QUERY_LIMIT ?? '100');
 
 const api = await builder
   .addUvicornApp('api', './src/api', 'main:app')
