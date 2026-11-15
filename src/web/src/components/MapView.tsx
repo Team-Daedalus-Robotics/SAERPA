@@ -64,6 +64,8 @@ interface Propriedades {
   target: MapTarget;
   municipio: Municipio | null;
   areas: Area[];
+  /** emoji da cultura plantada em cada área (id da área → emoji); área sem cultura informada não aparece aqui */
+  emojiDasAreas?: Record<number, string>;
   selectedId: number | null;
   drawing: LatLng[] | null;
   onSelectArea: (id: number) => void;
@@ -113,7 +115,10 @@ export default function MapView(propriedades: Propriedades) {
               },
             }}
           >
-            <Tooltip permanent direction="center" className="map-tip">{area.nome}</Tooltip>
+            <Tooltip permanent direction="center" className="map-tip">
+              {propriedades.emojiDasAreas?.[area.id] && <span className="rotulo-emoji">{propriedades.emojiDasAreas[area.id]}</span>}
+              <span>{area.nome}</span>
+            </Tooltip>
           </Polygon>
         );
       })}

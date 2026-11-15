@@ -89,7 +89,9 @@ src/
   (substitui o histórico: últimas culturas plantadas, gravadas em `planting`). Sem login: o navegador
   guarda **uma única propriedade** (`saerpa:propriedade-atual` no localStorage: última cidade escolhida + id no
   servidor); o app sempre abre nela. Trocar de cidade exclui de verdade a propriedade antiga (`DELETE`) depois
-  de um aviso; sem áreas salvas a troca é direta. `property.lat/lng` começa na sede do município e, a partir da
+  de um aviso; sem áreas salvas a troca é direta.
+  O mapa e as abas de área mostram, acima do nome, o `emoji` da última cultura informada para a área
+  (única parte da interface que usa emoji). `property.lat/lng` começa na sede do município e, a partir da
   primeira área, passa a ser o **centro das áreas** (PostGIS `ST_Centroid`, ponderado pelo tamanho),
   recalculado ao criar/apagar área; sem áreas restantes, mantém o último ponto.
 - **Quem grava em `event`**: SOMENTE o `station_data_gateway` e os workers. **A API nunca grava em `event`**

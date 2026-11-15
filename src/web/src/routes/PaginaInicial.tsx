@@ -274,6 +274,16 @@ export default function PaginaInicial() {
     [catalogo, regiao, municipio, historico, mes, colherRapido],
   );
 
+  const emojiDasAreas = useMemo(() => {
+    const emojiPorCultura = new Map((catalogo ?? []).map((cultura) => [cultura.id, cultura.emoji]));
+    const emojis: Record<number, string> = {};
+    for (const cadaArea of areas) {
+      const emoji = cadaArea.historico.ultima ? emojiPorCultura.get(cadaArea.historico.ultima) : undefined;
+      if (emoji) emojis[cadaArea.id] = emoji;
+    }
+    return emojis;
+  }, [areas, catalogo]);
+
   const ondeLabel = area ? area.nome : municipio ? `${municipio.nome} (cidade toda)` : '';
   const aguardandoCatalogo = municipio !== null && catalogo === undefined;
   const secaoAtiva = useSecaoAtiva(`${aguardandoCatalogo}-${catalogoConsulta.isError}`);
@@ -325,7 +335,7 @@ export default function PaginaInicial() {
           <div className="map-area" data-tour="mapa">
             <MapView
               base={base} celula={mostrarCelulaDaNasa && clima ? clima.celula : null} corDaCelula={corDaCelula} target={alvoDoMapa} municipio={municipio}
-              areas={areas} selectedId={area?.id ?? null} drawing={drawing}
+              areas={areas} emojiDasAreas={emojiDasAreas} selectedId={area?.id ?? null} drawing={drawing}
               onSelectArea={selecionarArea}
               onMapClick={(ponto) => drawing && setDrawing([...drawing, ponto])}
               onZoom={setZoom}
@@ -393,7 +403,8 @@ export default function PaginaInicial() {
               <button className={`tab ${area === null ? 'active' : ''}`} onClick={() => selecionarArea(null)}>Cidade toda</button>
               {areas.map((cadaArea) => (
                 <button key={cadaArea.id} className={`tab ${cadaArea.id === area?.id ? 'active' : ''}`} onClick={() => selecionarArea(cadaArea.id)}>
-                  {cadaArea.nome} · {formatarNumero(cadaArea.areaEmHectares, 1)} hectares
+                  {emojiDasAreas[cadaArea.id] && <span className="tab-emoji" aria-hidden="true">{emojiDasAreas[cadaArea.id]}</span>}
+                  <span>{cadaArea.nome} · {formatarNumero(cadaArea.areaEmHectares, 1)} hectares</span>
                 </button>
               ))}
               {area && nomeEmEdicao === null && (
