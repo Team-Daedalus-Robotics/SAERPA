@@ -95,7 +95,7 @@ src/
   0,5° x 0,625°), registra o pedido em `climate_cell` e **só lê** o que já está em `event`. Respostas: `200` com
   umidade do solo, temperaturas, umidade do ar e chuva; `202 {"status":"pending"}` quando o worker ainda não
   buscou a célula (o app tenta de novo a cada 3 s); `502` se a NASA falhou há menos de 60 s e não há dados.
-  Quem busca e grava é o **`nasa_event_worker`** (`saerpa_shared.climate`): a cada `NASA_EVENT_POLL_SECONDS`
+  Quem busca e grava é o **`nasa_event_worker`** (`saerpa_shared.climate`): a cada `CLIMATE_POLL_SECONDS` (padrão 3 s; o ciclo de observações de satélite usa `NASA_EVENT_POLL_SECONDS`)
   (padrão 3 s) atende até 3 células pedidas, traz 30 dias por hora na primeira vez, atualiza a cada 6 h as
   células pedidas nos últimos 30 dias e, se a NASA falhar, tenta de novo após 60 s (erro em `climate_cell`).
   Cada célula é uma estação virtual `nasa-power-lat<±lat>_lng<±lng>` (medidas `soil_moisture` %,
