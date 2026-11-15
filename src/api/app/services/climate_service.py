@@ -9,6 +9,7 @@ from saerpa_shared import climate, nasa_power
 from saerpa_shared.schemas import (
     ClimateCellResponse,
     ClimateMetricResponse,
+    ClimatePendingResponse,
     ClimateResponse,
     DailyValueResponse,
     RainfallResponse,
@@ -16,6 +17,7 @@ from saerpa_shared.schemas import (
 
 WINDOW_DAYS = 30
 SOURCE = "NASA POWER (MERRA-2)"
+RETRY_AFTER_SECONDS = 3
 
 
 def _group_by_day(values: list[tuple[datetime, float]]) -> dict[date, list[float]]:
@@ -46,18 +48,25 @@ def _build_rainfall(values: list[tuple[datetime, float]], latest_moment: datetim
     )
 
 
-def get_climate(session: Session, lat: float, lng: float) -> ClimateResponse:
+def get_climate(session: Session, lat: float, lng: float) -> ClimateResponse | ClimatePendingResponse:
+    """Só lê. Se a célula ainda não tem dados, registra o pedido e responde "pending": o nasa_event_worker grava."""
+    now = datetime.now(timezone.utc)
     cell = nasa_power.snap_to_grid_cell(lat, lng)
-    try:
-        station = climate.refresh_climate_events(session, cell)
-    except nasa_power.NasaPowerError as error:
-        raise ExternalServiceError(str(error)) from error
+    climate_cell = climate_repository.register_request(session, cell.latitude, cell.longitude, now)
 
-    latest_moment = climate_repository.get_latest_timestamp(session, station.id)
+    station_id = climate_repository.find_station_id(session, cell.identifier)
+    latest_moment = climate_repository.get_latest_timestamp(session, station_id) if station_id is not None else None
+    if latest_moment is None:
+        recently_failed = climate_cell.last_error is not None and climate_cell.last_attempt_at is not None \
+            and now - climate_cell.last_attempt_at < climate.RETRY_AFTER_ERROR
+        if recently_failed:
+            raise ExternalServiceError(climate_cell.last_error)
+        return ClimatePendingResponse(retry_after_seconds=RETRY_AFTER_SECONDS)
+
     since = latest_moment - timedelta(days=WINDOW_DAYS)
     values = {
-        measure_type: climate_repository.list_values(session, station.id, measure_type, since)
-        for measure_type in ("soil_moisture", "soil_temperature", "air_temperature", "air_humidity", "rainfall")
+        measure_type: climate_repository.list_values(session, station_id, measure_type, since)
+        for measure_type in climate.CLIMATE_MEASURE_TYPES
     }
 
     return ClimateResponse(

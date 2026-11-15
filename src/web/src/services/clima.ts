@@ -26,9 +26,15 @@ const converterIndicador = (indicador: IndicadorDaApi): Indicador => ({
   diaria: converterSerie(indicador.daily),
 });
 
-/** Clima real (NASA POWER) do ponto escolhido: a API calcula a célula da NASA, guarda nos eventos e responde */
-export async function buscarClima([latitude, longitude]: LatLng): Promise<Clima> {
-  const resposta = await requisitar<ClimaDaApi>('GET', `/api/climate?lat=${latitude.toFixed(4)}&lng=${longitude.toFixed(4)}`);
+interface PendenteDaApi { status: 'pending'; retry_after_seconds: number }
+
+/**
+ * Clima real (NASA POWER) do ponto escolhido. A API só lê o que o nasa_event_worker já gravou em `event`;
+ * quando a região ainda não foi buscada ela responde "pendente" e esta função devolve null (o app tenta de novo).
+ */
+export async function buscarClima([latitude, longitude]: LatLng): Promise<Clima | null> {
+  const resposta = await requisitar<ClimaDaApi | PendenteDaApi>('GET', `/api/climate?lat=${latitude.toFixed(4)}&lng=${longitude.toFixed(4)}`);
+  if ('status' in resposta) return null;
   return {
     fonte: resposta.source,
     celula: {

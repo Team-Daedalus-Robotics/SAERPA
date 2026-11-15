@@ -1,3 +1,4 @@
+from saerpa_shared.models.climate_cell import ClimateCell
 from saerpa_shared.models.crop import Crop
 from saerpa_shared.models.crop_planting_window import CropPlantingWindow
 from saerpa_shared.models.event import Event
@@ -11,6 +12,7 @@ from saerpa_shared.models.satellite_observation import SatelliteObservation
 from saerpa_shared.models.station import Station
 
 __all__ = [
+    "ClimateCell",
     "Crop",
     "CropPlantingWindow",
     "Event",

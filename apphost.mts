@@ -30,7 +30,10 @@ const database = await postgres.addDatabase('saerpa');
 
 const nasaEventWorker = await builder
   .addPythonApp('nasa-event-worker', './src/nasa_event_worker', 'main.py')
-  .withUv();
+  .withUv()
+  .withReference(database)
+  .waitFor(database)
+  .withEnvironment('DATABASE_URL', await database.uriExpression());
 const stationDataGateway = await builder
   .addUvicornApp('station-data-gateway', './src/station_data_gateway', 'main:app')
   .withUv()

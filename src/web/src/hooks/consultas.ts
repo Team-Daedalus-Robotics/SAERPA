@@ -43,6 +43,8 @@ export function useClima(municipio: Municipio | null, area: Area | null) {
     queryFn: () => buscarClima(ponto!),
     enabled: ponto !== null,
     staleTime: 30 * 60 * 1000,
+    // null = a região ainda está sendo buscada na NASA pelo worker: tenta de novo até chegar (ou dar erro)
+    refetchInterval: (consulta) => (consulta.state.data === null && consulta.state.status !== 'error' ? 3000 : false),
   });
 }
 

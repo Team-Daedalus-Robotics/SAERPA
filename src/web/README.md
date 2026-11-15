@@ -93,4 +93,4 @@ navegador (`localStorage`).
   Códigos seguem o IBGE; as coordenadas vêm do repositório (não são publicação oficial do IBGE).
 
 ### Umidade do solo
-- **NASA POWER** (https://power.larc.nasa.gov, modelo MERRA-2): umidade do solo na superfície (`GWETTOP`), temperatura do solo (`TSOIL1`), temperatura e umidade do ar (`T2M`, `RH2M`) e chuva (`PRECTOTCORR`), por hora, em células de 0,5° x 0,625° (cerca de 55 x 66 km). A API busca a célula do local escolhido, grava em `event` e responde em `GET /api/climate`. São dados reais de modelo: valem para a região, não para o terreno exato.
+- **NASA POWER** (https://power.larc.nasa.gov, modelo MERRA-2): umidade do solo na superfície (`GWETTOP`), temperatura do solo (`TSOIL1`), temperatura e umidade do ar (`T2M`, `RH2M`) e chuva (`PRECTOTCORR`), por hora, em células de 0,5° x 0,625° (cerca de 55 x 66 km). O `nasa_event_worker` busca a célula do local escolhido e grava em `event`; a API só lê e responde em `GET /api/climate` (enquanto o worker busca, o app mostra "Buscando os dados da NASA…"). São dados reais de modelo: valem para a região, não para o terreno exato.

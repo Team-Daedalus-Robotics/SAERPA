@@ -361,7 +361,7 @@ export default function PaginaInicial() {
               </div>
               {/* ===== Passo 3 ===== */}
               <div id="secao-sugestoes">
-                <SugestoesCard entrada={entrada} clima={clima} climaCarregando={climaConsulta.isPending && climaConsulta.fetchStatus !== 'idle'} climaComErro={climaConsulta.isError} onTentarClimaDeNovo={() => climaConsulta.refetch()} mesAtual={MES_ATUAL}
+                <SugestoesCard entrada={entrada} clima={clima} climaCarregando={municipio !== null && clima === null && !climaConsulta.isError} climaComErro={climaConsulta.isError} onTentarClimaDeNovo={() => climaConsulta.refetch()} mesAtual={MES_ATUAL}
                   onMes={setMes} onColherRapido={setColherRapido} />
               </div>
             </>
