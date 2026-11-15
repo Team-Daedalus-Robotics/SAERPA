@@ -21,7 +21,7 @@ export interface TourStep {
 
 export const PASSOS_TOUR: TourStep[] = [
   {
-    icone: 'broto', titulo: 'Bem-vindo ao Field Shift!',
+    icone: 'broto', titulo: 'Bem-vindo ao SAERPA!',
     texto: 'Este app ajuda você a escolher o que plantar depois, no mesmo lugar, para a terra continuar forte e produzindo. São só 3 passos. Vamos ver cada parte?',
   },
   {

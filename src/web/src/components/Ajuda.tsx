@@ -19,7 +19,7 @@ const PARTES: { icone: NomeDeIcone; titulo: string; texto: React.ReactNode }[] =
     texto: (
       <>
         <p>Escolha o <b>estado</b> na lista e depois digite o nome da <b>cidade</b>. Enquanto você digita, aparecem nomes parecidos; é só tocar no certo. Pode digitar sem acento.</p>
-        <p>O estado diz a sua região (Sul, Sudeste, Nordeste, Centro-Oeste ou Norte), e cada região tem uma época certa de plantar. Para recomeçar, toque em <b>Início</b>, no alto da tela.</p>
+        <p>O estado diz a sua região (Sul, Sudeste, Nordeste, Centro-Oeste ou Norte), e cada região tem uma época certa de plantar. O app sempre volta para a última propriedade que você escolheu. Para usar outra cidade, toque em <b>Trocar de propriedade</b>: a antiga é excluída, com as áreas e o histórico de plantio.</p>
       </>
     ),
   },

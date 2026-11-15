@@ -21,6 +21,14 @@ def get_property(property_id: int, session: SessionDep) -> PropertyResponse:
         raise HTTPException(status_code=404, detail=str(error)) from error
 
 
+@router.delete("/{property_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_property(property_id: int, session: SessionDep) -> None:
+    try:
+        property_service.delete_property(session, property_id)
+    except NotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
+
+
 @router.get("/{property_id}/fields")
 def list_fields(property_id: int, session: SessionDep) -> list[FieldResponse]:
     try:

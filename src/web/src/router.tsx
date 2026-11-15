@@ -10,7 +10,7 @@ function PaginaNaoEncontrada() {
   return (
     <main className="not-found">
       <h1>Página não encontrada</h1>
-      <p>Esse endereço não existe no Field Shift.</p>
+      <p>Esse endereço não existe no SAERPA.</p>
       <Link to="/" className="btn">Voltar ao início</Link>
     </main>
   );

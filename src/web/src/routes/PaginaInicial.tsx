@@ -4,14 +4,16 @@ import Ajuda from '../components/Ajuda';
 import LocationPicker from '../components/LocationPicker';
 import MapView, { type BaseLayer, type MapTarget } from '../components/MapView';
 import PlantouCard from '../components/PlantouCard';
+import { AvisoDeTroca, CartaoDaPropriedade } from '../components/TrocaDePropriedade';
 import SugestoesCard from '../components/SugestoesCard';
 import Tour, { PASSOS_TOUR } from '../components/Tour';
 import { Icone, type NomeDeIcone } from '../components/icones';
 import { EmptyState, StepTitle } from '../components/ui';
 import { ESTADOS } from '../data/locations';
-import { useApagarArea, useAreas, useCatalogo, useClima, useCriarArea, useMunicipios, useRenomearArea, useSalvarHistorico } from '../hooks/consultas';
+import { useApagarArea, useAreas, useCatalogo, useClima, useCriarArea, useMunicipios, useRenomearArea, useSalvarHistorico, useTrocarDePropriedade } from '../hooks/consultas';
 import { gravarArmazenado, lerArmazenado } from '../lib/armazenamento';
 import { formatarNumero } from '../lib/geo';
+import { esquecerPropriedadeAntigaDaCidade, gravarPropriedadeAtual, lerPropriedadeAtual, propriedadeIdDaCidade, type PropriedadeAtual } from '../lib/propriedadeAtual';
 import { mensagemDoErro } from '../services/clienteApi';
 import type { Entrada } from '../services/rotacao';
 import { COR_DO_TOM, classificarUmidadeDoSolo } from '../services/clima';
@@ -73,7 +75,11 @@ export default function PaginaInicial() {
   // ---- passo 1: onde (guardado na URL, então recarregar a página não perde a cidade) ----
   const estado: Estado | null = ESTADOS.find((candidato) => candidato.uf === ufEscolhida) ?? null;
   const { data: municipiosDoEstado } = useMunicipios(ufEscolhida);
-  const municipio: Municipio | null = municipiosDoEstado?.find((candidato) => candidato.codigoIbge === codigoDoMunicipio) ?? null;
+  // a propriedade guardada vale como a cidade escolhida enquanto a lista do estado ainda carrega
+  const [propriedadeAtual, setPropriedadeAtual] = useState<PropriedadeAtual | null>(lerPropriedadeAtual);
+  const municipio: Municipio | null =
+    municipiosDoEstado?.find((candidato) => candidato.codigoIbge === codigoDoMunicipio) ??
+    (propriedadeAtual && propriedadeAtual.municipio.codigoIbge === codigoDoMunicipio ? propriedadeAtual.municipio : null);
 
   const alvoDoMapa: MapTarget = useMemo(() => {
     if (municipio) return { kind: 'point', center: [municipio.lat, municipio.lng], zoom: 13 };
@@ -99,6 +105,10 @@ export default function PaginaInicial() {
   const renomearAreaMutacao = useRenomearArea(municipio);
   const [nomeDaNovaArea, setNomeDaNovaArea] = useState('');
   const [nomeEmEdicao, setNomeEmEdicao] = useState<string | null>(null);
+  const trocarDePropriedadeMutacao = useTrocarDePropriedade();
+  const [trocando, setTrocando] = useState(false);
+  const [estadoDaTroca, setEstadoDaTroca] = useState<Estado | null>(null);
+  const [trocaPendente, setTrocaPendente] = useState<{ uf: string; municipio: Municipio } | null>(null);
   const salvarHistoricoMutacao = useSalvarHistorico(municipio);
   const climaConsulta = useClima(municipio, area);
   const clima = climaConsulta.data ?? null;
@@ -139,6 +149,61 @@ export default function PaginaInicial() {
   }
   function escolherMunicipio(municipioEscolhido: Municipio | null) {
     atualizarBusca({ municipio: municipioEscolhido?.codigoIbge, area: undefined });
+  }
+
+  // ---- uma só propriedade: abre sempre na última e só troca depois de excluir a antiga ----
+  const restauradoRef = useRef(false);
+  useEffect(() => {
+    if (restauradoRef.current) return;
+    restauradoRef.current = true;
+    if (propriedadeAtual === null) return;
+    const mesmaCidade = propriedadeAtual.municipio.codigoIbge === codigoDoMunicipio;
+    atualizarBusca({ estado: propriedadeAtual.uf, municipio: propriedadeAtual.municipio.codigoIbge, area: mesmaCidade ? areaDaUrl : undefined });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (propriedadeAtual !== null || !municipio || !ufEscolhida) return;
+    const adotada: PropriedadeAtual = { uf: ufEscolhida, municipio, propriedadeId: propriedadeIdDaCidade(municipio.codigoIbge) };
+    gravarPropriedadeAtual(adotada);
+    esquecerPropriedadeAntigaDaCidade(municipio.codigoIbge);
+    setPropriedadeAtual(adotada);
+  }, [propriedadeAtual, municipio, ufEscolhida]);
+
+  const temAreasSalvas = areasConsulta.data === undefined || areasConsulta.data.length > 0;
+
+  function pedirTroca(novoMunicipio: Municipio) {
+    if (!estadoDaTroca || !propriedadeAtual) return;
+    if (novoMunicipio.codigoIbge === propriedadeAtual.municipio.codigoIbge) {
+      fecharTroca();
+      return;
+    }
+    const nova = { uf: estadoDaTroca.uf, municipio: novoMunicipio };
+    if (temAreasSalvas) setTrocaPendente(nova);
+    else confirmarTroca(nova);
+  }
+  function confirmarTroca(nova: { uf: string; municipio: Municipio }) {
+    const antiga = propriedadeAtual;
+    trocarDePropriedadeMutacao.mutate(nova, {
+      onSuccess: (atual) => {
+        setPropriedadeAtual(atual);
+        if (antiga) {
+          const restantes = { ...historicosDasCidades };
+          delete restantes[antiga.municipio.codigoIbge];
+          setHistoricosDasCidades(restantes);
+          gravarArmazenado(CHAVE_HISTORICO_DA_CIDADE, JSON.stringify(restantes));
+        }
+        setDrawing(null);
+        atualizarBusca({ estado: nova.uf, municipio: nova.municipio.codigoIbge, area: undefined });
+        fecharTroca();
+        showToast(`Agora sua propriedade é ${nova.municipio.nome}, ${nova.uf}.`);
+      },
+      onError: (erro) => { setTrocaPendente(null); showToast(mensagemDoErro(erro)); },
+    });
+  }
+  function fecharTroca() {
+    setTrocando(false);
+    setEstadoDaTroca(null);
+    setTrocaPendente(null);
   }
   function selecionarArea(areaId: number | null) {
     setNomeEmEdicao(null);
@@ -221,14 +286,14 @@ export default function PaginaInicial() {
     <div className="app">
       <header className="topbar">
         <div className="topbar-esq">
-          {estado ? (
+          {estado && !municipio ? (
             <button className="back-btn" onClick={() => escolherEstado(null)}>
               <Icone nome="voltar" tamanho={20} /> Início
             </button>
           ) : <span className="marca" aria-hidden="true"><Icone nome="broto" tamanho={22} /></span>}
         </div>
         <div className="title">
-          <h1>Field Shift</h1>
+          <h1>SAERPA</h1>
           <span className="tagline">O que plantar depois, para cuidar da terra</span>
         </div>
         <div className="topbar-dir">
@@ -241,7 +306,21 @@ export default function PaginaInicial() {
         <section className="map-wrap" id="secao-local">
           <div className="map-head" data-tour="local">
             <StepTitle numero={1} title="Onde fica sua plantação?" />
-            <LocationPicker estado={estado} municipio={municipio} onEstado={escolherEstado} onMunicipio={escolherMunicipio} />
+            {municipio && propriedadeAtual && !trocando ? (
+              <CartaoDaPropriedade
+                municipio={municipio}
+                uf={propriedadeAtual.uf}
+                quantidadeDeAreas={areasConsulta.data ? areasConsulta.data.length : null}
+                onTrocar={() => { setTrocando(true); setEstadoDaTroca(estado); }}
+              />
+            ) : trocando ? (
+              <>
+                <LocationPicker estado={estadoDaTroca} municipio={null} onEstado={setEstadoDaTroca} onMunicipio={(escolhido) => escolhido && pedirTroca(escolhido)} />
+                <button className="link-acao trocar-cancelar" onClick={fecharTroca}>Cancelar a troca</button>
+              </>
+            ) : (
+              <LocationPicker estado={estado} municipio={municipio} onEstado={escolherEstado} onMunicipio={escolherMunicipio} />
+            )}
           </div>
           <div className="map-area" data-tour="mapa">
             <MapView
@@ -382,6 +461,15 @@ export default function PaginaInicial() {
         </button>
       </nav>
 
+      {propriedadeAtual && (
+        <AvisoDeTroca
+          atual={propriedadeAtual}
+          nova={trocaPendente}
+          enviando={trocarDePropriedadeMutacao.isPending}
+          onCancelar={fecharTroca}
+          onConfirmar={() => trocaPendente && confirmarTroca(trocaPendente)}
+        />
+      )}
       <Ajuda open={ajuda} onClose={() => setAjuda(false)} onTour={() => setTour(true)} />
       {tour && <Tour passos={PASSOS_TOUR} onFim={() => setTour(false)} />}
 

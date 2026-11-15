@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { loadMunicipios } from '../data/locations';
-import { apagarArea, criarArea, listarAreas, renomearArea, salvarHistorico } from '../services/areas';
+import { apagarArea, criarArea, listarAreas, renomearArea, salvarHistorico, trocarDePropriedade } from '../services/areas';
 import { buscarCatalogo } from '../services/catalogo';
 import { celulaDaNasa } from '../lib/nasa';
 import { buscarClima } from '../services/clima';
@@ -107,5 +107,15 @@ export function useRenomearArea(municipio: Municipio | null) {
       if (contexto?.anteriores) clienteDeConsultas.setQueryData(chave, contexto.anteriores);
     },
     onSettled: () => clienteDeConsultas.invalidateQueries({ queryKey: chave }),
+  });
+}
+
+
+/** Troca a única propriedade: exclui a antiga no servidor e passa a usar a nova cidade */
+export function useTrocarDePropriedade() {
+  const clienteDeConsultas = useQueryClient();
+  return useMutation({
+    mutationFn: trocarDePropriedade,
+    onSuccess: () => clienteDeConsultas.removeQueries({ queryKey: ['areas'] }),
   });
 }

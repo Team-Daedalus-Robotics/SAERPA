@@ -2,7 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.exceptions import NotFoundError
-from app.repositories import property_repository
+from app.repositories import planting_repository, property_repository
 from saerpa_shared.models import Property
 from saerpa_shared.schemas import PropertyRequest
 
@@ -25,3 +25,15 @@ def get_property_or_raise(session: Session, property_id: int) -> Property:
     if property_ is None:
         raise NotFoundError("Propriedade não encontrada.")
     return property_
+
+
+def delete_property(session: Session, property_id: int) -> None:
+    property_ = get_property_or_raise(session, property_id)
+
+    try:
+        planting_repository.soft_delete_by_property(session, property_id)
+        property_repository.soft_delete(session, property_)
+        session.commit()
+    except SQLAlchemyError:
+        session.rollback()
+        raise

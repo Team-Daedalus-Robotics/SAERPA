@@ -50,7 +50,7 @@ src/
 ├── nasa_event_worker/   # worker: busca a NASA POWER das células pedidas (`climate_cell`) e grava em `event`
 ├── station_data_gateway/# worker: gateway de estações (placeholder)
 ├── suggestion_worker/   # worker: sugestões (placeholder)
-└── web/                 # React/Vite + TanStack Query/Router (Field Shift); proxy /api → services__api__http__0
+└── web/                 # React/Vite + TanStack Query/Router (SAERPA); proxy /api → services__api__http__0
 ```
 
 ## Grafo de dependências (AppHost)
@@ -82,11 +82,14 @@ src/
   row_spacing_centimeters, plant_spacing_centimeters, planting_type, harvest_days_min/max,
   production_per_square_meter, source); `crop_planting_window` (crop_id, region, month — PK composta)
   guarda as épocas de plantio por região. Culturas sem `slug` (cadastradas à mão) não aparecem na API.
-- Endpoints do Field Shift: `GET /api/crops`; `POST /api/properties`, `GET /api/properties/{id}`;
+- Endpoints do app SAERPA: `GET /api/crops`; `POST /api/properties`, `GET /api/properties/{id}`,
+  `DELETE /api/properties/{id}` (exclusão lógica da propriedade, das áreas e do histórico dela);
   `GET|POST /api/properties/{id}/fields`; `PATCH /api/fields/{id}` (renomear; o nome é opcional na interface e
   "Área N" é o padrão); `DELETE /api/fields/{id}`; `PUT /api/fields/{id}/history`
   (substitui o histórico: últimas culturas plantadas, gravadas em `planting`). Sem login: o navegador
-  guarda o id da propriedade por cidade. `property.lat/lng` começa na sede do município e, a partir da
+  guarda **uma única propriedade** (`saerpa:propriedade-atual` no localStorage: última cidade escolhida + id no
+  servidor); o app sempre abre nela. Trocar de cidade exclui de verdade a propriedade antiga (`DELETE`) depois
+  de um aviso; sem áreas salvas a troca é direta. `property.lat/lng` começa na sede do município e, a partir da
   primeira área, passa a ser o **centro das áreas** (PostGIS `ST_Centroid`, ponderado pelo tamanho),
   recalculado ao criar/apagar área; sem áreas restantes, mantém o último ponto.
 - **Quem grava em `event`**: SOMENTE o `station_data_gateway` e os workers. **A API nunca grava em `event`**

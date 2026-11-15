@@ -1,5 +1,5 @@
 from geoalchemy2 import Geometry
-from sqlalchemy import cast, func, select
+from sqlalchemy import cast, func, select, update
 from sqlalchemy.orm import Session
 
 from saerpa_shared.models import Field, Property
@@ -31,3 +31,8 @@ def refresh_location_from_fields(session: Session, property_id: int) -> None:
     property_ = session.get(Property, property_id)
     property_.lat = latitude
     property_.lng = longitude
+
+
+def soft_delete(session: Session, property_: Property) -> None:
+    property_.deleted = True
+    session.execute(update(Field).where(Field.property_id == property_.id, Field.deleted.is_(False)).values(deleted=True))

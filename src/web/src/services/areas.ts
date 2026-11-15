@@ -1,5 +1,5 @@
 import { centroid } from '../lib/geo';
-import { gravarArmazenado, lerArmazenado, removerArmazenado } from '../lib/armazenamento';
+import { gravarPropriedadeAtual, lerPropriedadeAtual, propriedadeIdDaCidade, type PropriedadeAtual } from '../lib/propriedadeAtual';
 import type { Area, Historico, LatLng, Municipio } from '../types';
 import { ErroDaApi, requisitar } from './clienteApi';
 
@@ -14,14 +14,6 @@ interface AreaDaApi {
 
 interface PropriedadeDaApi {
   id: number;
-}
-
-const chaveDaPropriedade = (codigoIbge: number) => `saerpa:propriedade:${codigoIbge}`;
-
-function lerPropriedadeSalva(codigoIbge: number): number | null {
-  const texto = lerArmazenado(chaveDaPropriedade(codigoIbge));
-  const identificador = texto === null ? NaN : Number(texto);
-  return Number.isInteger(identificador) ? identificador : null;
 }
 
 function converterArea(area: AreaDaApi): Area {
@@ -44,19 +36,39 @@ function ehNaoEncontrado(erro: unknown): boolean {
   return erro instanceof ErroDaApi && erro.status === 404;
 }
 
-/** Cada navegador guarda o id da sua propriedade por cidade; a propriedade só é criada ao marcar a primeira área. */
+/** Cada navegador tem uma só propriedade (a última cidade escolhida); ela só é criada no servidor ao marcar a primeira área. */
 async function criarPropriedade(municipio: Municipio): Promise<number> {
   const propriedade = await requisitar<PropriedadeDaApi>('POST', '/api/properties', {
     name: municipio.nome,
     lat: municipio.lat,
     lng: municipio.lng,
   });
-  gravarArmazenado(chaveDaPropriedade(municipio.codigoIbge), String(propriedade.id));
+  guardarIdDaPropriedade(municipio.codigoIbge, propriedade.id);
   return propriedade.id;
 }
 
+function guardarIdDaPropriedade(codigoIbge: number, propriedadeId: number | null): void {
+  const atual = lerPropriedadeAtual();
+  if (atual !== null && atual.municipio.codigoIbge === codigoIbge) gravarPropriedadeAtual({ ...atual, propriedadeId });
+}
+
+/** Exclui de verdade (no servidor) a propriedade antiga, com áreas e histórico, e passa a usar a nova cidade. */
+export async function trocarDePropriedade(nova: { uf: string; municipio: Municipio }): Promise<PropriedadeAtual> {
+  const antiga = lerPropriedadeAtual();
+  if (antiga?.propriedadeId != null) {
+    try {
+      await requisitar<void>('DELETE', `/api/properties/${antiga.propriedadeId}`);
+    } catch (erro) {
+      if (!ehNaoEncontrado(erro)) throw erro;
+    }
+  }
+  const atual: PropriedadeAtual = { uf: nova.uf, municipio: nova.municipio, propriedadeId: null };
+  gravarPropriedadeAtual(atual);
+  return atual;
+}
+
 export async function listarAreas(municipio: Municipio): Promise<Area[]> {
-  const propriedadeId = lerPropriedadeSalva(municipio.codigoIbge);
+  const propriedadeId = propriedadeIdDaCidade(municipio.codigoIbge);
   if (propriedadeId === null) return [];
 
   try {
@@ -64,14 +76,14 @@ export async function listarAreas(municipio: Municipio): Promise<Area[]> {
     return areas.map(converterArea);
   } catch (erro) {
     if (!ehNaoEncontrado(erro)) throw erro;
-    removerArmazenado(chaveDaPropriedade(municipio.codigoIbge));
+    guardarIdDaPropriedade(municipio.codigoIbge, null);
     return [];
   }
 }
 
 export async function criarArea(municipio: Municipio, nome: string, coordenadas: LatLng[]): Promise<Area> {
   const corpo = { name: nome, coordinates: coordenadas.map(([lat, lng]) => ({ lat, lng })) };
-  const propriedadeSalva = lerPropriedadeSalva(municipio.codigoIbge);
+  const propriedadeSalva = propriedadeIdDaCidade(municipio.codigoIbge);
 
   if (propriedadeSalva !== null) {
     try {

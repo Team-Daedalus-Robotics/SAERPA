@@ -1,4 +1,4 @@
-# Field Shift — front end (NASA Space Apps 2026)
+# SAERPA — front end (NASA Space Apps 2026)
 
 App para o pequeno produtor decidir **o que plantar depois** no mesmo lugar, cuidando da terra.
 Feito para ser simples: 3 passos numerados, botões grandes com texto, sem login, sem termos técnicos.

@@ -3,7 +3,7 @@ from datetime import date
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
-from saerpa_shared.models import Planting
+from saerpa_shared.models import Field, Planting
 
 
 def list_by_fields(session: Session, field_ids: list[int]) -> list[Planting]:
@@ -26,3 +26,8 @@ def create(session: Session, field_id: int, crop_id: int, planting_date: date) -
     session.add(planting)
     session.flush()
     return planting
+
+
+def soft_delete_by_property(session: Session, property_id: int) -> None:
+    field_ids = select(Field.id).where(Field.property_id == property_id)
+    session.execute(update(Planting).where(Planting.field_id.in_(field_ids), Planting.deleted.is_(False)).values(deleted=True))

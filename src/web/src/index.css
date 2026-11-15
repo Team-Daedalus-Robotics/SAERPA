@@ -1,5 +1,5 @@
 /* =========================================================================
- * Field Shift — estilos
+ * SAERPA — estilos
  * Visual sóbrio de aplicativo de campo: fundo cinza-claro, cartões brancos,
  * ícones de linha e um único verde de destaque. Continua pensado para quem
  * não é acostumado com tecnologia:
@@ -393,3 +393,17 @@ input[type='search']::-webkit-search-cancel-button { -webkit-appearance: none; a
 .renomear input { flex: 1 1 200px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line-strong); border-radius: 10px; background: #fff; font-size: 16px; }
 .renomear input:focus { border-color: var(--green); outline: 3px solid rgba(27, 127, 69, .18); outline-offset: 0; }
 .renomear .btn, .renomear .btn-outline { min-height: 44px; }
+
+/* ---------- Propriedade atual e troca ---------- */
+.propriedade { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 16px; }
+.propriedade-icone { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--green-soft); color: var(--green); }
+.propriedade-info { flex: 1; min-width: 180px; }
+.propriedade-info small { display: block; font-size: 12px; font-weight: 500; color: var(--muted); }
+.propriedade-info b { font: 600 17px var(--font); }
+.propriedade-info span { display: block; font-size: 13px; color: var(--muted); }
+.trocar-cancelar { margin: 0 16px 12px; }
+.aviso-perigo { display: flex; gap: 10px; margin: 14px 0 4px; padding: 12px 14px; border: 1px solid #fecdca; border-radius: 12px; background: var(--danger-soft); color: #912018; font-size: 15px; }
+.aviso-perigo svg { flex: none; margin-top: 2px; }
+.dialogo-acoes { display: flex; gap: 10px; margin-top: 18px; }
+.dialogo-acoes > * { flex: 1; }
+.btn.perigo { background: var(--danger); }
