@@ -413,3 +413,7 @@ input[type='search']::-webkit-search-cancel-button { -webkit-appearance: none; a
 .rotulo-emoji { font-size: 22px; line-height: 1.1; }
 .tab:has(.tab-emoji) { display: inline-flex; flex-direction: column; align-items: center; min-height: 54px; padding-top: 6px; padding-bottom: 6px; line-height: 1.2; }
 .tab-emoji { font-size: 22px; line-height: 1; }
+
+/* ---------- Sem internet ---------- */
+.sem-rede { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-bottom: 1px solid #fedf89; background: var(--amber-soft); color: var(--amber); font-size: 14px; font-weight: 500; }
+.sem-rede svg { flex: none; }

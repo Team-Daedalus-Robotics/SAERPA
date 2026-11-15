@@ -91,7 +91,12 @@ src/
   servidor); o app sempre abre nela. Trocar de cidade exclui de verdade a propriedade antiga (`DELETE`) depois
   de um aviso; sem áreas salvas a troca é direta.
   O mapa e as abas de área mostram, acima do nome, o `emoji` da última cultura informada para a área
-  (única parte da interface que usa emoji). `property.lat/lng` começa na sede do município e, a partir da
+  (única parte da interface que usa emoji).
+  **Mapa offline**: sem clicar em nada, o app salva em segundo plano (Cache API `saerpa-mapa-salvo`, no máximo
+  100 MB) o satélite e as ruas ao redor da propriedade (raio de 2 a 20 km, zoom 8–16, escolhido para caber no
+  orçamento; `lib/mapaOffline.ts`) e o service worker (`public/sw.js`, só em produção) serve essas imagens e a
+  página sem rede. Sem internet aparece a faixa "Sem internet…". Trocar de propriedade apaga o mapa salvo.
+  Em testes, `VITE_URL_DO_SATELITE`/`VITE_URL_DAS_RUAS` trocam o servidor de imagens do mapa. `property.lat/lng` começa na sede do município e, a partir da
   primeira área, passa a ser o **centro das áreas** (PostGIS `ST_Centroid`, ponderado pelo tamanho),
   recalculado ao criar/apagar área; sem áreas restantes, mantém o último ponto.
 - **Quem grava em `event`**: SOMENTE o `station_data_gateway` e os workers. **A API nunca grava em `event`**

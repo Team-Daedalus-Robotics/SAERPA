@@ -19,6 +19,7 @@ const DESENHOS = {
   ajuda: <><circle cx="12" cy="12" r="9" /><path d="M9.6 9.6a2.5 2.5 0 114.2 1.8c-.9.7-1.8 1.2-1.8 2.6M12 17.5h.01" /></>,
   calendario: <path d="M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zM4 10h16M8 3v4M16 3v4" />,
   relogio: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>,
+  'sem-rede': <path d="M2 8.8a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 20h.01M3 3l18 18" />,
   alerta: <path d="M12 3.5l9.5 17h-19l9.5-17zM12 10v4.5M12 17.5h.01" />,
   info: <><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></>,
   sucesso: <><circle cx="12" cy="12" r="9" /><path d="M8 12.5l3 3 5-6" /></>,

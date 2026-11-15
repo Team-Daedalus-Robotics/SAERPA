@@ -4,27 +4,15 @@ import {
   CircleMarker, MapContainer, Polygon, Rectangle, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents,
 } from 'react-leaflet';
 import { BRAZIL_BOUNDS } from '../lib/geo';
+import { CAMADAS_DO_MAPA, ZOOM_MAXIMO_SALVO, type CamadaBase } from '../lib/camadasDoMapa';
 import type { Area, CelulaDaNasa, LatLng, Municipio } from '../types';
 
-export type BaseLayer = 'satelite' | 'ruas';
+export type BaseLayer = CamadaBase;
 
 /** Para onde o mapa deve voar quando o usuário escolhe estado/cidade */
 export type MapTarget =
   | { kind: 'brasil' }
   | { kind: 'point'; center: LatLng; zoom: number };
-
-const TILES: Record<BaseLayer, { url: string; attribution: string; maxZoom: number }> = {
-  satelite: {
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Imagery © Esri',
-    maxZoom: 18,
-  },
-  ruas: {
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '© OpenStreetMap',
-    maxZoom: 19,
-  },
-};
 
 function FlyTo({ target }: { target: MapTarget }) {
   const map = useMap();
@@ -71,13 +59,21 @@ interface Propriedades {
   onSelectArea: (id: number) => void;
   onMapClick: (ponto: LatLng) => void;
   onZoom: (nivelDeZoom: number) => void;
+  /** sem internet só existem imagens até o zoom do mapa salvo; as mais fundas são esticadas a partir delas */
+  semInternet?: boolean;
 }
 
 export default function MapView(propriedades: Propriedades) {
-  const tile = TILES[propriedades.base];
+  const tile = CAMADAS_DO_MAPA[propriedades.base];
   return (
     <MapContainer bounds={BRAZIL_BOUNDS} zoomControl={false} className="map" minZoom={3}>
-      <TileLayer key={propriedades.base} url={tile.url} attribution={tile.attribution} maxZoom={tile.maxZoom} />
+      <TileLayer
+        key={`${propriedades.base}-${propriedades.semInternet ? 'sem-internet' : 'com-internet'}`}
+        url={tile.url}
+        attribution={tile.attribution}
+        maxZoom={tile.maxZoom}
+        maxNativeZoom={propriedades.semInternet ? Math.min(ZOOM_MAXIMO_SALVO, tile.maxZoom) : undefined}
+      />
       <ZoomControl position="bottomright" />
       <FlyTo target={propriedades.target} />
       <ZoomWatcher onZoom={propriedades.onZoom} />

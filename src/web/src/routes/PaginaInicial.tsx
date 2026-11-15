@@ -12,7 +12,9 @@ import { EmptyState, StepTitle } from '../components/ui';
 import { ESTADOS } from '../data/locations';
 import { useApagarArea, useAreas, useCatalogo, useClima, useCriarArea, useMunicipios, useRenomearArea, useSalvarHistorico, useTrocarDePropriedade } from '../hooks/consultas';
 import { gravarArmazenado, lerArmazenado } from '../lib/armazenamento';
-import { formatarNumero } from '../lib/geo';
+import { centroid, formatarNumero } from '../lib/geo';
+import { lerMapaSalvo, removerMapaSalvo } from '../lib/mapaOffline';
+import { useConexao, useSalvarMapaAutomaticamente } from '../hooks/mapaOffline';
 import { esquecerPropriedadeAntigaDaCidade, gravarPropriedadeAtual, lerPropriedadeAtual, propriedadeIdDaCidade, type PropriedadeAtual } from '../lib/propriedadeAtual';
 import { mensagemDoErro } from '../services/clienteApi';
 import type { Entrada } from '../services/rotacao';
@@ -186,6 +188,7 @@ export default function PaginaInicial() {
     trocarDePropriedadeMutacao.mutate(nova, {
       onSuccess: (atual) => {
         setPropriedadeAtual(atual);
+        void removerMapaSalvo();
         if (antiga) {
           const restantes = { ...historicosDasCidades };
           delete restantes[antiga.municipio.codigoIbge];
@@ -269,6 +272,12 @@ export default function PaginaInicial() {
     });
   }
 
+  const conectado = useConexao();
+  const centroDaPropriedade: LatLng | null = areas.length > 0
+    ? centroid(areas.map((cadaArea) => cadaArea.center))
+    : municipio ? [municipio.lat, municipio.lng] : null;
+  useSalvarMapaAutomaticamente(centroDaPropriedade, conectado);
+
   const entrada: Entrada | null = useMemo(
     () => (regiao && municipio && catalogo ? { catalogo, historico, regiao, mes, colherRapido } : null),
     [catalogo, regiao, municipio, historico, mes, colherRapido],
@@ -310,6 +319,16 @@ export default function PaginaInicial() {
           <button className="help-btn" data-tour="ajuda" onClick={() => setAjuda(true)}>Ajuda</button>
         </div>
       </header>
+      {!conectado && (
+        <div className="sem-rede" role="status">
+          <Icone nome="sem-rede" tamanho={18} />
+          <span>
+            {lerMapaSalvo()
+              ? 'Sem internet. Mostrando o mapa salvo; o clima da NASA pode estar desatualizado.'
+              : 'Sem internet. O mapa desta região ainda não foi salvo e pode aparecer em branco; o clima da NASA pode estar desatualizado.'}
+          </span>
+        </div>
+      )}
 
       <main className="layout">
         {/* ===== Passo 1: onde (mapa) ===== */}
@@ -335,7 +354,7 @@ export default function PaginaInicial() {
           <div className="map-area" data-tour="mapa">
             <MapView
               base={base} celula={mostrarCelulaDaNasa && clima ? clima.celula : null} corDaCelula={corDaCelula} target={alvoDoMapa} municipio={municipio}
-              areas={areas} emojiDasAreas={emojiDasAreas} selectedId={area?.id ?? null} drawing={drawing}
+              areas={areas} emojiDasAreas={emojiDasAreas} semInternet={!conectado} selectedId={area?.id ?? null} drawing={drawing}
               onSelectArea={selecionarArea}
               onMapClick={(ponto) => drawing && setDrawing([...drawing, ponto])}
               onZoom={setZoom}

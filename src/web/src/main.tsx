@@ -7,7 +7,8 @@ import './index.css';
 import { roteador } from './router';
 
 const clienteDeConsultas = new QueryClient({
-  defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
+  // a API pode estar na própria máquina: não pausa as consultas só porque o navegador diz que está sem internet
+  defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false, networkMode: 'always' }, mutations: { networkMode: 'always' } },
 });
 
 createRoot(document.getElementById('root')!).render(
@@ -17,3 +18,9 @@ createRoot(document.getElementById('root')!).render(
     </QueryClientProvider>
   </StrictMode>,
 );
+
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    void navigator.serviceWorker.register('/sw.js').catch(() => undefined);
+  });
+}
