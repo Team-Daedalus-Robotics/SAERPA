@@ -1,0 +1,287 @@
+{
+  "abobora": {
+    "botanical_family": "Cucurbitáceas",
+    "crop_group": "fruto",
+    "emoji": "🎃"
+  },
+  "abobrinha": {
+    "botanical_family": "Cucurbitáceas",
+    "crop_group": "fruto",
+    "emoji": "🥒"
+  },
+  "chuchu": {
+    "botanical_family": "Cucurbitáceas",
+    "crop_group": "fruto",
+    "emoji": "🥒"
+  },
+  "maxixe": {
+    "botanical_family": "Cucurbitáceas",
+    "crop_group": "fruto",
+    "emoji": "🥒"
+  },
+  "melancia": {
+    "botanical_family": "Cucurbitáceas",
+    "crop_group": "fruto",
+    "emoji": "🍉"
+  },
+  "melao": {
+    "botanical_family": "Cucurbitáceas",
+    "crop_group": "fruto",
+    "emoji": "🍈"
+  },
+  "moranga": {
+    "botanical_family": "Cucurbitáceas",
+    "crop_group": "fruto",
+    "emoji": "🎃"
+  },
+  "pepino": {
+    "botanical_family": "Cucurbitáceas",
+    "crop_group": "fruto",
+    "emoji": "🥒"
+  },
+  "batata": {
+    "botanical_family": "Solanáceas",
+    "crop_group": "raiz",
+    "emoji": "🥔"
+  },
+  "berinjela": {
+    "botanical_family": "Solanáceas",
+    "crop_group": "fruto",
+    "emoji": "🍆"
+  },
+  "jilo": {
+    "botanical_family": "Solanáceas",
+    "crop_group": "fruto",
+    "emoji": "🟢"
+  },
+  "pimenta": {
+    "botanical_family": "Solanáceas",
+    "crop_group": "fruto",
+    "emoji": "🌶️"
+  },
+  "pimentao": {
+    "botanical_family": "Solanáceas",
+    "crop_group": "fruto",
+    "emoji": "🫑"
+  },
+  "tomate-mesa": {
+    "botanical_family": "Solanáceas",
+    "crop_group": "fruto",
+    "emoji": "🍅"
+  },
+  "tomate-industria": {
+    "botanical_family": "Solanáceas",
+    "crop_group": "fruto",
+    "emoji": "🍅"
+  },
+  "agriao": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🌿"
+  },
+  "brocolis-de-inverno": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🥦"
+  },
+  "brocolis-de-verao": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🥦"
+  },
+  "couve": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "couve-chinesa": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "couve-flor-de-inverno": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🥦"
+  },
+  "couve-flor-de-verao": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🥦"
+  },
+  "mostarda": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "nabo": {
+    "botanical_family": "Brássicas",
+    "crop_group": "raiz",
+    "emoji": "🥕"
+  },
+  "rabanete": {
+    "botanical_family": "Brássicas",
+    "crop_group": "raiz",
+    "emoji": "🔴"
+  },
+  "repolho-de-inverno": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "repolho-de-verao": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "rucula": {
+    "botanical_family": "Brássicas",
+    "crop_group": "folha",
+    "emoji": "🌿"
+  },
+  "alcachofra": {
+    "botanical_family": "Asteráceas",
+    "crop_group": "fruto",
+    "emoji": "🌼"
+  },
+  "alface-de-inverno": {
+    "botanical_family": "Asteráceas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "alface-de-verao": {
+    "botanical_family": "Asteráceas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "almeirao": {
+    "botanical_family": "Asteráceas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "chicoria": {
+    "botanical_family": "Asteráceas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "acelga": {
+    "botanical_family": "Amarantáceas",
+    "crop_group": "folha",
+    "emoji": "🥬"
+  },
+  "beterraba": {
+    "botanical_family": "Amarantáceas",
+    "crop_group": "raiz",
+    "emoji": "🟣"
+  },
+  "espinafre": {
+    "botanical_family": "Amarantáceas",
+    "crop_group": "folha",
+    "emoji": "🍃"
+  },
+  "alho": {
+    "botanical_family": "Aliáceas",
+    "crop_group": "raiz",
+    "emoji": "🧄"
+  },
+  "alho-porro": {
+    "botanical_family": "Aliáceas",
+    "crop_group": "folha",
+    "emoji": "🧅"
+  },
+  "cebola": {
+    "botanical_family": "Aliáceas",
+    "crop_group": "raiz",
+    "emoji": "🧅"
+  },
+  "cebolinha": {
+    "botanical_family": "Aliáceas",
+    "crop_group": "folha",
+    "emoji": "🌱"
+  },
+  "cenoura-de-inverno": {
+    "botanical_family": "Apiáceas",
+    "crop_group": "raiz",
+    "emoji": "🥕"
+  },
+  "cenoura-de-verao": {
+    "botanical_family": "Apiáceas",
+    "crop_group": "raiz",
+    "emoji": "🥕"
+  },
+  "coentro": {
+    "botanical_family": "Apiáceas",
+    "crop_group": "folha",
+    "emoji": "🌿"
+  },
+  "mandioquinha-salsa": {
+    "botanical_family": "Apiáceas",
+    "crop_group": "raiz",
+    "emoji": "🥕"
+  },
+  "salsa": {
+    "botanical_family": "Apiáceas",
+    "crop_group": "folha",
+    "emoji": "🌿"
+  },
+  "ervilha-grao": {
+    "botanical_family": "Leguminosas",
+    "crop_group": "leguminosa",
+    "emoji": "🫛"
+  },
+  "ervilha-torta": {
+    "botanical_family": "Leguminosas",
+    "crop_group": "leguminosa",
+    "emoji": "🫛"
+  },
+  "feijao-vagem": {
+    "botanical_family": "Leguminosas",
+    "crop_group": "leguminosa",
+    "emoji": "🫛"
+  },
+  "inhame": {
+    "botanical_family": "Aráceas",
+    "crop_group": "raiz",
+    "emoji": "🍠"
+  },
+  "taioba": {
+    "botanical_family": "Aráceas",
+    "crop_group": "folha",
+    "emoji": "🍃"
+  },
+  "taro": {
+    "botanical_family": "Aráceas",
+    "crop_group": "raiz",
+    "emoji": "🍠"
+  },
+  "batata-doce": {
+    "botanical_family": "Convolvuláceas",
+    "crop_group": "raiz",
+    "emoji": "🍠"
+  },
+  "bertalha": {
+    "botanical_family": "Baseláceas",
+    "crop_group": "folha",
+    "emoji": "🍃"
+  },
+  "gengibre": {
+    "botanical_family": "Zingiberáceas",
+    "crop_group": "raiz",
+    "emoji": "🫚"
+  },
+  "milho-verde": {
+    "botanical_family": "Gramíneas",
+    "crop_group": "fruto",
+    "emoji": "🌽"
+  },
+  "morango": {
+    "botanical_family": "Rosáceas",
+    "crop_group": "fruto",
+    "emoji": "🍓"
+  },
+  "quiabo": {
+    "botanical_family": "Malváceas",
+    "crop_group": "fruto",
+    "emoji": "🟩"
+  }
+}

@@ -1,0 +1,2827 @@
+[
+ {
+  "slug": "abobrinha",
+  "name": "Abobrinha",
+  "row_spacing_centimeters": 150,
+  "plant_spacing_centimeters": 100,
+  "planting_type": "Semeadura direta/cova",
+  "harvest_days_min": 45,
+  "harvest_days_max": 60,
+  "production_per_square_meter": "1,0 a 1,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "botanical_family": "Cucurbitáceas",
+  "crop_group": "fruto",
+  "emoji": "🥒"
+ },
+ {
+  "slug": "abobora",
+  "name": "Abóbora",
+  "row_spacing_centimeters": 250,
+  "plant_spacing_centimeters": 250,
+  "planting_type": "Semeadura direta/cova",
+  "harvest_days_min": 90,
+  "harvest_days_max": 120,
+  "production_per_square_meter": "1,0 a 1,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "botanical_family": "Cucurbitáceas",
+  "crop_group": "fruto",
+  "emoji": "🎃"
+ },
+ {
+  "slug": "acelga",
+  "name": "Acelga",
+  "row_spacing_centimeters": 40,
+  "plant_spacing_centimeters": 30,
+  "planting_type": "Muda/canteiro",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "1,5 a 2,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [],
+   "Norte": [
+    4,
+    5,
+    6
+   ]
+  },
+  "botanical_family": "Amarantáceas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "agriao",
+  "name": "Agrião",
+  "row_spacing_centimeters": 20,
+  "plant_spacing_centimeters": 10,
+  "planting_type": "Estacas (muda)/cova",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "4,0 a 5,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🌿"
+ },
+ {
+  "slug": "alcachofra",
+  "name": "Alcachofra",
+  "row_spacing_centimeters": 200,
+  "plant_spacing_centimeters": 100,
+  "planting_type": "Muda/ Canteiro",
+  "harvest_days_min": 180,
+  "harvest_days_max": 200,
+  "production_per_square_meter": null,
+  "source": "Região sul",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3
+   ]
+  },
+  "botanical_family": "Asteráceas",
+  "crop_group": "fruto",
+  "emoji": "🌼"
+ },
+ {
+  "slug": "alface-de-inverno",
+  "name": "Alface de inverno",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 25,
+  "planting_type": "Muda/canteiro",
+  "harvest_days_min": 60,
+  "harvest_days_max": 80,
+  "production_per_square_meter": "16 pés",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Norte": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "botanical_family": "Asteráceas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "alface-de-verao",
+  "name": "Alface de verão",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 25,
+  "planting_type": "Muda/canteiro",
+  "harvest_days_min": 50,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "16 pés",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Asteráceas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "alho",
+  "name": "Alho",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 10,
+  "planting_type": "Semeadura direta/canteiro",
+  "harvest_days_min": 150,
+  "harvest_days_max": 180,
+  "production_per_square_meter": "0,4 a 0,6 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    5,
+    6
+   ],
+   "Sudeste": [
+    3,
+    4
+   ],
+   "Nordeste": [
+    5
+   ],
+   "Centro-Oeste": [
+    3,
+    4
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Aliáceas",
+  "crop_group": "raiz",
+  "emoji": "🧄"
+ },
+ {
+  "slug": "alho-porro",
+  "name": "Alho-porro",
+  "row_spacing_centimeters": 50,
+  "plant_spacing_centimeters": 15,
+  "planting_type": "Muda/ Canteiro",
+  "harvest_days_min": 90,
+  "harvest_days_max": 120,
+  "production_per_square_meter": null,
+  "source": "Região sul",
+  "planting_windows": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "botanical_family": "Aliáceas",
+  "crop_group": "folha",
+  "emoji": "🧅"
+ },
+ {
+  "slug": "almeirao",
+  "name": "Almeirão",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 25,
+  "planting_type": "Muda/canteiro",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "16 pés",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "botanical_family": "Asteráceas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "batata",
+  "name": "Batata",
+  "row_spacing_centimeters": 90,
+  "plant_spacing_centimeters": 30,
+  "planting_type": "Semeadura direta/sulco",
+  "harvest_days_min": 90,
+  "harvest_days_max": 120,
+  "production_per_square_meter": "2,0 a 3,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    11,
+    12
+   ],
+   "Sudeste": [
+    4,
+    5
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    4,
+    5
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Solanáceas",
+  "crop_group": "raiz",
+  "emoji": "🥔"
+ },
+ {
+  "slug": "batata-doce",
+  "name": "Batata-doce",
+  "row_spacing_centimeters": 90,
+  "plant_spacing_centimeters": 30,
+  "planting_type": "Semeadura direta/leira",
+  "harvest_days_min": 120,
+  "harvest_days_max": 150,
+  "production_per_square_meter": "1,0 a 1,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    10,
+    11,
+    12
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Convolvuláceas",
+  "crop_group": "raiz",
+  "emoji": "🍠"
+ },
+ {
+  "slug": "berinjela",
+  "name": "Berinjela",
+  "row_spacing_centimeters": 120,
+  "plant_spacing_centimeters": 100,
+  "planting_type": "Semeadura direta/canteiro",
+  "harvest_days_min": 100,
+  "harvest_days_max": 120,
+  "production_per_square_meter": "7,0 a 8,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "botanical_family": "Solanáceas",
+  "crop_group": "fruto",
+  "emoji": "🍆"
+ },
+ {
+  "slug": "bertalha",
+  "name": "Bertalha",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 40,
+  "planting_type": "Muda/cova",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "2,0 a 2,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Baseláceas",
+  "crop_group": "folha",
+  "emoji": "🍃"
+ },
+ {
+  "slug": "beterraba",
+  "name": "Beterraba",
+  "row_spacing_centimeters": 20,
+  "plant_spacing_centimeters": 10,
+  "planting_type": "Semeadura direta/canteiro",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "3,0 a 4,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Amarantáceas",
+  "crop_group": "raiz",
+  "emoji": "🟣"
+ },
+ {
+  "slug": "brocolis-de-inverno",
+  "name": "Brócolis de inverno",
+  "row_spacing_centimeters": 90,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Muda/cova",
+  "harvest_days_min": 90,
+  "harvest_days_max": 100,
+  "production_per_square_meter": "1,0 a 3,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🥦"
+ },
+ {
+  "slug": "brocolis-de-verao",
+  "name": "Brócolis de verão",
+  "row_spacing_centimeters": 90,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Muda/cova",
+  "harvest_days_min": 80,
+  "harvest_days_max": 100,
+  "production_per_square_meter": "1,0 a 3,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Nordeste": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Centro-Oeste": [
+    10,
+    11,
+    12,
+    1
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🥦"
+ },
+ {
+  "slug": "cebola",
+  "name": "Cebola",
+  "row_spacing_centimeters": 40,
+  "plant_spacing_centimeters": 10,
+  "planting_type": "Semeadura direta-muda/canteiro",
+  "harvest_days_min": 120,
+  "harvest_days_max": 180,
+  "production_per_square_meter": "1,0 a 2,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    7,
+    8
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "Norte": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "botanical_family": "Aliáceas",
+  "crop_group": "raiz",
+  "emoji": "🧅"
+ },
+ {
+  "slug": "cebolinha",
+  "name": "Cebolinha",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 15,
+  "planting_type": "Muda/canteiro",
+  "harvest_days_min": 80,
+  "harvest_days_max": 100,
+  "production_per_square_meter": "0,5 a 0,6 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "botanical_family": "Aliáceas",
+  "crop_group": "folha",
+  "emoji": "🌱"
+ },
+ {
+  "slug": "cenoura-de-inverno",
+  "name": "Cenoura de inverno",
+  "row_spacing_centimeters": 20,
+  "plant_spacing_centimeters": 5,
+  "planting_type": "Semeadura direta/canteiro",
+  "harvest_days_min": 90,
+  "harvest_days_max": 110,
+  "production_per_square_meter": "2,0 a 3,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Apiáceas",
+  "crop_group": "raiz",
+  "emoji": "🥕"
+ },
+ {
+  "slug": "cenoura-de-verao",
+  "name": "Cenoura de verão",
+  "row_spacing_centimeters": 20,
+  "plant_spacing_centimeters": 5,
+  "planting_type": "Semeadura direta/canteiro",
+  "harvest_days_min": 85,
+  "harvest_days_max": 100,
+  "production_per_square_meter": "2,0 a 3,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Centro-Oeste": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Norte": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ]
+  },
+  "botanical_family": "Apiáceas",
+  "crop_group": "raiz",
+  "emoji": "🥕"
+ },
+ {
+  "slug": "chicoria",
+  "name": "Chicória",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 25,
+  "planting_type": "Muda/canteiro",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "16 pés",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6
+   ],
+   "Norte": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "botanical_family": "Asteráceas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "chuchu",
+  "name": "Chuchu",
+  "row_spacing_centimeters": 600,
+  "plant_spacing_centimeters": 500,
+  "planting_type": "Semeadura direta/covas",
+  "harvest_days_min": 100,
+  "harvest_days_max": 120,
+  "production_per_square_meter": "1,5 a 2,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10
+   ],
+   "Sudeste": [
+    9,
+    10
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    9,
+    10
+   ],
+   "Norte": [
+    4,
+    5,
+    6
+   ]
+  },
+  "botanical_family": "Cucurbitáceas",
+  "crop_group": "fruto",
+  "emoji": "🥒"
+ },
+ {
+  "slug": "coentro",
+  "name": "Coentro",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 10,
+  "planting_type": "Semeadura direta/canteiro",
+  "harvest_days_min": 50,
+  "harvest_days_max": 60,
+  "production_per_square_meter": "0,6 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "botanical_family": "Apiáceas",
+  "crop_group": "folha",
+  "emoji": "🌿"
+ },
+ {
+  "slug": "couve",
+  "name": "Couve",
+  "row_spacing_centimeters": 90,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Muda/cova",
+  "harvest_days_min": 80,
+  "harvest_days_max": 90,
+  "production_per_square_meter": "1,6 molhos",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "couve-chinesa",
+  "name": "Couve-chinesa",
+  "row_spacing_centimeters": 50,
+  "plant_spacing_centimeters": 40,
+  "planting_type": "Muda/Cova",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": null,
+  "source": "Região sul",
+  "planting_windows": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "couve-flor-de-inverno",
+  "name": "Couve-flor de inverno",
+  "row_spacing_centimeters": 90,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Muda/cova",
+  "harvest_days_min": 100,
+  "harvest_days_max": 110,
+  "production_per_square_meter": "1,0 a 1,2 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🥦"
+ },
+ {
+  "slug": "couve-flor-de-verao",
+  "name": "Couve-flor de verão",
+  "row_spacing_centimeters": 90,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Muda/cova",
+  "harvest_days_min": 90,
+  "harvest_days_max": 100,
+  "production_per_square_meter": "1,0 a 1,2 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    12,
+    1
+   ],
+   "Sudeste": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    10,
+    11,
+    12,
+    1
+   ],
+   "Norte": [
+    11,
+    12,
+    1,
+    2
+   ]
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🥦"
+ },
+ {
+  "slug": "ervilha-grao",
+  "name": "Ervilha grão",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 7,
+  "planting_type": "Semeadura direta/sulco",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "0,2 a 0,3 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    4,
+    5
+   ],
+   "Sudeste": [
+    4,
+    5
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    4,
+    5
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Leguminosas",
+  "crop_group": "leguminosa",
+  "emoji": "🫛"
+ },
+ {
+  "slug": "ervilha-torta",
+  "name": "Ervilha torta",
+  "row_spacing_centimeters": 80,
+  "plant_spacing_centimeters": 60,
+  "planting_type": "Semente/Cova",
+  "harvest_days_min": 70,
+  "harvest_days_max": 100,
+  "production_per_square_meter": null,
+  "source": "Região sul",
+  "planting_windows": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "botanical_family": "Leguminosas",
+  "crop_group": "leguminosa",
+  "emoji": "🫛"
+ },
+ {
+  "slug": "espinafre",
+  "name": "Espinafre",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 10,
+  "planting_type": "Semeadura direta/canteiro",
+  "harvest_days_min": 60,
+  "harvest_days_max": 80,
+  "production_per_square_meter": "4,0 a 5,0 molhos",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    3,
+    4,
+    5
+   ]
+  },
+  "botanical_family": "Amarantáceas",
+  "crop_group": "folha",
+  "emoji": "🍃"
+ },
+ {
+  "slug": "feijao-vagem",
+  "name": "Feijão-vagem",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Semeadura direta/cova",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "2,0 a 2,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "botanical_family": "Leguminosas",
+  "crop_group": "leguminosa",
+  "emoji": "🫛"
+ },
+ {
+  "slug": "gengibre",
+  "name": "Gengibre",
+  "row_spacing_centimeters": 120,
+  "plant_spacing_centimeters": 20,
+  "planting_type": "Rizomasemente/sulco",
+  "harvest_days_min": 240,
+  "harvest_days_max": 300,
+  "production_per_square_meter": "3,0 a 4,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Zingiberáceas",
+  "crop_group": "raiz",
+  "emoji": "🫚"
+ },
+ {
+  "slug": "inhame",
+  "name": "Inhame",
+  "row_spacing_centimeters": 90,
+  "plant_spacing_centimeters": 40,
+  "planting_type": "Muda (tubérculo)/cova alta",
+  "harvest_days_min": 150,
+  "harvest_days_max": 180,
+  "production_per_square_meter": "1,0 a 1,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "Nordeste": [
+    12,
+    1
+   ],
+   "Centro-Oeste": [
+    7,
+    8
+   ],
+   "Norte": [
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "botanical_family": "Aráceas",
+  "crop_group": "raiz",
+  "emoji": "🍠"
+ },
+ {
+  "slug": "jilo",
+  "name": "Jiló",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 70,
+  "planting_type": "Muda/cova",
+  "harvest_days_min": 90,
+  "harvest_days_max": 100,
+  "production_per_square_meter": "1,6 a 2,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "botanical_family": "Solanáceas",
+  "crop_group": "fruto",
+  "emoji": "🟢"
+ },
+ {
+  "slug": "mandioquinha-salsa",
+  "name": "Mandioquinha salsa",
+  "row_spacing_centimeters": 80,
+  "plant_spacing_centimeters": 30,
+  "planting_type": "Semente/Canteiro",
+  "harvest_days_min": 300,
+  "harvest_days_max": 360,
+  "production_per_square_meter": null,
+  "source": "Região sul",
+  "planting_windows": {
+   "Sul": [
+    4,
+    5
+   ]
+  },
+  "botanical_family": "Apiáceas",
+  "crop_group": "raiz",
+  "emoji": "🥕"
+ },
+ {
+  "slug": "maxixe",
+  "name": "Maxixe",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Semeadura direta/cova",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "2,5 a 2,8 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Cucurbitáceas",
+  "crop_group": "fruto",
+  "emoji": "🥒"
+ },
+ {
+  "slug": "melancia",
+  "name": "Melancia",
+  "row_spacing_centimeters": 200,
+  "plant_spacing_centimeters": 200,
+  "planting_type": "Direto/cova",
+  "harvest_days_min": 85,
+  "harvest_days_max": 90,
+  "production_per_square_meter": "3,0 a 5,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "botanical_family": "Cucurbitáceas",
+  "crop_group": "fruto",
+  "emoji": "🍉"
+ },
+ {
+  "slug": "melao",
+  "name": "Melão",
+  "row_spacing_centimeters": 200,
+  "plant_spacing_centimeters": 150,
+  "planting_type": "Semente/Cova",
+  "harvest_days_min": 80,
+  "harvest_days_max": 120,
+  "production_per_square_meter": null,
+  "source": "Região sul",
+  "planting_windows": {
+   "Sul": [
+    10,
+    11,
+    12,
+    1
+   ]
+  },
+  "botanical_family": "Cucurbitáceas",
+  "crop_group": "fruto",
+  "emoji": "🍈"
+ },
+ {
+  "slug": "milho-verde",
+  "name": "Milho-verde",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 20,
+  "planting_type": "Semeadura direta/canteiro",
+  "harvest_days_min": 80,
+  "harvest_days_max": 110,
+  "production_per_square_meter": "5 - 6 espigas",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Centro-Oeste": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Norte": [
+    3,
+    4,
+    5
+   ]
+  },
+  "botanical_family": "Gramíneas",
+  "crop_group": "fruto",
+  "emoji": "🌽"
+ },
+ {
+  "slug": "moranga",
+  "name": "Moranga",
+  "row_spacing_centimeters": 200,
+  "plant_spacing_centimeters": 200,
+  "planting_type": "Semeadura direta/cova",
+  "harvest_days_min": 120,
+  "harvest_days_max": 150,
+  "production_per_square_meter": "1,0 a 1,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Cucurbitáceas",
+  "crop_group": "fruto",
+  "emoji": "🎃"
+ },
+ {
+  "slug": "morango",
+  "name": "Morango",
+  "row_spacing_centimeters": 30,
+  "plant_spacing_centimeters": 20,
+  "planting_type": "Mudas/cova",
+  "harvest_days_min": 70,
+  "harvest_days_max": 80,
+  "production_per_square_meter": "3,0 a 4,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    3,
+    4
+   ],
+   "Sudeste": [
+    3,
+    4
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    2,
+    3
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Rosáceas",
+  "crop_group": "fruto",
+  "emoji": "🍓"
+ },
+ {
+  "slug": "mostarda",
+  "name": "Mostarda",
+  "row_spacing_centimeters": 40,
+  "plant_spacing_centimeters": 40,
+  "planting_type": "Mudas/sulco",
+  "harvest_days_min": 45,
+  "harvest_days_max": 50,
+  "production_per_square_meter": "5 a 7 pés",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "nabo",
+  "name": "Nabo",
+  "row_spacing_centimeters": 30,
+  "plant_spacing_centimeters": 1,
+  "planting_type": "Semente/Canteiro",
+  "harvest_days_min": 50,
+  "harvest_days_max": 60,
+  "production_per_square_meter": null,
+  "source": "Região sul",
+  "planting_windows": {
+   "Sul": [
+    4,
+    5
+   ]
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "raiz",
+  "emoji": "🥕"
+ },
+ {
+  "slug": "pepino",
+  "name": "Pepino",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Semeadura direta-mudas/cova",
+  "harvest_days_min": 45,
+  "harvest_days_max": 60,
+  "production_per_square_meter": "4,0 a 5,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "botanical_family": "Cucurbitáceas",
+  "crop_group": "fruto",
+  "emoji": "🥒"
+ },
+ {
+  "slug": "pimenta",
+  "name": "Pimenta",
+  "row_spacing_centimeters": 120,
+  "plant_spacing_centimeters": 60,
+  "planting_type": "Mudas/cova",
+  "harvest_days_min": 90,
+  "harvest_days_max": 120,
+  "production_per_square_meter": "0,5 a 1,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Solanáceas",
+  "crop_group": "fruto",
+  "emoji": "🌶️"
+ },
+ {
+  "slug": "pimentao",
+  "name": "Pimentão",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Mudas/cova",
+  "harvest_days_min": 100,
+  "harvest_days_max": 120,
+  "production_per_square_meter": "3,0 a 4,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "botanical_family": "Solanáceas",
+  "crop_group": "fruto",
+  "emoji": "🫑"
+ },
+ {
+  "slug": "quiabo",
+  "name": "Quiabo",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 40,
+  "planting_type": "Semeadura direta-mudas/cova",
+  "harvest_days_min": 70,
+  "harvest_days_max": 80,
+  "production_per_square_meter": "1,5 a 2,2 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Malváceas",
+  "crop_group": "fruto",
+  "emoji": "🟩"
+ },
+ {
+  "slug": "rabanete",
+  "name": "Rabanete",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 5,
+  "planting_type": "Semeadura direta/canteiro",
+  "harvest_days_min": 25,
+  "harvest_days_max": 30,
+  "production_per_square_meter": "1,5 a 3,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Norte": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "raiz",
+  "emoji": "🔴"
+ },
+ {
+  "slug": "repolho-de-inverno",
+  "name": "Repolho de inverno",
+  "row_spacing_centimeters": 80,
+  "plant_spacing_centimeters": 40,
+  "planting_type": "Mudas/cova",
+  "harvest_days_min": 90,
+  "harvest_days_max": 110,
+  "production_per_square_meter": "3,0 a 6,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "repolho-de-verao",
+  "name": "Repolho de verão",
+  "row_spacing_centimeters": 80,
+  "plant_spacing_centimeters": 40,
+  "planting_type": "Mudas/cova",
+  "harvest_days_min": 90,
+  "harvest_days_max": 110,
+  "production_per_square_meter": "3,0 a 6,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Norte": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🥬"
+ },
+ {
+  "slug": "rucula",
+  "name": "Rúcula",
+  "row_spacing_centimeters": 20,
+  "plant_spacing_centimeters": 15,
+  "planting_type": "Semeadura direta/linha",
+  "harvest_days_min": 40,
+  "harvest_days_max": 60,
+  "production_per_square_meter": "2,0 a 2,5 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Brássicas",
+  "crop_group": "folha",
+  "emoji": "🌿"
+ },
+ {
+  "slug": "salsa",
+  "name": "Salsa",
+  "row_spacing_centimeters": 25,
+  "plant_spacing_centimeters": 10,
+  "planting_type": "Semeadura direta-mudas/li nha",
+  "harvest_days_min": 60,
+  "harvest_days_max": 70,
+  "production_per_square_meter": "0,5 a 0,7 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": []
+  },
+  "botanical_family": "Apiáceas",
+  "crop_group": "folha",
+  "emoji": "🌿"
+ },
+ {
+  "slug": "taioba",
+  "name": "Taioba",
+  "row_spacing_centimeters": 80,
+  "plant_spacing_centimeters": 40,
+  "planting_type": "Mudas (rizoma)/cova",
+  "harvest_days_min": 70,
+  "harvest_days_max": 100,
+  "production_per_square_meter": "2,5 a 3,0 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Aráceas",
+  "crop_group": "folha",
+  "emoji": "🍃"
+ },
+ {
+  "slug": "taro",
+  "name": "Taro",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 30,
+  "planting_type": "Muda/Sulco",
+  "harvest_days_min": 150,
+  "harvest_days_max": 180,
+  "production_per_square_meter": null,
+  "source": "Região sul",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10
+   ]
+  },
+  "botanical_family": "Aráceas",
+  "crop_group": "raiz",
+  "emoji": "🍠"
+ },
+ {
+  "slug": "tomate-industria",
+  "name": "Tomate indústria",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Muda/Sulco",
+  "harvest_days_min": 100,
+  "harvest_days_max": 120,
+  "production_per_square_meter": null,
+  "source": "Região sul",
+  "planting_windows": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ]
+  },
+  "botanical_family": "Solanáceas",
+  "crop_group": "fruto",
+  "emoji": "🍅"
+ },
+ {
+  "slug": "tomate-mesa",
+  "name": "Tomate mesa",
+  "row_spacing_centimeters": 100,
+  "plant_spacing_centimeters": 50,
+  "planting_type": "Mudas/sulco",
+  "harvest_days_min": 100,
+  "harvest_days_max": 120,
+  "production_per_square_meter": "5,0 a 10 kg",
+  "source": "Brasil",
+  "planting_windows": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "botanical_family": "Solanáceas",
+  "crop_group": "fruto",
+  "emoji": "🍅"
+ }
+]
