@@ -30,21 +30,25 @@ src/
 │       ├── exceptions.py# ConflictError, NotFoundError (domínio)
 │       ├── repositories/# acesso a dados (station_repository, measure_repository)
 │       ├── services/    # regras de aplicação (station_service)
-│       └── controllers/ # rotas finas (status, stations) — mapeiam exceções→HTTP
+│       └── controllers/ # rotas finas (status, stations, crops, properties, fields) — mapeiam exceções→HTTP
 ├── shared/              # pacote saerpa-shared (instalável, layout src/)
 │   ├── pyproject.toml   # sqlalchemy, psycopg[binary], geoalchemy2, alembic
 │   ├── alembic.ini
-│   ├── migrations/      # Alembic (env.py lê DATABASE_URL; 0001_initial)
+│   ├── data/            # planilha Embrapa + crop_classification.json (fontes do catálogo)
+│   ├── scripts/         # import_embrapa.py → gera seed/crops.json
+│   ├── migrations/      # Alembic (env.py lê DATABASE_URL; 0001_initial, 0002_crop_catalog)
 │   └── src/saerpa_shared/
 │       ├── base.py      # Base(DeclarativeBase)
 │       ├── engine.py    # engine = create_engine(DATABASE_URL); SessionLocal
 │       ├── migrator.py  # run_migrations() (alembic upgrade head)
-│       ├── models/      # Station, Measure, Event, Property, Crop, Field, Planting, RotationRule
+│       ├── seeder.py    # seed_crops(): grava o catálogo da Embrapa (idempotente, por slug)
+│       ├── seed/        # crops.json (GERADO por scripts/import_embrapa.py)
+│       ├── models/      # Station, Measure, Event, Property, Crop, CropPlantingWindow, Field, Planting, RotationRule
 │       └── schemas/     # Pydantic Request/Response (station, measure) — fonte única
 ├── nasa_event_worker/   # worker: eventos NASA (placeholder, loop + print)
 ├── station_data_gateway/# worker: gateway de estações (placeholder)
 ├── suggestion_worker/   # worker: sugestões (placeholder)
-└── web/                 # React/Vite; proxy /api → services__api__http__0
+└── web/                 # React/Vite + TanStack Query/Router (Field Shift); proxy /api → services__api__http__0
 ```
 
 ## Grafo de dependências (AppHost)
@@ -61,8 +65,8 @@ src/
 
 - **Migrations com Alembic** (migração da antiga decisão "sem migrations"): estrutura em
   `src/shared/` (`alembic.ini` + `migrations/`), env lê `DATABASE_URL` do ambiente.
-- A **API aplica `alembic upgrade head` no startup** (lifespan) — Aspire garante o
-  Postgres pronto antes. Para aplicar manualmente: `uv run alembic upgrade head`
+- A **API aplica `alembic upgrade head` e depois `seed_crops()` no startup** (lifespan) — Aspire
+  garante o Postgres pronto antes. Para aplicar manualmente: `uv run alembic upgrade head`
   dentro de `src/shared` (com `DATABASE_URL` exportada).
 - Nova revisão: `uv run alembic revision --autogenerate -m "..."` dentro de `src/shared`
   (compara as models do `saerpa_shared` com o banco).
@@ -72,6 +76,14 @@ src/
   measure_type, value) e `property` (id, name, lat, lng, created_at, deleted).
 - Geo: PostGIS (`field.geometry` = GEOGRAPHY(Polygon, 4326)) — o Postgres do AppHost
   precisa trocar a imagem para `postgis/postgis:18-*` (extensão criada em `0001_initial`).
+- `crop` guarda o **catálogo da Embrapa** (slug UNIQUE, botanical_family, crop_group, emoji,
+  row_spacing_centimeters, plant_spacing_centimeters, planting_type, harvest_days_min/max,
+  production_per_square_meter, source); `crop_planting_window` (crop_id, region, month — PK composta)
+  guarda as épocas de plantio por região. Culturas sem `slug` (cadastradas à mão) não aparecem na API.
+- Endpoints do Field Shift: `GET /api/crops`; `POST /api/properties`, `GET /api/properties/{id}`;
+  `GET|POST /api/properties/{id}/fields`; `DELETE /api/fields/{id}`; `PUT /api/fields/{id}/history`
+  (substitui o histórico: últimas culturas plantadas, gravadas em `planting`). Sem login: o navegador
+  guarda o id da propriedade por cidade.
 - Demais tabelas: `crop` (catálogo), `planting` (field_id, crop_id, planting_date,
   harvest_date NULL = ainda plantado) e `rotation_rule` (PK composta
   previous_crop_id+suggested_crop_id, priority 1 = melhor opção, reason).
