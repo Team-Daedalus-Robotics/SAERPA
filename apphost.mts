@@ -67,6 +67,13 @@ const stationDataGateway = await builder
   .withReference(database)
   .waitFor(database)
   .withEnvironment('DATABASE_URL', await database.uriExpression());
+const layaBaseUrl =
+  process.env.LAYA_BASE_URL ??
+  process.env.BASE_URL ??
+  process.env.TYPESAFE_BASE_URL ??
+  'http://localhost:11435';
+const layaDecideUrl =
+  process.env.LAYA_DECIDE_URL ?? process.env.DECIDE_URL ?? `${layaBaseUrl.replace(/\/$/, '')}/api/decide`;
 const suggestionWorker = await builder
   .addPythonApp('suggestion-worker', './src/suggestion_worker', 'main.py')
   .withUv()
@@ -81,17 +88,15 @@ const suggestionWorker = await builder
     }),
   )
   .withEnvironment(
-    'BASE_URL',
+    'LAYA_BASE_URL',
     await builder.addParameter('laya-base-url', {
-      value: process.env.BASE_URL ?? process.env.TYPESAFE_BASE_URL ?? 'http://localhost:11435',
+      value: layaBaseUrl,
     }),
   )
   .withEnvironment(
-    'DECIDE_URL',
+    'LAYA_DECIDE_URL',
     await builder.addParameter('laya-decide-url', {
-      value:
-        process.env.DECIDE_URL ??
-        `${process.env.BASE_URL ?? process.env.TYPESAFE_BASE_URL ?? 'http://localhost:11435'}/api/decide`,
+      value: layaDecideUrl,
     }),
   )
   .withEnvironment(

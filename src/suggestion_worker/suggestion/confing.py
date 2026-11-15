@@ -13,9 +13,12 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 API_KEY = os.getenv("API_KEY", os.getenv("TYPESAFE_API_KEY", "local"))
 BASE_URL = os.getenv(
-    "BASE_URL",
-    os.getenv("TYPESAFE_BASE_URL", "http://localhost:11435"),
+    "LAYA_BASE_URL",
+    os.getenv("BASE_URL", os.getenv("TYPESAFE_BASE_URL", "http://localhost:11435")),
 ).rstrip("/")
 MODEL = os.getenv("MODEL", os.getenv("TYPESAFE_DEFAULT_MODEL", "laya:multilingual"))
-DECIDE_URL = os.getenv("DECIDE_URL", f"{BASE_URL}/api/decide")
+DECIDE_URL = os.getenv(
+    "LAYA_DECIDE_URL",
+    os.getenv("DECIDE_URL", f"{BASE_URL}/api/decide"),
+)
 QUERY_LIMIT = int(os.getenv("QUERY_LIMIT", "100"))

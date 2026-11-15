@@ -4,9 +4,14 @@ from collections.abc import Mapping, Sequence
 from typing import Any, Literal
 
 import requests
+from sqlalchemy import select
+from sqlalchemy.orm import joinedload
 from typesafe_sdk import TypeSafeClient
 
-from suggestion.confing import API_KEY, BASE_URL, DECIDE_URL, MODEL
+from saerpa_shared.engine import SessionLocal
+from saerpa_shared.models import Event
+from suggestion.confing import API_KEY, BASE_URL, DECIDE_URL, MODEL, QUERY_LIMIT
+from suggestion.recommendation_repository import save_recommendation
 
 DecisionType = Literal["choice", "score", "noul"]
 DecisionState = str | dict[str, Any] | list[Any]
@@ -44,23 +49,49 @@ def evaluate_choice(
 
 
 def evaluate_score(
-    state: DecisionState,
-    instructions: str,
-    criteria: ScoreCriteria,
+    question: str,
+    answers: ScoreCriteria,
     question_id: str = "answer",
     timeout: float = 60,
 ) -> dict[str, Any]:
-    """Score the supplied state against caller-provided ordered levels."""
-    if isinstance(criteria, (str, bytes)) or not isinstance(criteria, Sequence):
-        raise ValueError("Score criteria must be an ordered sequence of level descriptions.")
-    if not 2 <= len(criteria) <= 10:
-        raise ValueError("Score questions require between 2 and 10 levels.")
+    """Load recent events and score them against caller-provided ordered levels."""
+    if not question.strip():
+        raise ValueError("Informe a pergunta para avaliar os eventos.")
+    if isinstance(answers, (str, bytes)) or not isinstance(answers, Sequence):
+        raise ValueError("Answers must be an ordered sequence of level descriptions.")
+    if not 2 <= len(answers) <= 10 or any(not answer.strip() for answer in answers):
+        raise ValueError("Score questions require 2 to 10 non-empty answer levels.")
+
+    statement = (
+        select(Event)
+        .options(joinedload(Event.measure))
+        .order_by(Event.timestamp.desc())
+        .limit(QUERY_LIMIT)
+    )
+
+    with SessionLocal() as session:
+        events = session.scalars(statement).all()
+        state = [
+            {
+                "timestamp": event.timestamp.isoformat() if event.timestamp else None,
+                "station_id": event.station_id,
+                "measure_id": event.measure_id,
+                "measure_type": event.measure_type,
+                "sensor_name": event.measure.sensor_name,
+                "measurement_unit": event.measure.measurement_unit,
+                "value": event.value,
+            }
+            for event in events
+        ]
+
+    if not state:
+        raise ValueError("Não há eventos na tabela event para avaliar.")
 
     return _evaluate_decision(
         state=state,
         question_type="score",
-        instructions=instructions,
-        criteria=list(criteria),
+        instructions=question,
+        criteria=list(answers),
         question_id=question_id,
         timeout=timeout,
     )
@@ -121,4 +152,14 @@ def _evaluate_decision(
     )
     response.raise_for_status()
     payload: dict[str, Any] = response.json()
-    return payload["answers"][question_id]
+    answer = payload["answers"][question_id]
+    save_recommendation(
+        question_id=question_id,
+        question_type=question_type,
+        model_name=payload.get("model", MODEL),
+        instructions=instructions,
+        criteria=question_spec.get("criteria"),
+        state=state,
+        response=answer,
+    )
+    return answer
