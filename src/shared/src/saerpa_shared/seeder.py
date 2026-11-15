@@ -1,7 +1,7 @@
 import json
 from importlib import resources
 
-from sqlalchemy import delete, select
+from sqlalchemy import delete, select, text
 
 from saerpa_shared.engine import SessionLocal
 from saerpa_shared.models import Crop, CropPlantingWindow
@@ -31,6 +31,7 @@ def seed_crops() -> None:
     seed = _load_crop_seed()
 
     with SessionLocal() as session:
+        session.execute(text("select pg_advisory_xact_lock(hashtext('saerpa-seed-crops'))"))
         existing_by_slug = {crop.slug: crop for crop in session.scalars(select(Crop).where(Crop.slug.is_not(None)))}
 
         for entry in seed:

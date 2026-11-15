@@ -30,7 +30,7 @@ src/
 │       ├── exceptions.py# ConflictError, NotFoundError (domínio)
 │       ├── repositories/# acesso a dados (station_repository, measure_repository)
 │       ├── services/    # regras de aplicação (station_service)
-│       └── controllers/ # rotas finas (status, stations, crops, properties, fields) — mapeiam exceções→HTTP
+│       └── controllers/ # rotas finas (status, stations, crops, properties, fields, climate) — mapeiam exceções→HTTP
 ├── shared/              # pacote saerpa-shared (instalável, layout src/)
 │   ├── pyproject.toml   # sqlalchemy, psycopg[binary], geoalchemy2, alembic
 │   ├── alembic.ini
@@ -42,6 +42,8 @@ src/
 │       ├── engine.py    # engine = create_engine(DATABASE_URL); SessionLocal
 │       ├── migrator.py  # run_migrations() (alembic upgrade head)
 │       ├── seeder.py    # seed_crops(): grava o catálogo da Embrapa (idempotente, por slug)
+│       ├── nasa_power.py# cliente da NASA POWER (horário) + célula da grade MERRA-2 (0,5° x 0,625°)
+│       ├── climate.py   # refresh_climate_events(): grava dados reais da NASA em `event` (1 estação virtual por célula)
 │       ├── seed/        # crops.json (GERADO por scripts/import_embrapa.py)
 │       ├── models/      # Station, Measure, Event, Property, Crop, CropPlantingWindow, Field, Planting, RotationRule
 │       └── schemas/     # Pydantic Request/Response (station, measure) — fonte única
@@ -84,6 +86,14 @@ src/
   `GET|POST /api/properties/{id}/fields`; `DELETE /api/fields/{id}`; `PUT /api/fields/{id}/history`
   (substitui o histórico: últimas culturas plantadas, gravadas em `planting`). Sem login: o navegador
   guarda o id da propriedade por cidade.
+- **Clima real (NASA POWER)**: `GET /api/climate?lat=&lng=` calcula a célula da NASA do ponto, busca na NASA o
+  que falta (primeira vez: 30 dias, por hora), grava em `event` e responde com umidade do solo, temperaturas,
+  umidade do ar e chuva. Cada célula é uma estação virtual `nasa-power-lat<±lat>_lng<±lng>` (medidas
+  `soil_moisture` %, `soil_temperature`, `air_temperature`, `air_humidity`, `rainfall` mm/h; `sensor_name`
+  `NASA POWER <variável>`). NASA fora do ar: lugar já guardado responde do banco; lugar novo dá 502.
+- Sensores simulados (demonstração): `src/shared/scripts/simulate_sensor_events.py` grava na estação
+  `sim-navegantes-001` o que DHT11, DS18B20 e Capacitive Soil Moisture v2.0 enviariam, a partir de dados reais
+  baixados por `fetch_nasa_power.py` (cópia em `src/shared/data/nasa_power/`). A chuva entra da NASA.
 - Demais tabelas: `crop` (catálogo), `planting` (field_id, crop_id, planting_date,
   harvest_date NULL = ainda plantado) e `rotation_rule` (PK composta
   previous_crop_id+suggested_crop_id, priority 1 = melhor opção, reason).

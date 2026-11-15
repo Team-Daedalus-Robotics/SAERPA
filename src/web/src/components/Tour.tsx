@@ -34,7 +34,7 @@ export const PASSOS_TOUR: TourStep[] = [
   },
   {
     alvo: 'umidade', icone: 'gota', titulo: 'Umidade da terra',
-    texto: 'As cores mostram se a terra está seca (marrom) ou molhada (azul), medidas por um satélite da NASA. Toque no botão para mostrar ou esconder as cores.',
+    texto: 'O quadrado tracejado no mapa é a região de cerca de 55 km de onde vêm os dados da NASA. A cor mostra se a terra está seca (laranja) ou molhada (azul). Toque no botão para mostrar ou esconder o quadrado.',
   },
   {
     alvo: 'marcar', icone: 'lapis', titulo: 'Marcar sua área (opcional)',

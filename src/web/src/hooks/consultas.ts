@@ -2,14 +2,15 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { loadMunicipios } from '../data/locations';
 import { apagarArea, criarArea, listarAreas, salvarHistorico } from '../services/areas';
 import { buscarCatalogo } from '../services/catalogo';
-import { fieldStatistics, pointStatistics } from '../services/smap';
+import { celulaDaNasa } from '../lib/nasa';
+import { buscarClima } from '../services/clima';
 import type { Area, Historico, LatLng, Municipio } from '../types';
 
 const CHAVES = {
   catalogo: ['catalogo'] as const,
   municipios: (uf: string | undefined) => ['municipios', uf] as const,
   areas: (codigoIbge: number | undefined) => ['areas', codigoIbge] as const,
-  umidade: (codigoIbge: number | undefined, areaId: number | null) => ['umidade', codigoIbge, areaId] as const,
+  clima: (latitudeDaCelula: number | undefined, longitudeDaCelula: number | undefined) => ['clima', latitudeDaCelula, longitudeDaCelula] as const,
 };
 
 export function useCatalogo() {
@@ -33,14 +34,15 @@ export function useAreas(municipio: Municipio | null) {
   });
 }
 
-export function useUmidade(municipio: Municipio | null, area: Area | null) {
+/** Clima real da NASA para a área escolhida (ou para a cidade, se nenhuma área estiver marcada) */
+export function useClima(municipio: Municipio | null, area: Area | null) {
+  const ponto: LatLng | null = area ? area.center : municipio ? [municipio.lat, municipio.lng] : null;
+  const celula = ponto ? celulaDaNasa(ponto) : null;
   return useQuery({
-    queryKey: CHAVES.umidade(municipio?.codigoIbge, area?.id ?? null),
-    queryFn: () => (area
-      ? fieldStatistics(area.coordenadas, area.center)
-      : pointStatistics([municipio!.lat, municipio!.lng])),
-    enabled: municipio !== null,
-    staleTime: 5 * 60 * 1000,
+    queryKey: CHAVES.clima(celula?.latitude, celula?.longitude),
+    queryFn: () => buscarClima(ponto!),
+    enabled: ponto !== null,
+    staleTime: 30 * 60 * 1000,
   });
 }
 

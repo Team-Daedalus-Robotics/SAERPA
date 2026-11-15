@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Leaflet from 'leaflet';
 import {
   CircleMarker, MapContainer, Polygon, Rectangle, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents,
 } from 'react-leaflet';
 import { BRAZIL_BOUNDS } from '../lib/geo';
-import { gridCells, type GridCell } from '../services/smap';
-import type { Area, LatLng, Municipio } from '../types';
+import type { Area, CelulaDaNasa, LatLng, Municipio } from '../types';
 
 export type BaseLayer = 'satelite' | 'ruas';
 
@@ -27,9 +26,6 @@ const TILES: Record<BaseLayer, { url: string; attribution: string; maxZoom: numb
   },
 };
 
-/** Zoom mínimo para desenhar a grade SMAP de 9 km (abaixo disso seriam milhares de células) */
-export const SMAP_ZOOM_MINIMO = 8;
-
 function FlyTo({ target }: { target: MapTarget }) {
   const map = useMap();
   useEffect(() => {
@@ -39,26 +35,14 @@ function FlyTo({ target }: { target: MapTarget }) {
   return null;
 }
 
-function SmapGrid({ visible }: { visible: boolean }) {
-  const [cells, setCells] = useState<GridCell[]>([]);
-  const map = useMapEvents({ moveend: () => update() });
-  function update() {
-    if (!visible || map.getZoom() < SMAP_ZOOM_MINIMO) return setCells([]);
-    const limites = map.getBounds().pad(0.2);
-    setCells(gridCells(limites.getSouth(), limites.getWest(), limites.getNorth(), limites.getEast()));
-  }
-  useEffect(update, [visible]);
+/** Região da grade da NASA (cerca de 55 km) de onde vêm os dados do local escolhido */
+function CelulaDaNasaNoMapa({ celula, cor }: { celula: CelulaDaNasa; cor: string }) {
   return (
-    <>
-      {cells.map((celula, indice) => (
-        <Rectangle
-          key={indice}
-          bounds={celula.bounds}
-          interactive={false}
-          pathOptions={{ color: '#fff', weight: 0.5, opacity: 0.35, fillColor: celula.color, fillOpacity: 0.42 }}
-        />
-      ))}
-    </>
+    <Rectangle
+      bounds={[[celula.sul, celula.oeste], [celula.norte, celula.leste]]}
+      interactive={false}
+      pathOptions={{ color: '#ffffff', weight: 2, dashArray: '8 6', opacity: 0.9, fillColor: cor, fillOpacity: 0.26 }}
+    />
   );
 }
 
@@ -75,7 +59,8 @@ function ClickCatcher({ onClick }: { onClick: (ponto: LatLng) => void }) {
 
 interface Propriedades {
   base: BaseLayer;
-  showSmap: boolean;
+  celula: CelulaDaNasa | null;
+  corDaCelula: string;
   target: MapTarget;
   municipio: Municipio | null;
   areas: Area[];
@@ -95,7 +80,7 @@ export default function MapView(propriedades: Propriedades) {
       <FlyTo target={propriedades.target} />
       <ZoomWatcher onZoom={propriedades.onZoom} />
       <ClickCatcher onClick={propriedades.onMapClick} />
-      <SmapGrid visible={propriedades.showSmap} />
+      {propriedades.celula && <CelulaDaNasaNoMapa celula={propriedades.celula} cor={propriedades.corDaCelula} />}
 
       {propriedades.municipio && (
         <CircleMarker
