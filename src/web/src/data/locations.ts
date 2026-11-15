@@ -8,10 +8,10 @@ import type { Estado, Municipio } from '../types';
 
 export const ESTADOS: Estado[] = estadosJson;
 
-type Raw = Record<string, [string, number, number, number][]>;
-let cache: Raw | null = null;
+type MunicipiosBrutos = Record<string, [string, number, number, number][]>;
+let cache: MunicipiosBrutos | null = null;
 
 export async function loadMunicipios(uf: string): Promise<Municipio[]> {
-  if (!cache) cache = (await import('./municipios.json')).default as unknown as Raw;
+  if (!cache) cache = (await import('./municipios.json')).default as unknown as MunicipiosBrutos;
   return (cache[uf] ?? []).map(([nome, lat, lng, codigoIbge]) => ({ nome, lat, lng, codigoIbge }));
 }

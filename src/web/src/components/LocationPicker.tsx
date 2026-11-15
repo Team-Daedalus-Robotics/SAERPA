@@ -2,15 +2,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { ESTADOS, loadMunicipios } from '../data/locations';
 import type { Estado, Municipio } from '../types';
 
-interface Props {
+interface Propriedades {
   estado: Estado | null;
   municipio: Municipio | null;
-  onEstado: (e: Estado | null) => void;
-  onMunicipio: (m: Municipio | null) => void;
+  onEstado: (estado: Estado | null) => void;
+  onMunicipio: (municipio: Municipio | null) => void;
 }
 
 /** Seleção de estado + cidade (com busca) cobrindo todo o Brasil */
-export default function LocationPicker({ estado, municipio, onEstado, onMunicipio }: Props) {
+export default function LocationPicker({ estado, municipio, onEstado, onMunicipio }: Propriedades) {
   const [municipios, setMunicipios] = useState<Municipio[]>([]);
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
@@ -26,11 +26,11 @@ export default function LocationPicker({ estado, municipio, onEstado, onMunicipi
   }, [municipio]);
 
   const filtered = useMemo(() => {
-    const q = normalize(query);
-    if (!q || q === normalize(municipio?.nome ?? '')) return municipios.slice(0, 60);
+    const consulta = normalizar(query);
+    if (!consulta || consulta === normalizar(municipio?.nome ?? '')) return municipios.slice(0, 60);
     // nomes que começam com o texto digitado aparecem primeiro
-    const starts = municipios.filter((m) => normalize(m.nome).startsWith(q));
-    const contains = municipios.filter((m) => !normalize(m.nome).startsWith(q) && normalize(m.nome).includes(q));
+    const starts = municipios.filter((candidato) => normalizar(candidato.nome).startsWith(consulta));
+    const contains = municipios.filter((candidato) => !normalizar(candidato.nome).startsWith(consulta) && normalizar(candidato.nome).includes(consulta));
     return [...starts, ...contains].slice(0, 60);
   }, [query, municipios, municipio]);
 
@@ -40,11 +40,11 @@ export default function LocationPicker({ estado, municipio, onEstado, onMunicipi
         <span>Estado</span>
         <select
           value={estado?.uf ?? ''}
-          onChange={(e) => onEstado(ESTADOS.find((s) => s.uf === e.target.value) ?? null)}
+          onChange={(evento) => onEstado(ESTADOS.find((candidato) => candidato.uf === evento.target.value) ?? null)}
         >
           <option value="">Escolha o estado…</option>
-          {ESTADOS.map((s) => (
-            <option key={s.uf} value={s.uf}>{s.nome} ({s.uf})</option>
+          {ESTADOS.map((opcao) => (
+            <option key={opcao.uf} value={opcao.uf}>{opcao.nome} ({opcao.uf})</option>
           ))}
         </select>
       </label>
@@ -56,21 +56,21 @@ export default function LocationPicker({ estado, municipio, onEstado, onMunicipi
           placeholder={estado ? 'Digite o nome da cidade' : 'Primeiro escolha o estado'}
           disabled={!estado}
           value={query}
-          onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
+          onChange={(evento) => { setQuery(evento.target.value); setOpen(true); }}
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
           autoComplete="off"
         />
         {open && estado && filtered.length > 0 && (
           <ul className="loc-list" role="listbox">
-            {filtered.map((m) => (
-              <li key={m.codigoIbge}>
+            {filtered.map((candidato) => (
+              <li key={candidato.codigoIbge}>
                 <button
                   type="button"
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={() => { onMunicipio(m); setOpen(false); }}
+                  onMouseDown={(evento) => evento.preventDefault()}
+                  onClick={() => { onMunicipio(candidato); setOpen(false); }}
                 >
-                  {m.nome}
+                  {candidato.nome}
                 </button>
               </li>
             ))}
@@ -81,6 +81,6 @@ export default function LocationPicker({ estado, municipio, onEstado, onMunicipi
   );
 }
 
-function normalize(s: string) {
-  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+function normalizar(texto: string) {
+  return texto.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 }

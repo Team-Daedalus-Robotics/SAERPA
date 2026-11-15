@@ -58,17 +58,17 @@
     8
    ]
   },
-  "espacamentoCm": {
-   "linhas": 150,
-   "plantas": 100
-  },
   "tipoPlantio": "Semeadura direta/cova",
   "colheitaDias": [
    45,
    60
   ],
-  "producaoM2": "1,0 a 1,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 150,
+   "plantas": 100
+  },
+  "producaoPorMetroQuadrado": "1,0 a 1,5 kg"
  },
  {
   "id": "abobora",
@@ -122,17 +122,17 @@
     8
    ]
   },
-  "espacamentoCm": {
-   "linhas": 250,
-   "plantas": 250
-  },
   "tipoPlantio": "Semeadura direta/cova",
   "colheitaDias": [
    90,
    120
   ],
-  "producaoM2": "1,0 a 1,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 250,
+   "plantas": 250
+  },
+  "producaoPorMetroQuadrado": "1,0 a 1,5 kg"
  },
  {
   "id": "acelga",
@@ -162,17 +162,17 @@
     6
    ]
   },
-  "espacamentoCm": {
-   "linhas": 40,
-   "plantas": 30
-  },
   "tipoPlantio": "Muda/canteiro",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "1,5 a 2,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 40,
+   "plantas": 30
+  },
+  "producaoPorMetroQuadrado": "1,5 a 2,0 kg"
  },
  {
   "id": "agriao",
@@ -220,17 +220,17 @@
     7
    ]
   },
-  "espacamentoCm": {
-   "linhas": 20,
-   "plantas": 10
-  },
   "tipoPlantio": "Estacas (muda)/cova",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "4,0 a 5,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 20,
+   "plantas": 10
+  },
+  "producaoPorMetroQuadrado": "4,0 a 5,0 kg"
  },
  {
   "id": "alcachofra",
@@ -241,17 +241,17 @@
     3
    ]
   },
-  "espacamentoCm": {
-   "linhas": 200,
-   "plantas": 100
-  },
   "tipoPlantio": "Muda/ Canteiro",
   "colheitaDias": [
    180,
    200
   ],
-  "producaoM2": null,
-  "fonte": "Região sul"
+  "fonte": "Região sul",
+  "espacamentoEmCentimetros": {
+   "linhas": 200,
+   "plantas": 100
+  },
+  "producaoPorMetroQuadrado": null
  },
  {
   "id": "alface-de-inverno",
@@ -302,17 +302,17 @@
     7
    ]
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 25
-  },
   "tipoPlantio": "Muda/canteiro",
   "colheitaDias": [
    60,
    80
   ],
-  "producaoM2": "16 pés",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 25
+  },
+  "producaoPorMetroQuadrado": "16 pés"
  },
  {
   "id": "alface-de-verao",
@@ -389,17 +389,17 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 25
-  },
   "tipoPlantio": "Muda/canteiro",
   "colheitaDias": [
    50,
    70
   ],
-  "producaoM2": "16 pés",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 25
+  },
+  "producaoPorMetroQuadrado": "16 pés"
  },
  {
   "id": "alho",
@@ -422,17 +422,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 10
-  },
   "tipoPlantio": "Semeadura direta/canteiro",
   "colheitaDias": [
    150,
    180
   ],
-  "producaoM2": "0,4 a 0,6 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 10
+  },
+  "producaoPorMetroQuadrado": "0,4 a 0,6 kg"
  },
  {
   "id": "alho-porro",
@@ -445,17 +445,17 @@
     6
    ]
   },
-  "espacamentoCm": {
-   "linhas": 50,
-   "plantas": 15
-  },
   "tipoPlantio": "Muda/ Canteiro",
   "colheitaDias": [
    90,
    120
   ],
-  "producaoM2": null,
-  "fonte": "Região sul"
+  "fonte": "Região sul",
+  "espacamentoEmCentimetros": {
+   "linhas": 50,
+   "plantas": 15
+  },
+  "producaoPorMetroQuadrado": null
  },
  {
   "id": "almeirao",
@@ -507,17 +507,17 @@
     8
    ]
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 25
-  },
   "tipoPlantio": "Muda/canteiro",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "16 pés",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 25
+  },
+  "producaoPorMetroQuadrado": "16 pés"
  },
  {
   "id": "batata",
@@ -538,17 +538,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 90,
-   "plantas": 30
-  },
   "tipoPlantio": "Semeadura direta/sulco",
   "colheitaDias": [
    90,
    120
   ],
-  "producaoM2": "2,0 a 3,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 90,
+   "plantas": 30
+  },
+  "producaoPorMetroQuadrado": "2,0 a 3,0 kg"
  },
  {
   "id": "batata-doce",
@@ -572,17 +572,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 90,
-   "plantas": 30
-  },
   "tipoPlantio": "Semeadura direta/leira",
   "colheitaDias": [
    120,
    150
   ],
-  "producaoM2": "1,0 a 1,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 90,
+   "plantas": 30
+  },
+  "producaoPorMetroQuadrado": "1,0 a 1,5 kg"
  },
  {
   "id": "berinjela",
@@ -637,17 +637,17 @@
     8
    ]
   },
-  "espacamentoCm": {
-   "linhas": 120,
-   "plantas": 100
-  },
   "tipoPlantio": "Semeadura direta/canteiro",
   "colheitaDias": [
    100,
    120
   ],
-  "producaoM2": "7,0 a 8,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 120,
+   "plantas": 100
+  },
+  "producaoPorMetroQuadrado": "7,0 a 8,0 kg"
  },
  {
   "id": "bertalha",
@@ -706,17 +706,17 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 40
-  },
   "tipoPlantio": "Muda/cova",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "2,0 a 2,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 40
+  },
+  "producaoPorMetroQuadrado": "2,0 a 2,5 kg"
  },
  {
   "id": "beterraba",
@@ -766,17 +766,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 20,
-   "plantas": 10
-  },
   "tipoPlantio": "Semeadura direta/canteiro",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "3,0 a 4,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 20,
+   "plantas": 10
+  },
+  "producaoPorMetroQuadrado": "3,0 a 4,0 kg"
  },
  {
   "id": "brocolis-de-inverno",
@@ -809,17 +809,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 90,
-   "plantas": 50
-  },
   "tipoPlantio": "Muda/cova",
   "colheitaDias": [
    90,
    100
   ],
-  "producaoM2": "1,0 a 3,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "1,0 a 3,0 kg"
  },
  {
   "id": "brocolis-de-verao",
@@ -857,17 +857,17 @@
     7
    ]
   },
-  "espacamentoCm": {
-   "linhas": 90,
-   "plantas": 50
-  },
   "tipoPlantio": "Muda/cova",
   "colheitaDias": [
    80,
    100
   ],
-  "producaoM2": "1,0 a 3,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "1,0 a 3,0 kg"
  },
  {
   "id": "cebola",
@@ -901,17 +901,17 @@
     5
    ]
   },
-  "espacamentoCm": {
-   "linhas": 40,
-   "plantas": 10
-  },
   "tipoPlantio": "Semeadura direta-muda/canteiro",
   "colheitaDias": [
    120,
    180
   ],
-  "producaoM2": "1,0 a 2,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 40,
+   "plantas": 10
+  },
+  "producaoPorMetroQuadrado": "1,0 a 2,0 kg"
  },
  {
   "id": "cebolinha",
@@ -969,17 +969,17 @@
     10
    ]
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 15
-  },
   "tipoPlantio": "Muda/canteiro",
   "colheitaDias": [
    80,
    100
   ],
-  "producaoM2": "0,5 a 0,6 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 15
+  },
+  "producaoPorMetroQuadrado": "0,5 a 0,6 kg"
  },
  {
   "id": "cenoura-de-inverno",
@@ -1010,17 +1010,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 20,
-   "plantas": 5
-  },
   "tipoPlantio": "Semeadura direta/canteiro",
   "colheitaDias": [
    90,
    110
   ],
-  "producaoM2": "2,0 a 3,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 20,
+   "plantas": 5
+  },
+  "producaoPorMetroQuadrado": "2,0 a 3,0 kg"
  },
  {
   "id": "cenoura-de-verao",
@@ -1064,17 +1064,17 @@
     3
    ]
   },
-  "espacamentoCm": {
-   "linhas": 20,
-   "plantas": 5
-  },
   "tipoPlantio": "Semeadura direta/canteiro",
   "colheitaDias": [
    85,
    100
   ],
-  "producaoM2": "2,0 a 3,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 20,
+   "plantas": 5
+  },
+  "producaoPorMetroQuadrado": "2,0 a 3,0 kg"
  },
  {
   "id": "chicoria",
@@ -1119,17 +1119,17 @@
     8
    ]
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 25
-  },
   "tipoPlantio": "Muda/canteiro",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "16 pés",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 25
+  },
+  "producaoPorMetroQuadrado": "16 pés"
  },
  {
   "id": "chuchu",
@@ -1167,17 +1167,17 @@
     6
    ]
   },
-  "espacamentoCm": {
-   "linhas": 600,
-   "plantas": 500
-  },
   "tipoPlantio": "Semeadura direta/covas",
   "colheitaDias": [
    100,
    120
   ],
-  "producaoM2": "1,5 a 2,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 600,
+   "plantas": 500
+  },
+  "producaoPorMetroQuadrado": "1,5 a 2,0 kg"
  },
  {
   "id": "coentro",
@@ -1234,17 +1234,17 @@
     10
    ]
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 10
-  },
   "tipoPlantio": "Semeadura direta/canteiro",
   "colheitaDias": [
    50,
    60
   ],
-  "producaoM2": "0,6 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 10
+  },
+  "producaoPorMetroQuadrado": "0,6 kg"
  },
  {
   "id": "couve",
@@ -1288,17 +1288,17 @@
     7
    ]
   },
-  "espacamentoCm": {
-   "linhas": 90,
-   "plantas": 50
-  },
   "tipoPlantio": "Muda/cova",
   "colheitaDias": [
    80,
    90
   ],
-  "producaoM2": "1,6 molhos",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "1,6 molhos"
  },
  {
   "id": "couve-chinesa",
@@ -1319,17 +1319,17 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 50,
-   "plantas": 40
-  },
   "tipoPlantio": "Muda/Cova",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": null,
-  "fonte": "Região sul"
+  "fonte": "Região sul",
+  "espacamentoEmCentimetros": {
+   "linhas": 50,
+   "plantas": 40
+  },
+  "producaoPorMetroQuadrado": null
  },
  {
   "id": "couve-flor-de-inverno",
@@ -1365,17 +1365,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 90,
-   "plantas": 50
-  },
   "tipoPlantio": "Muda/cova",
   "colheitaDias": [
    100,
    110
   ],
-  "producaoM2": "1,0 a 1,2 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "1,0 a 1,2 kg"
  },
  {
   "id": "couve-flor-de-verao",
@@ -1409,17 +1409,17 @@
     2
    ]
   },
-  "espacamentoCm": {
-   "linhas": 90,
-   "plantas": 50
-  },
   "tipoPlantio": "Muda/cova",
   "colheitaDias": [
    90,
    100
   ],
-  "producaoM2": "1,0 a 1,2 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "1,0 a 1,2 kg"
  },
  {
   "id": "ervilha-grao",
@@ -1440,17 +1440,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 7
-  },
   "tipoPlantio": "Semeadura direta/sulco",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "0,2 a 0,3 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 7
+  },
+  "producaoPorMetroQuadrado": "0,2 a 0,3 kg"
  },
  {
   "id": "ervilha-torta",
@@ -1466,17 +1466,17 @@
     9
    ]
   },
-  "espacamentoCm": {
-   "linhas": 80,
-   "plantas": 60
-  },
   "tipoPlantio": "Semente/Cova",
   "colheitaDias": [
    70,
    100
   ],
-  "producaoM2": null,
-  "fonte": "Região sul"
+  "fonte": "Região sul",
+  "espacamentoEmCentimetros": {
+   "linhas": 80,
+   "plantas": 60
+  },
+  "producaoPorMetroQuadrado": null
  },
  {
   "id": "espinafre",
@@ -1524,17 +1524,17 @@
     5
    ]
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 10
-  },
   "tipoPlantio": "Semeadura direta/canteiro",
   "colheitaDias": [
    60,
    80
   ],
-  "producaoM2": "4,0 a 5,0 molhos",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 10
+  },
+  "producaoPorMetroQuadrado": "4,0 a 5,0 molhos"
  },
  {
   "id": "feijao-vagem",
@@ -1588,17 +1588,17 @@
     7
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 50
-  },
   "tipoPlantio": "Semeadura direta/cova",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "2,0 a 2,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "2,0 a 2,5 kg"
  },
  {
   "id": "gengibre",
@@ -1654,17 +1654,17 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 120,
-   "plantas": 20
-  },
   "tipoPlantio": "Rizomasemente/sulco",
   "colheitaDias": [
    240,
    300
   ],
-  "producaoM2": "3,0 a 4,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 120,
+   "plantas": 20
+  },
+  "producaoPorMetroQuadrado": "3,0 a 4,5 kg"
  },
  {
   "id": "inhame",
@@ -1697,17 +1697,17 @@
     9
    ]
   },
-  "espacamentoCm": {
-   "linhas": 90,
-   "plantas": 40
-  },
   "tipoPlantio": "Muda (tubérculo)/cova alta",
   "colheitaDias": [
    150,
    180
   ],
-  "producaoM2": "1,0 a 1,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 90,
+   "plantas": 40
+  },
+  "producaoPorMetroQuadrado": "1,0 a 1,5 kg"
  },
  {
   "id": "jilo",
@@ -1755,17 +1755,17 @@
     8
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 70
-  },
   "tipoPlantio": "Muda/cova",
   "colheitaDias": [
    90,
    100
   ],
-  "producaoM2": "1,6 a 2,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 70
+  },
+  "producaoPorMetroQuadrado": "1,6 a 2,0 kg"
  },
  {
   "id": "mandioquinha-salsa",
@@ -1776,17 +1776,17 @@
     5
    ]
   },
-  "espacamentoCm": {
-   "linhas": 80,
-   "plantas": 30
-  },
   "tipoPlantio": "Semente/Canteiro",
   "colheitaDias": [
    300,
    360
   ],
-  "producaoM2": null,
-  "fonte": "Região sul"
+  "fonte": "Região sul",
+  "espacamentoEmCentimetros": {
+   "linhas": 80,
+   "plantas": 30
+  },
+  "producaoPorMetroQuadrado": null
  },
  {
   "id": "maxixe",
@@ -1851,17 +1851,17 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 50
-  },
   "tipoPlantio": "Semeadura direta/cova",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "2,5 a 2,8 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "2,5 a 2,8 kg"
  },
  {
   "id": "melancia",
@@ -1907,17 +1907,17 @@
     8
    ]
   },
-  "espacamentoCm": {
-   "linhas": 200,
-   "plantas": 200
-  },
   "tipoPlantio": "Direto/cova",
   "colheitaDias": [
    85,
    90
   ],
-  "producaoM2": "3,0 a 5,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 200,
+   "plantas": 200
+  },
+  "producaoPorMetroQuadrado": "3,0 a 5,0 kg"
  },
  {
   "id": "melao",
@@ -1930,17 +1930,17 @@
     1
    ]
   },
-  "espacamentoCm": {
-   "linhas": 200,
-   "plantas": 150
-  },
   "tipoPlantio": "Semente/Cova",
   "colheitaDias": [
    80,
    120
   ],
-  "producaoM2": null,
-  "fonte": "Região sul"
+  "fonte": "Região sul",
+  "espacamentoEmCentimetros": {
+   "linhas": 200,
+   "plantas": 150
+  },
+  "producaoPorMetroQuadrado": null
  },
  {
   "id": "milho-verde",
@@ -1982,17 +1982,17 @@
     5
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 20
-  },
   "tipoPlantio": "Semeadura direta/canteiro",
   "colheitaDias": [
    80,
    110
   ],
-  "producaoM2": "5 - 6 espigas",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 20
+  },
+  "producaoPorMetroQuadrado": "5 - 6 espigas"
  },
  {
   "id": "moranga",
@@ -2055,17 +2055,17 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 200,
-   "plantas": 200
-  },
   "tipoPlantio": "Semeadura direta/cova",
   "colheitaDias": [
    120,
    150
   ],
-  "producaoM2": "1,0 a 1,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 200,
+   "plantas": 200
+  },
+  "producaoPorMetroQuadrado": "1,0 a 1,5 kg"
  },
  {
   "id": "morango",
@@ -2086,17 +2086,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 30,
-   "plantas": 20
-  },
   "tipoPlantio": "Mudas/cova",
   "colheitaDias": [
    70,
    80
   ],
-  "producaoM2": "3,0 a 4,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 30,
+   "plantas": 20
+  },
+  "producaoPorMetroQuadrado": "3,0 a 4,0 kg"
  },
  {
   "id": "mostarda",
@@ -2135,17 +2135,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 40,
-   "plantas": 40
-  },
   "tipoPlantio": "Mudas/sulco",
   "colheitaDias": [
    45,
    50
   ],
-  "producaoM2": "5 a 7 pés",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 40,
+   "plantas": 40
+  },
+  "producaoPorMetroQuadrado": "5 a 7 pés"
  },
  {
   "id": "nabo",
@@ -2156,17 +2156,17 @@
     5
    ]
   },
-  "espacamentoCm": {
-   "linhas": 30,
-   "plantas": 1
-  },
   "tipoPlantio": "Semente/Canteiro",
   "colheitaDias": [
    50,
    60
   ],
-  "producaoM2": null,
-  "fonte": "Região sul"
+  "fonte": "Região sul",
+  "espacamentoEmCentimetros": {
+   "linhas": 30,
+   "plantas": 1
+  },
+  "producaoPorMetroQuadrado": null
  },
  {
   "id": "pepino",
@@ -2218,17 +2218,17 @@
     9
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 50
-  },
   "tipoPlantio": "Semeadura direta-mudas/cova",
   "colheitaDias": [
    45,
    60
   ],
-  "producaoM2": "4,0 a 5,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "4,0 a 5,0 kg"
  },
  {
   "id": "pimenta",
@@ -2282,17 +2282,17 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 120,
-   "plantas": 60
-  },
   "tipoPlantio": "Mudas/cova",
   "colheitaDias": [
    90,
    120
   ],
-  "producaoM2": "0,5 a 1,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 120,
+   "plantas": 60
+  },
+  "producaoPorMetroQuadrado": "0,5 a 1,5 kg"
  },
  {
   "id": "pimentao",
@@ -2337,17 +2337,17 @@
     7
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 50
-  },
   "tipoPlantio": "Mudas/cova",
   "colheitaDias": [
    100,
    120
   ],
-  "producaoM2": "3,0 a 4,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "3,0 a 4,0 kg"
  },
  {
   "id": "quiabo",
@@ -2406,17 +2406,17 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 40
-  },
   "tipoPlantio": "Semeadura direta-mudas/cova",
   "colheitaDias": [
    70,
    80
   ],
-  "producaoM2": "1,5 a 2,2 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 40
+  },
+  "producaoPorMetroQuadrado": "1,5 a 2,2 kg"
  },
  {
   "id": "rabanete",
@@ -2462,17 +2462,17 @@
     8
    ]
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 5
-  },
   "tipoPlantio": "Semeadura direta/canteiro",
   "colheitaDias": [
    25,
    30
   ],
-  "producaoM2": "1,5 a 3,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 5
+  },
+  "producaoPorMetroQuadrado": "1,5 a 3,0 kg"
  },
  {
   "id": "repolho-de-inverno",
@@ -2514,17 +2514,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 80,
-   "plantas": 40
-  },
   "tipoPlantio": "Mudas/cova",
   "colheitaDias": [
    90,
    110
   ],
-  "producaoM2": "3,0 a 6,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 80,
+   "plantas": 40
+  },
+  "producaoPorMetroQuadrado": "3,0 a 6,0 kg"
  },
  {
   "id": "repolho-de-verao",
@@ -2573,17 +2573,17 @@
     9
    ]
   },
-  "espacamentoCm": {
-   "linhas": 80,
-   "plantas": 40
-  },
   "tipoPlantio": "Mudas/cova",
   "colheitaDias": [
    90,
    110
   ],
-  "producaoM2": "3,0 a 6,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 80,
+   "plantas": 40
+  },
+  "producaoPorMetroQuadrado": "3,0 a 6,0 kg"
  },
  {
   "id": "rucula",
@@ -2621,17 +2621,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 20,
-   "plantas": 15
-  },
   "tipoPlantio": "Semeadura direta/linha",
   "colheitaDias": [
    40,
    60
   ],
-  "producaoM2": "2,0 a 2,5 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 20,
+   "plantas": 15
+  },
+  "producaoPorMetroQuadrado": "2,0 a 2,5 kg"
  },
  {
   "id": "salsa",
@@ -2673,17 +2673,17 @@
    ],
    "Norte": []
   },
-  "espacamentoCm": {
-   "linhas": 25,
-   "plantas": 10
-  },
   "tipoPlantio": "Semeadura direta-mudas/li nha",
   "colheitaDias": [
    60,
    70
   ],
-  "producaoM2": "0,5 a 0,7 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 25,
+   "plantas": 10
+  },
+  "producaoPorMetroQuadrado": "0,5 a 0,7 kg"
  },
  {
   "id": "taioba",
@@ -2736,17 +2736,17 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 80,
-   "plantas": 40
-  },
   "tipoPlantio": "Mudas (rizoma)/cova",
   "colheitaDias": [
    70,
    100
   ],
-  "producaoM2": "2,5 a 3,0 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 80,
+   "plantas": 40
+  },
+  "producaoPorMetroQuadrado": "2,5 a 3,0 kg"
  },
  {
   "id": "taro",
@@ -2757,17 +2757,17 @@
     10
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 30
-  },
   "tipoPlantio": "Muda/Sulco",
   "colheitaDias": [
    150,
    180
   ],
-  "producaoM2": null,
-  "fonte": "Região sul"
+  "fonte": "Região sul",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 30
+  },
+  "producaoPorMetroQuadrado": null
  },
  {
   "id": "tomate-industria",
@@ -2782,17 +2782,17 @@
     2
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 50
-  },
   "tipoPlantio": "Muda/Sulco",
   "colheitaDias": [
    100,
    120
   ],
-  "producaoM2": null,
-  "fonte": "Região sul"
+  "fonte": "Região sul",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": null
  },
  {
   "id": "tomate-mesa",
@@ -2869,16 +2869,16 @@
     12
    ]
   },
-  "espacamentoCm": {
-   "linhas": 100,
-   "plantas": 50
-  },
   "tipoPlantio": "Mudas/sulco",
   "colheitaDias": [
    100,
    120
   ],
-  "producaoM2": "5,0 a 10 kg",
-  "fonte": "Brasil"
+  "fonte": "Brasil",
+  "espacamentoEmCentimetros": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "producaoPorMetroQuadrado": "5,0 a 10 kg"
  }
 ]

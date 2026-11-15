@@ -107,10 +107,10 @@ def main(path):
             "id": slug(nome),
             "nome": nome,
             "epocas": epocas,
-            "espacamentoCm": {"linhas": linhas, "plantas": plantas},
+            "espacamentoEmCentimetros": {"linhas": linhas, "plantas": plantas},
             "tipoPlantio": clean(row[8]).replace("- ", "").replace("/ ", "/").replace(" /", "/"),
             "colheitaDias": parse_faixa(row[9]),
-            "producaoM2": clean(row[10]),
+            "producaoPorMetroQuadrado": clean(row[10]),
             "fonte": "Brasil",
         }
 
@@ -124,10 +124,10 @@ def main(path):
             "id": slug(nome),
             "nome": nome,
             "epocas": {"Sul": parse_janela(row[1])},  # outras regiões: sem dado
-            "espacamentoCm": {"linhas": esp[0], "plantas": esp[1]},
+            "espacamentoEmCentimetros": {"linhas": esp[0], "plantas": esp[1]},
             "tipoPlantio": clean(row[3]),
             "colheitaDias": parse_faixa(row[4]),
-            "producaoM2": None,
+            "producaoPorMetroQuadrado": None,
             "fonte": "Região sul",
         }
 

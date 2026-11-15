@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { USE_MOCK } from '../services/smap';
 import { Sheet } from './ui';
 
-interface Props {
+interface Propriedades {
   open: boolean;
   onClose: () => void;
   onTour: () => void;
@@ -96,7 +96,7 @@ const PARTES: { icone: string; titulo: string; texto: React.ReactNode }[] = [
   },
 ];
 
-export default function Ajuda({ open, onClose, onTour }: Props) {
+export default function Ajuda({ open, onClose, onTour }: Propriedades) {
   const [verPartes, setVerPartes] = useState(false);
   const fechar = () => { setVerPartes(false); onClose(); };
 
@@ -122,10 +122,10 @@ export default function Ajuda({ open, onClose, onTour }: Props) {
           <h3>Como cada parte funciona</h3>
           <p className="ajuda-sub">Toque em uma parte para ler a explicação.</p>
           <div className="ajuda-partes">
-            {PARTES.map((p) => (
-              <details key={p.titulo} className="ajuda-parte">
-                <summary><span>{p.icone}</span>{p.titulo}</summary>
-                <div className="ajuda-texto">{p.texto}</div>
+            {PARTES.map((parte) => (
+              <details key={parte.titulo} className="ajuda-parte">
+                <summary><span>{parte.icone}</span>{parte.titulo}</summary>
+                <div className="ajuda-texto">{parte.texto}</div>
               </details>
             ))}
           </div>
