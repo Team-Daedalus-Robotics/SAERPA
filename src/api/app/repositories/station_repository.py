@@ -1,7 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from saerpa_shared.models import Station
+from shared.src.saerpa_shared.models.station import Station
+
 
 
 def create(session: Session, unique_identifier: str) -> Station:
