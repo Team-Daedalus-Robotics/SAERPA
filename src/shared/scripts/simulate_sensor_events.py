@@ -20,15 +20,27 @@ Premissas (ajuste as constantes abaixo se medirem diferente em campo):
   - os valores da NASA são de modelo, em grade de ~50 km: representam a região;
   - cerca de 1,5 % dos pacotes LoRa se perdem e cerca de 1 % das leituras do DHT11 falham.
 
-Uso (dentro de src/shared, com DATABASE_URL exportada):
-  uv run python scripts/simulate_sensor_events.py              # grava no banco (substitui a simulação anterior)
-  uv run python scripts/simulate_sensor_events.py --dry-run    # só mostra o resumo, sem banco
-  uv run python scripts/simulate_sensor_events.py --payloads-out saida.json   # formato do gateway
+Os pacotes são enviados ao station_data_gateway (POST /api/stations/data), o mesmo caminho de um sensor
+real: é o gateway que cria a estação, as medidas e grava os eventos. Ele não apaga nem confere duplicatas,
+então rodar duas vezes duplica as leituras (o script avisa e recusa, a menos que se use --force).
+
+Uso (dentro de src/shared):
+  uv run python scripts/simulate_sensor_events.py --gateway-url http://localhost:PORTA
+      (a porta do `station-data-gateway` aparece no painel do Aspire; também vale a variável
+       de ambiente STATION_DATA_GATEWAY_URL. Se o endereço for https com certificado de
+       desenvolvimento, acrescente --insecure.)
+  uv run python scripts/simulate_sensor_events.py --dry-run                   # só mostra o resumo
+  uv run python scripts/simulate_sensor_events.py --payloads-out saida.json   # grava os pacotes em arquivo
+  uv run python scripts/simulate_sensor_events.py --direct-database           # SÓ PARA TESTES: grava direto no banco
 """
 import argparse
 import json
 import math
+import os
 import random
+import ssl
+import urllib.error
+import urllib.request
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -38,6 +50,11 @@ DEFAULT_NASA_PATH = SHARED_ROOT / "data" / "nasa_power" / "navegantes_sc_hourly.
 
 STATION_UNIQUE_IDENTIFIER = "sim-navegantes-001"
 DATA_TYPE = "number"
+
+GATEWAY_PATH = "/api/stations/data"
+GATEWAY_URL_ENVIRONMENT_VARIABLE = "STATION_DATA_GATEWAY_URL"
+GATEWAY_TIMEOUT_SECONDS = 30
+PROGRESS_EVERY = 200
 
 # Capacitive Soil Moisture Sensor v2.0 em ADC de 12 bits (0-4095), calibração típica
 ADC_RAW_DRY = 3100
@@ -196,6 +213,45 @@ def print_summary(payloads: list[dict], expected_packets: int) -> None:
     print(f"eventos no total: {sum(len(values) for values in values_by_type.values())}")
 
 
+def count_existing_events() -> int | None:
+    """Eventos já gravados na estação simulada (só leitura); None quando não há DATABASE_URL para consultar."""
+    if not os.environ.get("DATABASE_URL"):
+        return None
+
+    from sqlalchemy import func, select
+
+    from saerpa_shared.engine import SessionLocal
+    from saerpa_shared.models import Event, Station
+
+    with SessionLocal() as session:
+        return session.scalar(
+            select(func.count(Event.id)).join(Station, Station.id == Event.station_id)
+            .where(Station.unique_identifier == STATION_UNIQUE_IDENTIFIER)
+        )
+
+
+def send_to_gateway(payloads: list[dict], gateway_url: str, insecure: bool) -> None:
+    """Envia os pacotes em ordem, um por vez (o gateway cria estação e medidas na primeira leitura, sem trava)."""
+    endpoint = gateway_url.rstrip("/") + GATEWAY_PATH
+    context = ssl._create_unverified_context() if insecure else None
+    for sent, payload in enumerate(payloads):
+        request = urllib.request.Request(
+            endpoint, data=json.dumps(payload).encode("utf-8"), method="POST", headers={"Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(request, timeout=GATEWAY_TIMEOUT_SECONDS, context=context) as response:
+                if response.status != 201:
+                    raise SystemExit(f"O gateway respondeu {response.status} no pacote {sent + 1}. {sent} pacotes já foram gravados.")
+        except urllib.error.HTTPError as error:
+            raise SystemExit(f"O gateway recusou o pacote {sent + 1} (HTTP {error.code}): {error.read().decode('utf-8', 'replace')[:200]}\n"
+                             f"{sent} pacotes já foram gravados; não envie de novo sem apagar a estação '{STATION_UNIQUE_IDENTIFIER}'.") from error
+        except (urllib.error.URLError, OSError) as error:
+            raise SystemExit(f"Não foi possível falar com o gateway em {endpoint}: {error}\n"
+                             f"{sent} pacotes já foram gravados.") from error
+        if (sent + 1) % PROGRESS_EVERY == 0:
+            print(f"  {sent + 1} de {len(payloads)} pacotes enviados")
+    print(f"{len(payloads)} pacotes enviados ao gateway ({endpoint})")
+
+
 def load_into_database(payloads: list[dict], replace: bool) -> None:
     from sqlalchemy import delete, insert, select
 
@@ -245,8 +301,13 @@ def main() -> None:
     parser.add_argument("--nasa-data", type=Path, default=DEFAULT_NASA_PATH)
     parser.add_argument("--interval-minutes", type=int, default=10)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--dry-run", action="store_true", help="mostra o resumo sem gravar no banco")
-    parser.add_argument("--keep-existing", action="store_true", help="não apaga os eventos anteriores da estação simulada")
+    parser.add_argument("--gateway-url", default=os.environ.get(GATEWAY_URL_ENVIRONMENT_VARIABLE),
+                        help=f"endereço do station_data_gateway (ou a variável {GATEWAY_URL_ENVIRONMENT_VARIABLE})")
+    parser.add_argument("--insecure", action="store_true", help="não verifica o certificado https (certificado de desenvolvimento do Aspire)")
+    parser.add_argument("--force", action="store_true", help="envia mesmo que a estação simulada já tenha eventos (duplica)")
+    parser.add_argument("--dry-run", action="store_true", help="mostra o resumo sem gravar em lugar nenhum")
+    parser.add_argument("--direct-database", action="store_true", help="SÓ PARA TESTES: grava direto no banco, sem passar pelo gateway")
+    parser.add_argument("--keep-existing", action="store_true", help="com --direct-database: não apaga os eventos anteriores da estação")
     parser.add_argument("--payloads-out", type=Path, help="grava os pacotes no formato do gateway neste arquivo JSON")
     arguments = parser.parse_args()
 
@@ -262,8 +323,22 @@ def main() -> None:
     if arguments.payloads_out:
         arguments.payloads_out.write_text(json.dumps(payloads, ensure_ascii=False), encoding="utf-8")
         print(f"pacotes gravados em {arguments.payloads_out}")
-    if not arguments.dry_run:
+    if arguments.dry_run:
+        return
+    if arguments.direct_database:
         load_into_database(payloads, replace=not arguments.keep_existing)
+        return
+    if not arguments.gateway_url:
+        raise SystemExit(f"Informe o endereço do gateway com --gateway-url (ou {GATEWAY_URL_ENVIRONMENT_VARIABLE}). "
+                         "Use --dry-run para só ver o resumo.")
+
+    existing = count_existing_events()
+    if existing is None:
+        print("aviso: sem DATABASE_URL não dá para conferir se a simulação já foi enviada; enviar de novo duplica as leituras")
+    elif existing > 0 and not arguments.force:
+        raise SystemExit(f"A estação '{STATION_UNIQUE_IDENTIFIER}' já tem {existing} eventos. O gateway não apaga nem confere duplicatas, "
+                         "então enviar de novo duplicaria. Apague a estação antes ou use --force.")
+    send_to_gateway(payloads, arguments.gateway_url, arguments.insecure)
 
 
 if __name__ == "__main__":

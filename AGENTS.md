@@ -94,9 +94,13 @@ src/
   umidade do ar e chuva. Cada célula é uma estação virtual `nasa-power-lat<±lat>_lng<±lng>` (medidas
   `soil_moisture` %, `soil_temperature`, `air_temperature`, `air_humidity`, `rainfall` mm/h; `sensor_name`
   `NASA POWER <variável>`). NASA fora do ar: lugar já guardado responde do banco; lugar novo dá 502.
-- Sensores simulados (demonstração): `src/shared/scripts/simulate_sensor_events.py` grava na estação
-  `sim-navegantes-001` o que DHT11, DS18B20 e Capacitive Soil Moisture v2.0 enviariam, a partir de dados reais
-  baixados por `fetch_nasa_power.py` (cópia em `src/shared/data/nasa_power/`). A chuva entra da NASA.
+- Sensores simulados (demonstração): `src/shared/scripts/simulate_sensor_events.py` simula o que DHT11, DS18B20 e
+  Capacitive Soil Moisture v2.0 enviariam (a partir de dados reais da NASA, baixados por `fetch_nasa_power.py`,
+  cópia em `src/shared/data/nasa_power/`; a chuva entra da NASA) e **envia os pacotes ao `station_data_gateway`**
+  (`POST /api/stations/data`, formato `{unique_identifier, timestamp, measures[]}`) com `--gateway-url` (a porta
+  aparece no painel do Aspire; `--insecure` para https de desenvolvimento). É o gateway que cria a estação
+  `sim-navegantes-001`, as medidas e grava `event`. O gateway não deduplica: enviar duas vezes duplica (o script
+  recusa se a estação já tiver eventos, salvo `--force`). `--direct-database` grava direto e serve só para testes.
 - Demais tabelas: `crop` (catálogo), `planting` (field_id, crop_id, planting_date,
   harvest_date NULL = ainda plantado) e `rotation_rule` (PK composta
   previous_crop_id+suggested_crop_id, priority 1 = melhor opção, reason).
