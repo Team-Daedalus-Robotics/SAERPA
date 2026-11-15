@@ -1,3 +1,10 @@
+> ⚠️ **Documento histórico (14/11/2026), escrito antes da migração para o SAERPA.**
+> Estado atual: o catálogo da Embrapa e a classificação por família estão no **banco** (tabelas `crop` e
+> `crop_planting_window`, servidas por `GET /api/crops`); áreas e histórico são salvos pela API
+> (`/api/properties`, `/api/fields`); o roteamento usa TanStack Router e os dados do servidor, TanStack Query.
+> Os caminhos `data-raw/`, `scripts/` e `src/data/hortalicas.json` abaixo foram movidos para `src/shared`
+> (ver `README.md` desta pasta). O back end do SMAP (Earth Engine) continua pendente.
+
 # Field Shift — contexto do projeto (NASA Space Apps Challenge 2026)
 
 Resumo de tudo que já foi feito, para quem continuar o projeto (pessoa ou Claude Code).

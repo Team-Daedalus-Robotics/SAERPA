@@ -1,4 +1,5 @@
 from saerpa_shared.models.crop import Crop
+from saerpa_shared.models.crop_planting_window import CropPlantingWindow
 from saerpa_shared.models.event import Event
 from saerpa_shared.models.field import Field
 from saerpa_shared.models.measure import Measure
@@ -9,6 +10,7 @@ from saerpa_shared.models.station import Station
 
 __all__ = [
     "Crop",
+    "CropPlantingWindow",
     "Event",
     "Field",
     "Measure",

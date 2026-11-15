@@ -33,37 +33,45 @@ Só para checar tipos e gerar o build do frontend (dentro de `src/web`):
 | Critério | Origem | Efeito |
 |---|---|---|
 | Época de plantio na região, no mês escolhido | Tabela Embrapa | +35 se é a época; +15 se começa no mês seguinte |
-| Mesma família botânica da última planta | `classificacao.ts` | **Evitar** (pragas e doenças em comum) |
+| Mesma família botânica da última planta | classificação no banco (`crop`) | **Evitar** (pragas e doenças em comum) |
 | Ordem folha → fruto → raiz → leguminosa → folha | `classificacao.ts` | +45 se é o próximo grupo ideal |
 | Leguminosa depois de folha/fruto | `classificacao.ts` | +35 (devolve nitrogênio) |
-| Mesma família nas 2 safras anteriores | `classificacao.ts` | −15 |
+| Mesma família nas 2 safras anteriores | classificação no banco (`crop`) | −15 |
 | "Quero colher rápido" | Tabela Embrapa (dias até a colheita) | até +20 |
 
 Nota ≥ 70 = "Ótima escolha", ≥ 50 = "Boa escolha".
 
 ## Estrutura
 
-    data-raw/embrapa-informacoes-gerais-plantio-hortalicas.xlsx   planilha original
-    scripts/import_embrapa.py   converte a planilha em src/data/hortalicas.json
     src/
-      App.tsx                   tela e fluxo dos 3 passos
+      main.tsx                  provedores: TanStack Query + TanStack Router
+      router.tsx                rotas (a cidade, o estado e a área ficam na URL)
+      routes/PaginaInicial.tsx  tela e fluxo dos 3 passos
       components/
         LocationPicker.tsx      estado + cidade
         MapView.tsx             mapa, umidade SMAP, áreas marcadas
         PlantouCard.tsx         passo 2
         SugestoesCard.tsx       passo 3
         ui.tsx                  peças reutilizáveis
+      hooks/consultas.ts        TanStack Query: catálogo, áreas, histórico, umidade
       data/
-        hortalicas.json         GERADO pelo script (não editar à mão)
-        hortalicas.ts           junta tabela + classificação
-        classificacao.ts        família e grupo de cada hortaliça (adicionado pelo time)
+        hortalicas.ts           funções sobre o catálogo (vem da API)
+        classificacao.ts        grupos e ordem da rotação (folha → fruto → raiz → leguminosa)
         estados.json, municipios.json, locations.ts
       services/
+        clienteApi.ts           fetch com erros em português
+        catalogo.ts             GET /api/crops
+        areas.ts                propriedades, áreas e histórico (API + PostGIS)
         rotacao.ts              motor de recomendação
         smap.ts                 umidade NASA SMAP (hoje SIMULADA: USE_MOCK = true)
 
-Para atualizar a tabela: substitua o .xlsx em `data-raw/` e rode
-`python3 scripts/import_embrapa.py` (precisa de `pip install openpyxl`).
+O catálogo de hortaliças **não fica mais no frontend**: vem do banco pela API. A planilha da
+Embrapa, o script de importação e a classificação por família ficam em `src/shared`
+(`data/`, `scripts/import_embrapa.py`, `src/saerpa_shared/seed/crops.json`).
+Para atualizar a tabela, dentro de `src/shared`: edite `data/*` e rode
+`uv run --with openpyxl python scripts/import_embrapa.py`; a API grava no banco ao iniciar.
+Áreas marcadas e histórico por área ficam no banco; o histórico "cidade toda" fica no
+navegador (`localStorage`).
 
 ## Fontes de dados
 
@@ -78,7 +86,7 @@ Para atualizar a tabela: substitua o .xlsx em `data-raw/` e rode
   - Couve-flor de verão: espaçamento 9 × 5 cm → 90 × 50 cm (igual à aba Sul e à couve-flor de inverno)
 
 ### Família botânica e grupo (folha/fruto/raiz/leguminosa)
-- Classificação feita pelo time (`src/data/classificacao.ts`), não faz parte da tabela da Embrapa.
+- Classificação feita pelo time (`src/shared/data/crop_classification.json`), não faz parte da tabela da Embrapa.
 
 ### Estados e municípios
 - [kelvins/municipios-brasileiros](https://github.com/kelvins/municipios-brasileiros) — Kelvin S. do Prado, licença MIT (© 2016).
