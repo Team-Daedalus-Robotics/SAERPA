@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from shared.src.saerpa_shared.models.measure import Measure
+from saerpa_shared.models import Measure
 
 
 def list_by_station(session: Session, station_id: int) -> list[Measure]:
