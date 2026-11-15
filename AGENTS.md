@@ -25,20 +25,22 @@ src/
 │   ├── pyproject.toml   # fastapi, uvicorn, sqlalchemy via saerpa-shared
 │   ├── main.py          # re-exporta app.main.app (entrypoint do uvicorn)
 │   └── app/
-│       ├── main.py      # FastAPI() + include_routers
+│       ├── main.py      # FastAPI() + include_routers (lifespan aplica migrations)
 │       ├── deps.py      # get_session/SessionDep (SessionLocal do shared)
 │       ├── exceptions.py# ConflictError, NotFoundError (domínio)
 │       ├── repositories/# acesso a dados (station_repository, measure_repository)
 │       ├── services/    # regras de aplicação (station_service)
 │       └── controllers/ # rotas finas (status, stations) — mapeiam exceções→HTTP
 ├── shared/              # pacote saerpa-shared (instalável, layout src/)
-│   ├── pyproject.toml   # sqlalchemy, psycopg[binary]
-│   ├── src/saerpa_shared/
-│   │   ├── base.py      # Base(DeclarativeBase)
-│   │   ├── engine.py    # engine = create_engine(DATABASE_URL); SessionLocal
-│   │   ├── models/      # Station, Measure (estilo clássico Column(...))
-│   │   └── schemas/     # Pydantic Request/Response (station, measure) — fonte única
-│   └── sql/             # DDL manual, versionado (001_station.sql, 002_measure.sql)
+│   ├── pyproject.toml   # sqlalchemy, psycopg[binary], geoalchemy2, alembic
+│   ├── alembic.ini
+│   ├── migrations/      # Alembic (env.py lê DATABASE_URL; 0001_initial)
+│   └── src/saerpa_shared/
+│       ├── base.py      # Base(DeclarativeBase)
+│       ├── engine.py    # engine = create_engine(DATABASE_URL); SessionLocal
+│       ├── migrator.py  # run_migrations() (alembic upgrade head)
+│       ├── models/      # Station, Measure, Event, Property, Crop, Field, Planting, RotationRule
+│       └── schemas/     # Pydantic Request/Response (station, measure) — fonte única
 ├── nasa_event_worker/   # worker: eventos NASA (placeholder, loop + print)
 ├── station_data_gateway/# worker: gateway de estações (placeholder)
 ├── suggestion_worker/   # worker: sugestões (placeholder)
@@ -57,12 +59,22 @@ src/
 
 ## Banco de dados
 
-- **Sem migrations** (decisão do time): DDL é SQL manual versionado em `src/shared/sql/`
-  numerado (`001_*.sql`, `002_*.sql`...).
-- Tabelas atuais: `station` (id, unique_identifier UNIQUE, created_at),
+- **Migrations com Alembic** (migração da antiga decisão "sem migrations"): estrutura em
+  `src/shared/` (`alembic.ini` + `migrations/`), env lê `DATABASE_URL` do ambiente.
+- A **API aplica `alembic upgrade head` no startup** (lifespan) — Aspire garante o
+  Postgres pronto antes. Para aplicar manualmente: `uv run alembic upgrade head`
+  dentro de `src/shared` (com `DATABASE_URL` exportada).
+- Nova revisão: `uv run alembic revision --autogenerate -m "..."` dentro de `src/shared`
+  (compara as models do `saerpa_shared` com o banco).
+- Tabelas: `station` (id, unique_identifier UNIQUE, created_at),
   `measure` (id, station_id FK→station CASCADE, type, sensor_name, measurement_unit, data_type)
   e `event` (id, timestamp, station_id FK→station CASCADE, measure_id FK→measure CASCADE,
-  measure_type, value).
+  measure_type, value) e `property` (id, name, lat, lng, created_at, deleted).
+- Geo: PostGIS (`field.geometry` = GEOGRAPHY(Polygon, 4326)) — o Postgres do AppHost
+  precisa trocar a imagem para `postgis/postgis:18-*` (extensão criada em `0001_initial`).
+- Demais tabelas: `crop` (catálogo), `planting` (field_id, crop_id, planting_date,
+  harvest_date NULL = ainda plantado) e `rotation_rule` (PK composta
+  previous_crop_id+suggested_crop_id, priority 1 = melhor opção, reason).
 - Entidades no `saerpa_shared/models/` **devem espelhar** o DDL — qualquer mudança de
   tabela exige atualizar o `.sql` e a model juntos.
 
@@ -71,11 +83,15 @@ src/
 - **SQLAlchemy no estilo clássico** (`id = Column(Integer, primary_key=True)`), não
   `Mapped[...]`/`mapped_column`.
 - **Toda entidade deve ter `created_at` e `deleted`** (soft delete; `deleted = Column(Boolean, default=False)`).
+- **Frontend (React/Vite): usar TanStack Query** (server state — fetch, cache, mutations)
+  e **TanStack Router** (roteamento) — nunca fetch manual em `useEffect` nem react-router.
 - Base e conexão: `from saerpa_shared.base import Base`, `from saerpa_shared.engine import engine, SessionLocal`.
 - **Pydantic: sufixos `Request`/`Response`** (nunca `In`/`Out`). Schemas vivem em
   `saerpa_shared/schemas/` (fonte única p/ API e workers). Responses de entidade usam
   `model_config = ConfigDict(from_attributes=True)`.
 - Nomes em **inglês** (código, tabelas, colunas). Textos de UI em pt-BR.
+- **Nunca usar abreviações** — nem em tabelas/colunas, nem no código (ex.: usar
+  `property`, `measurement_unit`, `repository`, não `prop`, `unit`, `repo`).
 - FastAPI: rotas em camada fina; regra de sessão via `Depends` (`SessionDep`), rollback em erro.
 - **Camadas da api**: `controllers/` (rotas, mapeiam `ConflictError`/`NotFoundError`→HTTP)
   → `services/` (regras, commit/rollback) → `repositories/` (queries) → `saerpa_shared.models`.
@@ -101,7 +117,7 @@ uv add --editable ../shared        # usar saerpa-shared num serviço
 python -m py_compile <arquivos>
 
 # Aplicar DDL manual (com DATABASE_URL do painel exportado)
-psql "$DATABASE_URL" -f src/shared/sql/001_station.sql -f src/shared/sql/002_measure.sql
+uv run alembic upgrade head          # dentro de src/shared
 ```
 
 ## Requisitos

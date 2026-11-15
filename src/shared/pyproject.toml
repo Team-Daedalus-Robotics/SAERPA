@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "Entidades e infraestrutura de dados compartilhadas do SAERPA"
 requires-python = ">=3.13"
 dependencies = [
+    "alembic>=1.20.1",
+    "geoalchemy2>=0.21.0",
     "psycopg[binary]>=3.2,<4",
     "pydantic>=2.14.3",
     "sqlalchemy>=2.0,<3",

@@ -3,6 +3,7 @@ dist/
 .aspire/
 aspire-output/
 .venv/
+uv.lock
 __pycache__/
 *.py[cod]
 .env

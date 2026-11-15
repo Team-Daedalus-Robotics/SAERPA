@@ -4,6 +4,7 @@ const builder = await createBuilder();
 
 const postgres = await builder
   .addPostgres('postgres')
+  .withImage('postgis/postgis', { tag: '18-3.6' })
   .withPersistentLifetime()
   .withDataVolume({ name: 'saerpa-postgres-data' });
 const database = await postgres.addDatabase('saerpa');
