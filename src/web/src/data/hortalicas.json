@@ -1,0 +1,2884 @@
+[
+ {
+  "id": "abobrinha",
+  "nome": "Abobrinha",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 150,
+   "plantas": 100
+  },
+  "tipoPlantio": "Semeadura direta/cova",
+  "colheitaDias": [
+   45,
+   60
+  ],
+  "producaoM2": "1,0 a 1,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "abobora",
+  "nome": "Abóbora",
+  "epocas": {
+   "Sul": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 250,
+   "plantas": 250
+  },
+  "tipoPlantio": "Semeadura direta/cova",
+  "colheitaDias": [
+   90,
+   120
+  ],
+  "producaoM2": "1,0 a 1,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "acelga",
+  "nome": "Acelga",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [],
+   "Norte": [
+    4,
+    5,
+    6
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 40,
+   "plantas": 30
+  },
+  "tipoPlantio": "Muda/canteiro",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "1,5 a 2,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "agriao",
+  "nome": "Agrião",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 20,
+   "plantas": 10
+  },
+  "tipoPlantio": "Estacas (muda)/cova",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "4,0 a 5,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "alcachofra",
+  "nome": "Alcachofra",
+  "epocas": {
+   "Sul": [
+    2,
+    3
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 200,
+   "plantas": 100
+  },
+  "tipoPlantio": "Muda/ Canteiro",
+  "colheitaDias": [
+   180,
+   200
+  ],
+  "producaoM2": null,
+  "fonte": "Região sul"
+ },
+ {
+  "id": "alface-de-inverno",
+  "nome": "Alface de inverno",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Norte": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 25
+  },
+  "tipoPlantio": "Muda/canteiro",
+  "colheitaDias": [
+   60,
+   80
+  ],
+  "producaoM2": "16 pés",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "alface-de-verao",
+  "nome": "Alface de verão",
+  "epocas": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 25
+  },
+  "tipoPlantio": "Muda/canteiro",
+  "colheitaDias": [
+   50,
+   70
+  ],
+  "producaoM2": "16 pés",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "alho",
+  "nome": "Alho",
+  "epocas": {
+   "Sul": [
+    5,
+    6
+   ],
+   "Sudeste": [
+    3,
+    4
+   ],
+   "Nordeste": [
+    5
+   ],
+   "Centro-Oeste": [
+    3,
+    4
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 10
+  },
+  "tipoPlantio": "Semeadura direta/canteiro",
+  "colheitaDias": [
+   150,
+   180
+  ],
+  "producaoM2": "0,4 a 0,6 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "alho-porro",
+  "nome": "Alho-porro",
+  "epocas": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 50,
+   "plantas": 15
+  },
+  "tipoPlantio": "Muda/ Canteiro",
+  "colheitaDias": [
+   90,
+   120
+  ],
+  "producaoM2": null,
+  "fonte": "Região sul"
+ },
+ {
+  "id": "almeirao",
+  "nome": "Almeirão",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 25
+  },
+  "tipoPlantio": "Muda/canteiro",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "16 pés",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "batata",
+  "nome": "Batata",
+  "epocas": {
+   "Sul": [
+    11,
+    12
+   ],
+   "Sudeste": [
+    4,
+    5
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    4,
+    5
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 90,
+   "plantas": 30
+  },
+  "tipoPlantio": "Semeadura direta/sulco",
+  "colheitaDias": [
+   90,
+   120
+  ],
+  "producaoM2": "2,0 a 3,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "batata-doce",
+  "nome": "Batata-doce",
+  "epocas": {
+   "Sul": [
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    10,
+    11,
+    12
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 90,
+   "plantas": 30
+  },
+  "tipoPlantio": "Semeadura direta/leira",
+  "colheitaDias": [
+   120,
+   150
+  ],
+  "producaoM2": "1,0 a 1,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "berinjela",
+  "nome": "Berinjela",
+  "epocas": {
+   "Sul": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 120,
+   "plantas": 100
+  },
+  "tipoPlantio": "Semeadura direta/canteiro",
+  "colheitaDias": [
+   100,
+   120
+  ],
+  "producaoM2": "7,0 a 8,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "bertalha",
+  "nome": "Bertalha",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 40
+  },
+  "tipoPlantio": "Muda/cova",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "2,0 a 2,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "beterraba",
+  "nome": "Beterraba",
+  "epocas": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 20,
+   "plantas": 10
+  },
+  "tipoPlantio": "Semeadura direta/canteiro",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "3,0 a 4,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "brocolis-de-inverno",
+  "nome": "Brócolis de inverno",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "tipoPlantio": "Muda/cova",
+  "colheitaDias": [
+   90,
+   100
+  ],
+  "producaoM2": "1,0 a 3,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "brocolis-de-verao",
+  "nome": "Brócolis de verão",
+  "epocas": {
+   "Sul": [
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Nordeste": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Centro-Oeste": [
+    10,
+    11,
+    12,
+    1
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "tipoPlantio": "Muda/cova",
+  "colheitaDias": [
+   80,
+   100
+  ],
+  "producaoM2": "1,0 a 3,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "cebola",
+  "nome": "Cebola",
+  "epocas": {
+   "Sul": [
+    7,
+    8
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "Norte": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 40,
+   "plantas": 10
+  },
+  "tipoPlantio": "Semeadura direta-muda/canteiro",
+  "colheitaDias": [
+   120,
+   180
+  ],
+  "producaoM2": "1,0 a 2,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "cebolinha",
+  "nome": "Cebolinha",
+  "epocas": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 15
+  },
+  "tipoPlantio": "Muda/canteiro",
+  "colheitaDias": [
+   80,
+   100
+  ],
+  "producaoM2": "0,5 a 0,6 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "cenoura-de-inverno",
+  "nome": "Cenoura de inverno",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 20,
+   "plantas": 5
+  },
+  "tipoPlantio": "Semeadura direta/canteiro",
+  "colheitaDias": [
+   90,
+   110
+  ],
+  "producaoM2": "2,0 a 3,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "cenoura-de-verao",
+  "nome": "Cenoura de verão",
+  "epocas": {
+   "Sul": [
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Centro-Oeste": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Norte": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 20,
+   "plantas": 5
+  },
+  "tipoPlantio": "Semeadura direta/canteiro",
+  "colheitaDias": [
+   85,
+   100
+  ],
+  "producaoM2": "2,0 a 3,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "chicoria",
+  "nome": "Chicória",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6
+   ],
+   "Norte": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 25
+  },
+  "tipoPlantio": "Muda/canteiro",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "16 pés",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "chuchu",
+  "nome": "Chuchu",
+  "epocas": {
+   "Sul": [
+    9,
+    10
+   ],
+   "Sudeste": [
+    9,
+    10
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    9,
+    10
+   ],
+   "Norte": [
+    4,
+    5,
+    6
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 600,
+   "plantas": 500
+  },
+  "tipoPlantio": "Semeadura direta/covas",
+  "colheitaDias": [
+   100,
+   120
+  ],
+  "producaoM2": "1,5 a 2,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "coentro",
+  "nome": "Coentro",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 10
+  },
+  "tipoPlantio": "Semeadura direta/canteiro",
+  "colheitaDias": [
+   50,
+   60
+  ],
+  "producaoM2": "0,6 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "couve",
+  "nome": "Couve",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "tipoPlantio": "Muda/cova",
+  "colheitaDias": [
+   80,
+   90
+  ],
+  "producaoM2": "1,6 molhos",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "couve-chinesa",
+  "nome": "Couve-chinesa",
+  "epocas": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 50,
+   "plantas": 40
+  },
+  "tipoPlantio": "Muda/Cova",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": null,
+  "fonte": "Região sul"
+ },
+ {
+  "id": "couve-flor-de-inverno",
+  "nome": "Couve-flor de inverno",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "tipoPlantio": "Muda/cova",
+  "colheitaDias": [
+   100,
+   110
+  ],
+  "producaoM2": "1,0 a 1,2 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "couve-flor-de-verao",
+  "nome": "Couve-flor de verão",
+  "epocas": {
+   "Sul": [
+    12,
+    1
+   ],
+   "Sudeste": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    10,
+    11,
+    12,
+    1
+   ],
+   "Norte": [
+    11,
+    12,
+    1,
+    2
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 90,
+   "plantas": 50
+  },
+  "tipoPlantio": "Muda/cova",
+  "colheitaDias": [
+   90,
+   100
+  ],
+  "producaoM2": "1,0 a 1,2 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "ervilha-grao",
+  "nome": "Ervilha grão",
+  "epocas": {
+   "Sul": [
+    4,
+    5
+   ],
+   "Sudeste": [
+    4,
+    5
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    4,
+    5
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 7
+  },
+  "tipoPlantio": "Semeadura direta/sulco",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "0,2 a 0,3 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "ervilha-torta",
+  "nome": "Ervilha torta",
+  "epocas": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 80,
+   "plantas": 60
+  },
+  "tipoPlantio": "Semente/Cova",
+  "colheitaDias": [
+   70,
+   100
+  ],
+  "producaoM2": null,
+  "fonte": "Região sul"
+ },
+ {
+  "id": "espinafre",
+  "nome": "Espinafre",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    3,
+    4,
+    5
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 10
+  },
+  "tipoPlantio": "Semeadura direta/canteiro",
+  "colheitaDias": [
+   60,
+   80
+  ],
+  "producaoM2": "4,0 a 5,0 molhos",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "feijao-vagem",
+  "nome": "Feijão-vagem",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "tipoPlantio": "Semeadura direta/cova",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "2,0 a 2,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "gengibre",
+  "nome": "Gengibre",
+  "epocas": {
+   "Sul": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 120,
+   "plantas": 20
+  },
+  "tipoPlantio": "Rizomasemente/sulco",
+  "colheitaDias": [
+   240,
+   300
+  ],
+  "producaoM2": "3,0 a 4,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "inhame",
+  "nome": "Inhame",
+  "epocas": {
+   "Sul": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "Nordeste": [
+    12,
+    1
+   ],
+   "Centro-Oeste": [
+    7,
+    8
+   ],
+   "Norte": [
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 90,
+   "plantas": 40
+  },
+  "tipoPlantio": "Muda (tubérculo)/cova alta",
+  "colheitaDias": [
+   150,
+   180
+  ],
+  "producaoM2": "1,0 a 1,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "jilo",
+  "nome": "Jiló",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 70
+  },
+  "tipoPlantio": "Muda/cova",
+  "colheitaDias": [
+   90,
+   100
+  ],
+  "producaoM2": "1,6 a 2,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "mandioquinha-salsa",
+  "nome": "Mandioquinha salsa",
+  "epocas": {
+   "Sul": [
+    4,
+    5
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 80,
+   "plantas": 30
+  },
+  "tipoPlantio": "Semente/Canteiro",
+  "colheitaDias": [
+   300,
+   360
+  ],
+  "producaoM2": null,
+  "fonte": "Região sul"
+ },
+ {
+  "id": "maxixe",
+  "nome": "Maxixe",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "tipoPlantio": "Semeadura direta/cova",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "2,5 a 2,8 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "melancia",
+  "nome": "Melancia",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 200,
+   "plantas": 200
+  },
+  "tipoPlantio": "Direto/cova",
+  "colheitaDias": [
+   85,
+   90
+  ],
+  "producaoM2": "3,0 a 5,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "melao",
+  "nome": "Melão",
+  "epocas": {
+   "Sul": [
+    10,
+    11,
+    12,
+    1
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 200,
+   "plantas": 150
+  },
+  "tipoPlantio": "Semente/Cova",
+  "colheitaDias": [
+   80,
+   120
+  ],
+  "producaoM2": null,
+  "fonte": "Região sul"
+ },
+ {
+  "id": "milho-verde",
+  "nome": "Milho-verde",
+  "epocas": {
+   "Sul": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Centro-Oeste": [
+    9,
+    10,
+    11,
+    12,
+    1
+   ],
+   "Norte": [
+    3,
+    4,
+    5
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 20
+  },
+  "tipoPlantio": "Semeadura direta/canteiro",
+  "colheitaDias": [
+   80,
+   110
+  ],
+  "producaoM2": "5 - 6 espigas",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "moranga",
+  "nome": "Moranga",
+  "epocas": {
+   "Sul": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 200,
+   "plantas": 200
+  },
+  "tipoPlantio": "Semeadura direta/cova",
+  "colheitaDias": [
+   120,
+   150
+  ],
+  "producaoM2": "1,0 a 1,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "morango",
+  "nome": "Morango",
+  "epocas": {
+   "Sul": [
+    3,
+    4
+   ],
+   "Sudeste": [
+    3,
+    4
+   ],
+   "Nordeste": [],
+   "Centro-Oeste": [
+    2,
+    3
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 30,
+   "plantas": 20
+  },
+  "tipoPlantio": "Mudas/cova",
+  "colheitaDias": [
+   70,
+   80
+  ],
+  "producaoM2": "3,0 a 4,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "mostarda",
+  "nome": "Mostarda",
+  "epocas": {
+   "Sul": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 40,
+   "plantas": 40
+  },
+  "tipoPlantio": "Mudas/sulco",
+  "colheitaDias": [
+   45,
+   50
+  ],
+  "producaoM2": "5 a 7 pés",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "nabo",
+  "nome": "Nabo",
+  "epocas": {
+   "Sul": [
+    4,
+    5
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 30,
+   "plantas": 1
+  },
+  "tipoPlantio": "Semente/Canteiro",
+  "colheitaDias": [
+   50,
+   60
+  ],
+  "producaoM2": null,
+  "fonte": "Região sul"
+ },
+ {
+  "id": "pepino",
+  "nome": "Pepino",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "tipoPlantio": "Semeadura direta-mudas/cova",
+  "colheitaDias": [
+   45,
+   60
+  ],
+  "producaoM2": "4,0 a 5,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "pimenta",
+  "nome": "Pimenta",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 120,
+   "plantas": 60
+  },
+  "tipoPlantio": "Mudas/cova",
+  "colheitaDias": [
+   90,
+   120
+  ],
+  "producaoM2": "0,5 a 1,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "pimentao",
+  "nome": "Pimentão",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "tipoPlantio": "Mudas/cova",
+  "colheitaDias": [
+   100,
+   120
+  ],
+  "producaoM2": "3,0 a 4,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "quiabo",
+  "nome": "Quiabo",
+  "epocas": {
+   "Sul": [
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 40
+  },
+  "tipoPlantio": "Semeadura direta-mudas/cova",
+  "colheitaDias": [
+   70,
+   80
+  ],
+  "producaoM2": "1,5 a 2,2 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "rabanete",
+  "nome": "Rabanete",
+  "epocas": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Norte": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 5
+  },
+  "tipoPlantio": "Semeadura direta/canteiro",
+  "colheitaDias": [
+   25,
+   30
+  ],
+  "producaoM2": "1,5 a 3,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "repolho-de-inverno",
+  "nome": "Repolho de inverno",
+  "epocas": {
+   "Sul": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Nordeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 80,
+   "plantas": 40
+  },
+  "tipoPlantio": "Mudas/cova",
+  "colheitaDias": [
+   90,
+   110
+  ],
+  "producaoM2": "3,0 a 6,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "repolho-de-verao",
+  "nome": "Repolho de verão",
+  "epocas": {
+   "Sul": [
+    11,
+    12,
+    1
+   ],
+   "Sudeste": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Norte": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 80,
+   "plantas": 40
+  },
+  "tipoPlantio": "Mudas/cova",
+  "colheitaDias": [
+   90,
+   110
+  ],
+  "producaoM2": "3,0 a 6,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "rucula",
+  "nome": "Rúcula",
+  "epocas": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 20,
+   "plantas": 15
+  },
+  "tipoPlantio": "Semeadura direta/linha",
+  "colheitaDias": [
+   40,
+   60
+  ],
+  "producaoM2": "2,0 a 2,5 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "salsa",
+  "nome": "Salsa",
+  "epocas": {
+   "Sul": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Sudeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "Nordeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Centro-Oeste": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "Norte": []
+  },
+  "espacamentoCm": {
+   "linhas": 25,
+   "plantas": 10
+  },
+  "tipoPlantio": "Semeadura direta-mudas/li nha",
+  "colheitaDias": [
+   60,
+   70
+  ],
+  "producaoM2": "0,5 a 0,7 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "taioba",
+  "nome": "Taioba",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11
+   ],
+   "Sudeste": [
+    9,
+    10,
+    11
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 80,
+   "plantas": 40
+  },
+  "tipoPlantio": "Mudas (rizoma)/cova",
+  "colheitaDias": [
+   70,
+   100
+  ],
+  "producaoM2": "2,5 a 3,0 kg",
+  "fonte": "Brasil"
+ },
+ {
+  "id": "taro",
+  "nome": "Taro",
+  "epocas": {
+   "Sul": [
+    9,
+    10
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 30
+  },
+  "tipoPlantio": "Muda/Sulco",
+  "colheitaDias": [
+   150,
+   180
+  ],
+  "producaoM2": null,
+  "fonte": "Região sul"
+ },
+ {
+  "id": "tomate-industria",
+  "nome": "Tomate indústria",
+  "epocas": {
+   "Sul": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "tipoPlantio": "Muda/Sulco",
+  "colheitaDias": [
+   100,
+   120
+  ],
+  "producaoM2": null,
+  "fonte": "Região sul"
+ },
+ {
+  "id": "tomate-mesa",
+  "nome": "Tomate mesa",
+  "epocas": {
+   "Sul": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Sudeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Nordeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Centro-Oeste": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "Norte": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "espacamentoCm": {
+   "linhas": 100,
+   "plantas": 50
+  },
+  "tipoPlantio": "Mudas/sulco",
+  "colheitaDias": [
+   100,
+   120
+  ],
+  "producaoM2": "5,0 a 10 kg",
+  "fonte": "Brasil"
+ }
+]
