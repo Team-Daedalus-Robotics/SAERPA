@@ -1,3 +1,5 @@
+import { delimiter, dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createBuilder } from './.aspire/modules/aspire.mjs';
 
 try {
@@ -7,6 +9,7 @@ try {
 }
 
 const builder = await createBuilder();
+const sharedPythonPath = resolve(dirname(fileURLToPath(import.meta.url)), 'src/shared/src');
 
 const postgresPassword = await builder.addParameter('postgres-password', {
   value: process.env.POSTGRES_PASSWORD,
@@ -15,10 +18,12 @@ const postgresPassword = await builder.addParameter('postgres-password', {
 const postgresUser = await builder.addParameter('postgres-user', {
   value: process.env.POSTGRES_USER,
 });
+const postgresPlatform = process.env.POSTGRES_PLATFORM ?? 'linux/amd64';
 
 const postgres = await builder
   .addPostgres('postgres', { userName: postgresUser, password: postgresPassword, port: 5432 })
   .withImage('postgis/postgis', { tag: '18-3.6' })
+  .withContainerRuntimeArgs(['--platform', postgresPlatform])
   .withPersistentLifetime()
   .withDataVolume({ name: 'saerpa-postgres-data' });
 const database = await postgres.addDatabase('saerpa');
@@ -47,6 +52,7 @@ const api = await builder
   .waitFor(nasaEventWorker)
   .waitFor(stationDataGateway)
   .waitFor(suggestionWorker)
+  .withEnvironment('PYTHONPATH', [sharedPythonPath, process.env.PYTHONPATH].filter(Boolean).join(delimiter))
   .withEnvironment('DATABASE_URL', await database.uriExpression());
 
 await builder
