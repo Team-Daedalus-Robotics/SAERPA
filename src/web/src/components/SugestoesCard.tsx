@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { NOMES_MES } from '../data/hortalicas';
 import { formatarNumero } from '../lib/geo';
 import { planoDoAno, recomendar, type Entrada, type Sugestao } from '../services/rotacao';
-import { classify } from '../services/smap';
+import { USE_MOCK, classify } from '../services/smap';
 import type { MoistureStatistics } from '../types';
+import { Icone, SeloDaCultura, type NomeDeIcone } from './icones';
 import { EmptyState, StepTitle } from './ui';
 
 interface Propriedades {
@@ -23,13 +24,19 @@ const BADGE = {
 
 /** Conselho simples a partir da umidade da terra (satélite NASA SMAP) */
 const DICA_UMIDADE = {
-  dry: { icon: '🏜️', texto: 'A terra está seca. Regue bem antes de plantar e cubra o canteiro com palha para segurar a água.' },
-  mid: { icon: '💧', texto: 'A terra está um pouco seca. Regue com frequência nos primeiros dias depois de plantar.' },
-  ok:  { icon: '👍', texto: 'A umidade da terra está boa para plantar.' },
-  wet: { icon: '🌧️', texto: 'A terra está muito molhada. Faça canteiros mais altos para a água escorrer.' },
+  dry: 'A terra está seca. Regue bem antes de plantar e cubra o canteiro com palha para segurar a água.',
+  mid: 'A terra está um pouco seca. Regue com frequência nos primeiros dias depois de plantar.',
+  ok: 'A umidade da terra está boa para plantar.',
+  wet: 'A terra está muito molhada. Faça canteiros mais altos para a água escorrer.',
 } as const;
 
+const ICONE_DO_MOTIVO: Record<'bom' | 'ruim' | 'info', NomeDeIcone> = { bom: 'sucesso', ruim: 'alerta', info: 'info' };
+
 const PRIMEIROS = 5;
+
+function posicaoNaEscala(valor: number): number {
+  return Math.max(0, Math.min(1, (valor - 0.05) / 0.4)) * 100;
+}
 
 /** Passo 3 — "O que plantar agora" */
 export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onColherRapido }: Propriedades) {
@@ -40,7 +47,7 @@ export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onCol
     return (
       <section className="card step-off">
         <StepTitle numero={3} title="O que plantar agora" />
-        <EmptyState icon="🧑‍🌾" title="Aqui aparecem as sugestões" text="Escolha a cidade no passo 1 para começar." />
+        <EmptyState icone="lista" title="Aqui aparecem as sugestões" text="Escolha a cidade no passo 1 para começar." />
       </section>
     );
   }
@@ -48,14 +55,15 @@ export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onCol
   const resultado = recomendar(entrada);
   const plano = planoDoAno(entrada, 3);
   const lista = verMais ? resultado.agora : resultado.agora.slice(0, PRIMEIROS);
-  const dica = umidade ? DICA_UMIDADE[classify(umidade.mean).tone] : null;
+  const classificacao = umidade ? classify(umidade.mean) : null;
   const ehAgora = entrada.mes === mesAtual;
+  const nomeDoMes = NOMES_MES[entrada.mes - 1];
 
   return (
     <section className="card">
       <StepTitle
         numero={3}
-        title={ehAgora ? 'O que plantar agora' : `O que plantar em ${NOMES_MES[entrada.mes - 1]}`}
+        title={ehAgora ? 'O que plantar agora' : `O que plantar em ${nomeDoMes}`}
         subtitulo={`Região ${entrada.regiao} · tabela de plantio da Embrapa`}
       />
 
@@ -63,8 +71,8 @@ export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onCol
         <label className="ctl">
           <span>Quando vai plantar?</span>
           <select value={entrada.mes} onChange={(evento) => { onMes(Number(evento.target.value)); setVerMais(false); }}>
-            {NOMES_MES.map((nomeDoMes, indice) => (
-              <option key={nomeDoMes} value={indice + 1}>{indice + 1 === mesAtual ? `Agora (${nomeDoMes})` : primeiraLetraMaiuscula(nomeDoMes)}</option>
+            {NOMES_MES.map((nome, indice) => (
+              <option key={nome} value={indice + 1}>{indice + 1 === mesAtual ? `Agora (${nome})` : primeiraLetraMaiuscula(nome)}</option>
             ))}
           </select>
         </label>
@@ -73,22 +81,38 @@ export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onCol
           aria-pressed={entrada.colherRapido}
           onClick={() => onColherRapido(!entrada.colherRapido)}
         >
-          ⏱️ Quero colher rápido
+          <Icone nome="relogio" tamanho={18} /> Quero colher rápido
         </button>
       </div>
 
       {!entrada.historico.respondeu && (
-        <p className="nudge">👆 Conte no passo 2 o que você plantou por último. Assim a sugestão cuida melhor da sua terra.</p>
+        <p className="nudge"><Icone nome="info" tamanho={20} /> Conte no passo 2 o que você plantou por último. Assim a sugestão cuida melhor da sua terra.</p>
       )}
 
-      {dica && umidade && (
-        <div className="tip">
-          <span className="tip-icon">{dica.icon}</span>
-          <p>{dica.texto} <small>Umidade medida por satélite da NASA: {formatarNumero(umidade.mean)} (média de 30 dias)</small></p>
+      {umidade && classificacao && (
+        <div className="stat">
+          <div className="stat-head">
+            <span className="stat-titulo"><Icone nome="gota" tamanho={18} /> Umidade da terra</span>
+            {USE_MOCK && <span className="chip-teste">Dados de teste</span>}
+          </div>
+          <div className="stat-valor">
+            <b className={`tom-${classificacao.tone}`}>{classificacao.label}</b>
+            <span>índice {formatarNumero(umidade.mean)} · média de 30 dias</span>
+          </div>
+          <div className="escala" aria-hidden="true">
+            <span className="escala-faixa f-dry" /><span className="escala-faixa f-mid" /><span className="escala-faixa f-ok" /><span className="escala-faixa f-wet" />
+            <span className="escala-marca" style={{ left: `${posicaoNaEscala(umidade.mean)}%` }} />
+          </div>
+          <div className="escala-rotulos"><span>Seca</span><span>Molhada</span></div>
+          <p className="stat-dica">{DICA_UMIDADE[classificacao.tone]}</p>
+          <span className="stat-fonte">{USE_MOCK ? 'Valores simulados enquanto a ligação com o satélite NASA SMAP não está pronta.' : 'Satélite NASA SMAP.'}</span>
         </div>
       )}
 
-      <h3 className="list-title">✅ Boas para plantar {ehAgora ? 'agora' : `em ${NOMES_MES[entrada.mes - 1]}`}</h3>
+      <h3 className="list-title">
+        Boas para plantar {ehAgora ? 'agora' : `em ${nomeDoMes}`}
+        <span className="contagem">{resultado.agora.length}</span>
+      </h3>
       {resultado.agora.length === 0 && <p className="hint">Nenhuma planta da tabela é indicada para este mês na sua região. Veja os próximos meses abaixo.</p>}
       <ul className="sug-list" data-tour="sugestoes">
         {lista.map((sugestao, indice) => (
@@ -102,10 +126,14 @@ export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onCol
 
       {resultado.proximosMeses.length > 0 && (
         <>
-          <h3 className="list-title">📅 Para os próximos meses</h3>
+          <h3 className="list-title">Para os próximos meses</h3>
           <ul className="mini-list">
             {resultado.proximosMeses.slice(0, 4).map((sugestao) => (
-              <li key={sugestao.hortalica.id}><span>{sugestao.hortalica.emoji}</span><b>{sugestao.hortalica.nome}</b><em>a partir de {NOMES_MES[sugestao.proximoMes! - 1]}</em></li>
+              <li key={sugestao.hortalica.id}>
+                <SeloDaCultura grupo={sugestao.hortalica.grupo} tamanho={36} />
+                <b>{sugestao.hortalica.nome}</b>
+                <em>a partir de {NOMES_MES[sugestao.proximoMes! - 1]}</em>
+              </li>
             ))}
           </ul>
         </>
@@ -113,11 +141,15 @@ export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onCol
 
       {resultado.evitar.length > 0 && (
         <div data-tour="evitar">
-          <h3 className="list-title">⚠️ Evite plantar no mesmo lugar</h3>
+          <h3 className="list-title">Evite plantar no mesmo lugar</h3>
           <p className="hint">São da mesma família do que você plantou. Pegam as mesmas pragas e doenças.</p>
           <ul className="mini-list bad">
             {resultado.evitar.slice(0, 5).map((sugestao) => (
-              <li key={sugestao.hortalica.id}><span>{sugestao.hortalica.emoji}</span><b>{sugestao.hortalica.nome}</b><em>{sugestao.hortalica.familia}</em></li>
+              <li key={sugestao.hortalica.id}>
+                <SeloDaCultura grupo={sugestao.hortalica.grupo} tamanho={36} />
+                <b>{sugestao.hortalica.nome}</b>
+                <em>{sugestao.hortalica.familia}</em>
+              </li>
             ))}
           </ul>
         </div>
@@ -125,16 +157,16 @@ export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onCol
 
       {plano.length > 1 && (
         <>
-          <h3 className="list-title">🗓️ Ideia de sequência para o ano</h3>
-          <div className="timeline">
+          <h3 className="list-title">Ideia de sequência para o ano</h3>
+          <ol className="timeline">
             {plano.map((passoDoPlano, indice) => (
-              <div key={indice} className="t-step">
-                <span className="e">{passoDoPlano.sugestao.hortalica.emoji}</span>
+              <li key={indice} className="t-step">
+                <span className="t-num">{indice + 1}</span>
                 <b>{passoDoPlano.sugestao.hortalica.nome}</b>
-                {primeiraLetraMaiuscula(NOMES_MES[passoDoPlano.mes - 1])}
-              </div>
+                <span>{primeiraLetraMaiuscula(NOMES_MES[passoDoPlano.mes - 1])}</span>
+              </li>
             ))}
-          </div>
+          </ol>
         </>
       )}
 
@@ -151,27 +183,29 @@ function SugestaoItem({ sugestao, destaque, aberto, onToggle }: { sugestao: Suge
   return (
     <li className={`sug ${destaque ? 'top' : ''} ${aberto ? 'open' : ''}`}>
       <button className="sug-head" onClick={onToggle} aria-expanded={aberto}>
-        <span className="sug-emoji">{hortalica.emoji}</span>
+        <SeloDaCultura grupo={hortalica.grupo} />
         <span className="sug-main">
           <b>{hortalica.nome}</b>
-          <span className={`badge ${selo.classeCss}`}>{destaque ? '⭐ Melhor escolha' : selo.texto}</span>
           <span className="sug-sub">Colhe em {hortalica.colheitaDias[0]}–{hortalica.colheitaDias[1]} dias</span>
         </span>
-        <span className="sug-more">{aberto ? 'Fechar' : 'Ver como plantar'}</span>
+        <span className={`badge ${selo.classeCss}`}>{destaque ? 'Melhor escolha' : selo.texto}</span>
+        <span className="sug-seta"><Icone nome="baixo" tamanho={20} /></span>
       </button>
       {aberto && (
         <div className="sug-body">
           <h4>Por que?</h4>
           <ul className="reasons">
-            {sugestao.motivos.map((motivo, indice) => <li key={indice} className={motivo.tipo}>{motivo.texto}</li>)}
+            {sugestao.motivos.map((motivo, indice) => (
+              <li key={indice} className={motivo.tipo}><Icone nome={ICONE_DO_MOTIVO[motivo.tipo]} tamanho={18} /><span>{motivo.texto}</span></li>
+            ))}
           </ul>
           <h4>Como plantar</h4>
           <dl className="howto">
-            <div><dt>📏 Entre as linhas</dt><dd>{hortalica.espacamentoEmCentimetros.linhas} cm</dd></div>
-            <div><dt>📐 Entre as plantas</dt><dd>{hortalica.espacamentoEmCentimetros.plantas} cm</dd></div>
-            <div><dt>🌱 Jeito de plantar</dt><dd>{hortalica.tipoPlantio}</dd></div>
-            <div><dt>🧺 Colheita</dt><dd>{hortalica.colheitaDias[0]} a {hortalica.colheitaDias[1]} dias depois de plantar</dd></div>
-            {hortalica.producaoPorMetroQuadrado && <div><dt>⚖️ Produção</dt><dd>{hortalica.producaoPorMetroQuadrado} por m²</dd></div>}
+            <div><dt>Entre as linhas</dt><dd>{hortalica.espacamentoEmCentimetros.linhas} cm</dd></div>
+            <div><dt>Entre as plantas</dt><dd>{hortalica.espacamentoEmCentimetros.plantas} cm</dd></div>
+            <div><dt>Jeito de plantar</dt><dd>{hortalica.tipoPlantio}</dd></div>
+            <div><dt>Colheita</dt><dd>{hortalica.colheitaDias[0]} a {hortalica.colheitaDias[1]} dias depois de plantar</dd></div>
+            {hortalica.producaoPorMetroQuadrado && <div><dt>Produção</dt><dd>{hortalica.producaoPorMetroQuadrado} por m²</dd></div>}
           </dl>
         </div>
       )}

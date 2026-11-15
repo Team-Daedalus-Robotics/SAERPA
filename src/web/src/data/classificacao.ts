@@ -13,11 +13,11 @@
  * ========================================================================= */
 import type { Grupo } from '../types';
 
-export const GRUPOS: Record<Grupo, { nome: string; emoji: string; frase: string }> = {
-  folha:      { nome: 'Folhas',      emoji: '🥬', frase: 'de folha' },
-  fruto:      { nome: 'Frutos',      emoji: '🍅', frase: 'de fruto' },
-  raiz:       { nome: 'Raízes',      emoji: '🥕', frase: 'de raiz ou bulbo' },
-  leguminosa: { nome: 'Leguminosas', emoji: '🫛', frase: 'leguminosa (vagem)' },
+export const GRUPOS: Record<Grupo, { nome: string; frase: string }> = {
+  folha:      { nome: 'Folhas',      frase: 'de folha' },
+  fruto:      { nome: 'Frutos',      frase: 'de fruto' },
+  raiz:       { nome: 'Raízes',      frase: 'de raiz ou bulbo' },
+  leguminosa: { nome: 'Leguminosas', frase: 'leguminosa (vagem)' },
 };
 
 /** Ordem da rotação: depois de cada grupo, qual é o ideal */

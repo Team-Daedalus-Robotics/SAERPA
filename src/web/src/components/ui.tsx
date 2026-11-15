@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { MoisturePoint } from '../types';
+import { Icone, type NomeDeIcone } from './icones';
 
 export function Icon({ caminho, children }: { caminho?: string; children?: ReactNode }) {
   return (
@@ -51,7 +52,7 @@ export function Sparkline({ series }: { series: MoisturePoint[] }) {
     <svg className="spark" viewBox={`0 0 ${largura} ${altura}`} preserveAspectRatio="none" aria-label="Umidade nos últimos 30 dias">
       <path d={`${linha} L${ultimoPonto[0]},${altura} L${pontos[0][0]},${altura} Z`} fill="#2f6b45" opacity=".12" />
       <path d={linha} fill="none" stroke="#2f6b45" strokeWidth="1.8" vectorEffect="non-scaling-stroke" />
-      <circle cx={ultimoPonto[0]} cy={ultimoPonto[1]} r="3" fill="#e4572e" />
+      <circle cx={ultimoPonto[0]} cy={ultimoPonto[1]} r="3" fill="#1b7f45" />
     </svg>
   );
 }
@@ -70,10 +71,10 @@ export function Sheet({ open, onClose, children }: { open: boolean; onClose: () 
   );
 }
 
-export function EmptyState({ icon, title, text }: { icon: string; title: string; text: string }) {
+export function EmptyState({ icone, title, text }: { icone: NomeDeIcone; title: string; text: string }) {
   return (
     <div className="empty">
-      <span className="empty-icon">{icon}</span>
+      <span className="empty-icon"><Icone nome={icone} tamanho={26} /></span>
       <b>{title}</b>
       <p>{text}</p>
     </div>

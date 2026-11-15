@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { GRUPOS } from '../data/classificacao';
 import { daRegiao, indexarPorId } from '../data/hortalicas';
 import type { Historico, Hortalica, Regiao } from '../types';
+import { Icone, SeloDaCultura } from './icones';
 import { EmptyState, StepTitle } from './ui';
 
 interface Propriedades {
@@ -31,7 +32,7 @@ export default function PlantouCard({ catalogo, regiao, historico, onChange, ond
     return (
       <section className="card step-off" data-tour="plantou">
         <StepTitle numero={2} title="O que você plantou por último?" />
-        <EmptyState icon="🌱" title="Primeiro escolha a cidade" text="Assim mostramos as plantas que dão certo na sua região." />
+        <EmptyState icone="broto" title="Primeiro escolha a cidade" text="Assim mostramos as plantas que dão certo na sua região." />
       </section>
     );
   }
@@ -56,34 +57,37 @@ export default function PlantouCard({ catalogo, regiao, historico, onChange, ond
 
       {!mostrarGrade && (
         <div className="answer">
-          <span className="answer-emoji">{ultima ? ultima.emoji : '🤷'}</span>
+          {ultima ? <SeloDaCultura grupo={ultima.grupo} /> : <span className="selo selo-neutro" style={{ width: 44, height: 44 }}><Icone nome="ajuda" /></span>}
           <div>
             <b>{ultima ? ultima.nome : 'Nada / não sei'}</b>
             <span>{ultima ? `Planta ${GRUPOS[ultima.grupo].frase} · família ${ultima.familia}` : 'Vamos sugerir pela época do ano'}</span>
           </div>
-          <button className="btn-outline" onClick={() => setTrocando(true)}>Trocar</button>
+          <button className="btn-outline" onClick={() => setTrocando(true)}><Icone nome="troca" tamanho={18} /> Trocar</button>
         </div>
       )}
 
       {mostrarGrade && (
         <>
-          <input
-            className="search"
-            type="search"
-            placeholder="🔎 Procure: alface, tomate, cenoura…"
-            value={busca}
-            onChange={(evento) => setBusca(evento.target.value)}
-          />
+          <label className="search-wrap">
+            <Icone nome="busca" tamanho={20} />
+            <input
+              className="search"
+              type="search"
+              placeholder="Procure: alface, tomate, cenoura…"
+              value={busca}
+              onChange={(evento) => setBusca(evento.target.value)}
+            />
+          </label>
           <div className="tiles">
             {!busca && (
               <button className={`tile ${escolheu && !ultima ? 'active' : ''}`} onClick={() => escolher(null)}>
-                <span className="tile-emoji">🤷</span>
+                <span className="selo selo-neutro" style={{ width: 44, height: 44 }}><Icone nome="ajuda" /></span>
                 <span>Nada / não sei</span>
               </button>
             )}
             {visiveis.map((hortalica) => (
               <button key={hortalica.id} className={`tile ${hortalica.id === historico.ultima ? 'active' : ''}`} onClick={() => escolher(hortalica.id)}>
-                <span className="tile-emoji">{hortalica.emoji}</span>
+                <SeloDaCultura grupo={hortalica.grupo} />
                 <span>{hortalica.nome}</span>
               </button>
             ))}
@@ -97,13 +101,15 @@ export default function PlantouCard({ catalogo, regiao, historico, onChange, ond
 
       {ultima && !mostrarGrade && (
         <div className="before">
-          <span className="before-label">E antes disso? <small>(se lembrar — melhora a sugestão)</small></span>
+          <span className="before-label">E antes disso? <small>Se lembrar, melhora a sugestão</small></span>
           <div className="before-row">
             {historico.anteriores.map((id, indice) => (
               <span key={indice} className="pill-item">
-                {porId[id]?.emoji} {porId[id]?.nome}
+                {porId[id]?.nome}
                 <button aria-label={`Tirar ${porId[id]?.nome}`}
-                  onClick={() => onChange({ ...historico, anteriores: historico.anteriores.filter((_, outroIndice) => outroIndice !== indice) })}>×</button>
+                  onClick={() => onChange({ ...historico, anteriores: historico.anteriores.filter((_, outroIndice) => outroIndice !== indice) })}>
+                  <Icone nome="fechar" tamanho={16} />
+                </button>
               </span>
             ))}
             {historico.anteriores.length < 3 && (
