@@ -1,4 +1,8 @@
-from pydantic import BaseModel, Field
+from typing import Annotated
+
+from pydantic import BaseModel, Field, StringConstraints
+
+FieldName = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=128)]
 
 
 class CoordinateRequest(BaseModel):
@@ -12,8 +16,12 @@ class CoordinateResponse(BaseModel):
 
 
 class FieldRequest(BaseModel):
-    name: str = Field(min_length=1, max_length=128)
+    name: FieldName
     coordinates: list[CoordinateRequest] = Field(min_length=3, max_length=500)
+
+
+class FieldRenameRequest(BaseModel):
+    name: FieldName
 
 
 class FieldHistoryRequest(BaseModel):

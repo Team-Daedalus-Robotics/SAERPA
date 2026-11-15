@@ -9,7 +9,7 @@ import Tour, { PASSOS_TOUR } from '../components/Tour';
 import { Icone, type NomeDeIcone } from '../components/icones';
 import { EmptyState, StepTitle } from '../components/ui';
 import { ESTADOS } from '../data/locations';
-import { useApagarArea, useAreas, useCatalogo, useClima, useCriarArea, useMunicipios, useSalvarHistorico } from '../hooks/consultas';
+import { useApagarArea, useAreas, useCatalogo, useClima, useCriarArea, useMunicipios, useRenomearArea, useSalvarHistorico } from '../hooks/consultas';
 import { gravarArmazenado, lerArmazenado } from '../lib/armazenamento';
 import { formatarNumero } from '../lib/geo';
 import { mensagemDoErro } from '../services/clienteApi';
@@ -96,6 +96,9 @@ export default function PaginaInicial() {
   const area = areas.find((candidata) => candidata.id === areaDaUrl) ?? null;
   const criarAreaMutacao = useCriarArea(municipio);
   const apagarAreaMutacao = useApagarArea(municipio);
+  const renomearAreaMutacao = useRenomearArea(municipio);
+  const [nomeDaNovaArea, setNomeDaNovaArea] = useState('');
+  const [nomeEmEdicao, setNomeEmEdicao] = useState<string | null>(null);
   const salvarHistoricoMutacao = useSalvarHistorico(municipio);
   const climaConsulta = useClima(municipio, area);
   const clima = climaConsulta.data ?? null;
@@ -138,6 +141,7 @@ export default function PaginaInicial() {
     atualizarBusca({ municipio: municipioEscolhido?.codigoIbge, area: undefined });
   }
   function selecionarArea(areaId: number | null) {
+    setNomeEmEdicao(null);
     atualizarBusca({ area: areaId ?? undefined });
   }
 
@@ -166,16 +170,32 @@ export default function PaginaInicial() {
   function terminarMarcar() {
     if (!drawing || drawing.length < 3) return;
     criarAreaMutacao.mutate(
-      { nome: proximoNomeDeArea(areas.map((candidata) => candidata.nome)), coordenadas: drawing },
+      { nome: nomeDaNovaArea.trim() || proximoNomeDeArea(areas.map((candidata) => candidata.nome)), coordenadas: drawing },
       {
         onSuccess: (novaArea) => {
           selecionarArea(novaArea.id);
           setDrawing(null);
+          setNomeDaNovaArea('');
           showToast(`${novaArea.nome} marcada (${formatarNumero(novaArea.areaEmHectares, 2)} hectares). Agora diga o que plantou nela.`);
         },
         onError: (erro) => showToast(mensagemDoErro(erro)),
       },
     );
+  }
+  function cancelarMarcacao() {
+    setDrawing(null);
+    setNomeDaNovaArea('');
+  }
+  function salvarNomeDaArea() {
+    const nome = (nomeEmEdicao ?? '').trim();
+    if (!area || !nome) return;
+    if (nome !== area.nome) {
+      renomearAreaMutacao.mutate({ areaId: area.id, nome }, {
+        onSuccess: () => showToast('Nome salvo.'),
+        onError: (erro) => showToast(mensagemDoErro(erro)),
+      });
+    }
+    setNomeEmEdicao(null);
   }
   function apagarArea(areaId: number) {
     apagarAreaMutacao.mutate(areaId, {
@@ -256,8 +276,18 @@ export default function PaginaInicial() {
                   <b>Toque nos cantos do seu terreno</b>
                   {drawing.length < 3 ? `Faltam ${3 - drawing.length} toque(s) no mínimo` : `${drawing.length} cantos marcados`}
                 </p>
+                <input
+                  className="draw-nome"
+                  type="text"
+                  maxLength={60}
+                  placeholder="Nome da área (opcional)"
+                  aria-label="Nome da área (opcional)"
+                  value={nomeDaNovaArea}
+                  onChange={(evento) => setNomeDaNovaArea(evento.target.value)}
+                  onKeyDown={(evento) => { if (evento.key === 'Enter' && drawing.length >= 3) terminarMarcar(); }}
+                />
                 <div className="draw-actions">
-                  <button className="btn ghost" onClick={() => setDrawing(null)}>Cancelar</button>
+                  <button className="btn ghost" onClick={cancelarMarcacao}>Cancelar</button>
                   {drawing.length > 0 && <button className="btn ghost" onClick={() => setDrawing(drawing.slice(0, -1))}>Desfazer</button>}
                   <button className="btn" disabled={drawing.length < 3 || criarAreaMutacao.isPending} onClick={terminarMarcar}>
                     {criarAreaMutacao.isPending ? 'Salvando…' : 'Pronto'}
@@ -287,7 +317,27 @@ export default function PaginaInicial() {
                   {cadaArea.nome} · {formatarNumero(cadaArea.areaEmHectares, 1)} hectares
                 </button>
               ))}
-              {area && <button className="link-danger" onClick={() => apagarArea(area.id)}>Apagar {area.nome}</button>}
+              {area && nomeEmEdicao === null && (
+                <>
+                  <button className="link-acao" onClick={() => setNomeEmEdicao(area.nome)}>Renomear</button>
+                  <button className="link-danger" onClick={() => apagarArea(area.id)}>Apagar {area.nome}</button>
+                </>
+              )}
+              {area && nomeEmEdicao !== null && (
+                <form className="renomear" onSubmit={(evento) => { evento.preventDefault(); salvarNomeDaArea(); }}>
+                  <input
+                    type="text"
+                    maxLength={60}
+                    autoFocus
+                    aria-label="Novo nome da área"
+                    value={nomeEmEdicao}
+                    onChange={(evento) => setNomeEmEdicao(evento.target.value)}
+                    onKeyDown={(evento) => { if (evento.key === 'Escape') setNomeEmEdicao(null); }}
+                  />
+                  <button type="submit" className="btn" disabled={!nomeEmEdicao.trim()}>Salvar</button>
+                  <button type="button" className="btn-outline" onClick={() => setNomeEmEdicao(null)}>Cancelar</button>
+                </form>
+              )}
             </div>
           )}
         </section>

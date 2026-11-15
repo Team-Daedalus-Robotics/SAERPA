@@ -4,7 +4,7 @@ from sqlalchemy.exc import DataError, InternalError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.exceptions import InvalidGeometryError, NotFoundError
-from app.repositories import crop_repository, field_repository, planting_repository
+from app.repositories import crop_repository, field_repository, planting_repository, property_repository
 from app.repositories.field_repository import FieldRow
 from app.services import property_service
 from saerpa_shared.models import Planting
@@ -12,6 +12,7 @@ from saerpa_shared.schemas import (
     CoordinateResponse,
     FieldHistoryRequest,
     FieldHistoryResponse,
+    FieldRenameRequest,
     FieldRequest,
     FieldResponse,
 )
@@ -66,6 +67,7 @@ def create_field(session: Session, property_id: int, payload: FieldRequest) -> F
         if not field_repository.is_valid_polygon(session, coordinates):
             raise InvalidGeometryError("O contorno da área se cruza. Marque os cantos em ordem, sem cruzar as linhas.")
         field = field_repository.create(session, property_id, payload.name, coordinates)
+        property_repository.refresh_location_from_fields(session, property_id)
         session.commit()
     except (DataError, InternalError) as error:
         session.rollback()
@@ -88,10 +90,27 @@ def delete_field(session: Session, field_id: int) -> None:
     try:
         field.deleted = True
         planting_repository.soft_delete_by_field(session, field_id)
+        session.flush()
+        property_repository.refresh_location_from_fields(session, field.property_id)
         session.commit()
     except SQLAlchemyError:
         session.rollback()
         raise
+
+
+def rename_field(session: Session, field_id: int, payload: FieldRenameRequest) -> FieldResponse:
+    field = field_repository.get_by_id(session, field_id)
+    if field is None:
+        raise NotFoundError("Área não encontrada.")
+
+    try:
+        field.name = payload.name
+        session.commit()
+    except SQLAlchemyError:
+        session.rollback()
+        raise
+
+    return _build_responses(session, [_get_row_or_raise(session, field_id)])[0]
 
 
 def replace_history(session: Session, field_id: int, payload: FieldHistoryRequest) -> FieldResponse:

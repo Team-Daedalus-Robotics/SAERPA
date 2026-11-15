@@ -11,6 +11,7 @@ from saerpa_shared.schemas.field import (
     CoordinateResponse,
     FieldHistoryRequest,
     FieldHistoryResponse,
+    FieldRenameRequest,
     FieldRequest,
     FieldResponse,
 )
@@ -35,6 +36,7 @@ __all__ = [
     "CropResponse",
     "FieldHistoryRequest",
     "FieldHistoryResponse",
+    "FieldRenameRequest",
     "FieldRequest",
     "FieldResponse",
     "PropertyRequest",
