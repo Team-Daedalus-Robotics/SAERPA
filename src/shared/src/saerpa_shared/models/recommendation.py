@@ -1,4 +1,16 @@
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Table, Text, func
+from sqlalchemy import (
+    JSON,
+    Boolean,
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+    Text,
+    func,
+)
 from sqlalchemy.orm import relationship
 
 from saerpa_shared.base import Base
@@ -19,6 +31,18 @@ class Recommendation(Base):
     type = Column(String(64), nullable=False)
     response = Column(Text, nullable=False)
     observation_text = Column(Text, nullable=False)
+    question_id = Column(String(255))
+    model_name = Column(String(128))
+    instructions = Column(Text)
+    criteria = Column(JSON)
+    input_state = Column(JSON)
+    choice = Column(Text)
+    score = Column(Float)
+    noul = Column(Float)
+    confidence = Column(Float)
+    probabilities = Column(JSON)
+    legend = Column(JSON)
+    response_data = Column(JSON)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     deleted = Column(Boolean, default=False)
 
