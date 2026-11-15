@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import { GRUPOS } from '../data/classificacao';
-import { POR_ID, daRegiao } from '../data/hortalicas';
-import type { Historico, Regiao } from '../types';
+import { daRegiao, indexarPorId } from '../data/hortalicas';
+import type { Historico, Hortalica, Regiao } from '../types';
 import { EmptyState, StepTitle } from './ui';
 
 interface Propriedades {
+  catalogo: Hortalica[];
   regiao: Regiao | null;
   historico: Historico;
   onChange: (historico: Historico) => void;
@@ -15,7 +16,7 @@ interface Propriedades {
 const LIMITE = 12;
 
 /** Passo 2 — "O que você plantou por último?" */
-export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: Propriedades) {
+export default function PlantouCard({ catalogo, regiao, historico, onChange, ondeLabel }: Propriedades) {
   const [busca, setBusca] = useState('');
   const [verTodas, setVerTodas] = useState(false);
   const [trocando, setTrocando] = useState(false);
@@ -23,8 +24,8 @@ export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: 
   const opcoes = useMemo(() => {
     if (!regiao) return [];
     const consulta = normalizar(busca);
-    return daRegiao(regiao).filter((hortalica) => !consulta || normalizar(hortalica.nome).includes(consulta));
-  }, [regiao, busca]);
+    return daRegiao(catalogo, regiao).filter((hortalica) => !consulta || normalizar(hortalica.nome).includes(consulta));
+  }, [catalogo, regiao, busca]);
 
   if (!regiao) {
     return (
@@ -35,7 +36,8 @@ export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: 
     );
   }
 
-  const ultima = historico.ultima ? POR_ID[historico.ultima] : null;
+  const porId = indexarPorId(catalogo);
+  const ultima = historico.ultima ? porId[historico.ultima] : null;
   const escolheu = historico.ultima !== null || historico.respondeu;
   const mostrarGrade = !escolheu || trocando;
 
@@ -99,8 +101,8 @@ export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: 
           <div className="before-row">
             {historico.anteriores.map((id, indice) => (
               <span key={indice} className="pill-item">
-                {POR_ID[id]?.emoji} {POR_ID[id]?.nome}
-                <button aria-label={`Tirar ${POR_ID[id]?.nome}`}
+                {porId[id]?.emoji} {porId[id]?.nome}
+                <button aria-label={`Tirar ${porId[id]?.nome}`}
                   onClick={() => onChange({ ...historico, anteriores: historico.anteriores.filter((_, outroIndice) => outroIndice !== indice) })}>×</button>
               </span>
             ))}
@@ -111,7 +113,7 @@ export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: 
                 onChange={(evento) => evento.target.value && onChange({ ...historico, anteriores: [...historico.anteriores, evento.target.value] })}
               >
                 <option value="">+ Adicionar</option>
-                {daRegiao(regiao).map((hortalica) => <option key={hortalica.id} value={hortalica.id}>{hortalica.nome}</option>)}
+                {daRegiao(catalogo, regiao).map((hortalica) => <option key={hortalica.id} value={hortalica.id}>{hortalica.nome}</option>)}
               </select>
             )}
           </div>

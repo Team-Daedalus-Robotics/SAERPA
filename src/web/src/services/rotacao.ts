@@ -22,10 +22,12 @@
  * Nota final de 0 a 100 → "Ótima escolha" (≥70), "Boa escolha" (≥50), "Pode plantar".
  * ========================================================================= */
 import { GRUPOS, PROXIMO_GRUPO } from '../data/classificacao';
-import { NOMES_MES, POR_ID, daRegiao } from '../data/hortalicas';
+import { NOMES_MES, daRegiao, indexarPorId } from '../data/hortalicas';
 import type { Historico, Hortalica, Regiao } from '../types';
 
 export interface Entrada {
+  /** hortaliças disponíveis (vêm do banco, via GET /api/crops) */
+  catalogo: Hortalica[];
   historico: Historico;
   regiao: Regiao;
   /** mês em que vai plantar (1–12) */
@@ -67,7 +69,7 @@ function mesesAte(janela: number[], mes: number): number {
   return 99;
 }
 
-function avaliar(hortalica: Hortalica, entrada: Entrada): Sugestao {
+function avaliar(hortalica: Hortalica, entrada: Entrada, porId: Record<string, Hortalica>): Sugestao {
   const janela = hortalica.epocas[entrada.regiao] ?? [];
   const falta = mesesAte(janela, entrada.mes);
   const motivos: Motivo[] = [];
@@ -85,7 +87,7 @@ function avaliar(hortalica: Hortalica, entrada: Entrada): Sugestao {
   }
 
   // ---- 2. rotação ----
-  const ultima = entrada.historico.ultima ? POR_ID[entrada.historico.ultima] : null;
+  const ultima = entrada.historico.ultima ? porId[entrada.historico.ultima] : null;
   if (!ultima) {
     nota += 25;
   } else if (ultima.familia === hortalica.familia) {
@@ -113,7 +115,7 @@ function avaliar(hortalica: Hortalica, entrada: Entrada): Sugestao {
     motivos.unshift({ tipo: 'bom', texto: `É de outra família (${hortalica.familia}), o que ajuda a quebrar o ciclo de pragas.` });
   }
 
-  const familiasAnteriores = entrada.historico.anteriores.slice(-2).map((id) => POR_ID[id]?.familia);
+  const familiasAnteriores = entrada.historico.anteriores.slice(-2).map((id) => porId[id]?.familia);
   if (!evitar && familiasAnteriores.includes(hortalica.familia)) {
     nota -= 15;
     motivos.push({ tipo: 'ruim', texto: `Uma planta da mesma família (${hortalica.familia}) já foi plantada aqui há pouco tempo.` });
@@ -131,7 +133,8 @@ function avaliar(hortalica: Hortalica, entrada: Entrada): Sugestao {
 }
 
 export function recomendar(entrada: Entrada): Resultado {
-  const todas = daRegiao(entrada.regiao).map((hortalica) => avaliar(hortalica, entrada));
+  const porId = indexarPorId(entrada.catalogo);
+  const todas = daRegiao(entrada.catalogo, entrada.regiao).map((hortalica) => avaliar(hortalica, entrada, porId));
   // empate: ciclo mais curto primeiro
   const porNota = (primeira: Sugestao, segunda: Sugestao) =>
     segunda.nota - primeira.nota || primeira.hortalica.colheitaDias[0] - segunda.hortalica.colheitaDias[0];

@@ -336,3 +336,6 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 3px s
 
 /* deixa espaço para o cabeçalho fixo quando o passo a passo rola até uma parte */
 [data-tour] { scroll-margin-top: 80px; }
+
+.not-found { width: min(520px, 90%); margin: 18vh auto; text-align: center; display: grid; gap: 14px; justify-items: center; }
+.not-found .btn { text-decoration: none; }

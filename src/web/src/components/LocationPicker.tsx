@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ESTADOS, loadMunicipios } from '../data/locations';
+import { ESTADOS } from '../data/locations';
+import { useMunicipios } from '../hooks/consultas';
 import type { Estado, Municipio } from '../types';
 
 interface Propriedades {
@@ -11,14 +12,12 @@ interface Propriedades {
 
 /** Seleção de estado + cidade (com busca) cobrindo todo o Brasil */
 export default function LocationPicker({ estado, municipio, onEstado, onMunicipio }: Propriedades) {
-  const [municipios, setMunicipios] = useState<Municipio[]>([]);
+  const { data: municipios = [] } = useMunicipios(estado?.uf);
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setMunicipios([]);
     setQuery('');
-    if (estado) loadMunicipios(estado.uf).then(setMunicipios);
   }, [estado]);
 
   useEffect(() => {
