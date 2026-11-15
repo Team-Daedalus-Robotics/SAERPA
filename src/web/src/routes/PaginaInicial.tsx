@@ -354,7 +354,7 @@ export default function PaginaInicial() {
           <div className="map-area" data-tour="mapa">
             <MapView
               base={base} celula={mostrarCelulaDaNasa && clima ? clima.celula : null} corDaCelula={corDaCelula} target={alvoDoMapa} municipio={municipio}
-              areas={areas} emojiDasAreas={emojiDasAreas} semInternet={!conectado} selectedId={area?.id ?? null} drawing={drawing}
+              areas={areas} emojiDasAreas={emojiDasAreas} selectedId={area?.id ?? null} drawing={drawing}
               onSelectArea={selecionarArea}
               onMapClick={(ponto) => drawing && setDrawing([...drawing, ponto])}
               onZoom={setZoom}

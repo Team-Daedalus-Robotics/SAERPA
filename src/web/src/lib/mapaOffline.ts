@@ -159,8 +159,14 @@ export async function salvarMapaDaRegiao(centro: LatLng, sinal: AbortSignal): Pr
           estourouOLimite = true;
           return;
         }
-        await cache.put(chaveDaImagem, new Response(conteudo, { headers: { 'Content-Type': conteudo.type || 'image/png' } }));
+        // reserva o espaço antes de gravar: as outras conexões somam ao mesmo tempo
         bytes += conteudo.size;
+        try {
+          await cache.put(chaveDaImagem, new Response(conteudo, { headers: { 'Content-Type': conteudo.type || 'image/png' } }));
+        } catch (erro) {
+          bytes -= conteudo.size;
+          throw erro;
+        }
         falhasSeguidas = 0;
       } catch {
         if (sinal.aborted) return;

@@ -4,7 +4,7 @@ import {
   CircleMarker, MapContainer, Polygon, Rectangle, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents,
 } from 'react-leaflet';
 import { BRAZIL_BOUNDS } from '../lib/geo';
-import { CAMADAS_DO_MAPA, ZOOM_MAXIMO_SALVO, type CamadaBase } from '../lib/camadasDoMapa';
+import { CAMADAS_DO_MAPA, ZOOM_MAXIMO_DO_MAPA, type CamadaBase } from '../lib/camadasDoMapa';
 import type { Area, CelulaDaNasa, LatLng, Municipio } from '../types';
 
 export type BaseLayer = CamadaBase;
@@ -59,21 +59,13 @@ interface Propriedades {
   onSelectArea: (id: number) => void;
   onMapClick: (ponto: LatLng) => void;
   onZoom: (nivelDeZoom: number) => void;
-  /** sem internet só existem imagens até o zoom do mapa salvo; as mais fundas são esticadas a partir delas */
-  semInternet?: boolean;
 }
 
 export default function MapView(propriedades: Propriedades) {
   const tile = CAMADAS_DO_MAPA[propriedades.base];
   return (
-    <MapContainer bounds={BRAZIL_BOUNDS} zoomControl={false} className="map" minZoom={3}>
-      <TileLayer
-        key={`${propriedades.base}-${propriedades.semInternet ? 'sem-internet' : 'com-internet'}`}
-        url={tile.url}
-        attribution={tile.attribution}
-        maxZoom={tile.maxZoom}
-        maxNativeZoom={propriedades.semInternet ? Math.min(ZOOM_MAXIMO_SALVO, tile.maxZoom) : undefined}
-      />
+    <MapContainer bounds={BRAZIL_BOUNDS} zoomControl={false} className="map" minZoom={3} maxZoom={ZOOM_MAXIMO_DO_MAPA}>
+      <TileLayer key={propriedades.base} url={tile.url} attribution={tile.attribution} maxZoom={tile.maxZoom} />
       <ZoomControl position="bottomright" />
       <FlyTo target={propriedades.target} />
       <ZoomWatcher onZoom={propriedades.onZoom} />

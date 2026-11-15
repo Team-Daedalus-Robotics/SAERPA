@@ -96,6 +96,8 @@ src/
   100 MB) o satélite e as ruas ao redor da propriedade (raio de 2 a 20 km, zoom 8–16, escolhido para caber no
   orçamento; `lib/mapaOffline.ts`) e o service worker (`public/sw.js`, só em produção) serve essas imagens e a
   página sem rede. Sem internet aparece a faixa "Sem internet…". Trocar de propriedade apaga o mapa salvo.
+  O zoom do mapa para no **nível 16** (`ZOOM_MAXIMO_DO_MAPA`): acima disso a Esri devolve "Map data not yet
+  available" em áreas rurais.
   Em testes, `VITE_URL_DO_SATELITE`/`VITE_URL_DAS_RUAS` trocam o servidor de imagens do mapa. `property.lat/lng` começa na sede do município e, a partir da
   primeira área, passa a ser o **centro das áreas** (PostGIS `ST_Centroid`, ponderado pelo tamanho),
   recalculado ao criar/apagar área; sem áreas restantes, mantém o último ponto.
