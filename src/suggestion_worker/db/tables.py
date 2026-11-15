@@ -1,8 +1,8 @@
 from sqlalchemy import MetaData, Table
-from shared.src.saerpa_shared import engine
-from shared.src.saerpa_shared.models import event, field, measure, planting, property, rotation_rule, station
 
-metadata = MetaData(engine)
+from saerpa_shared.engine import engine
+
+metadata = MetaData()
 
 event_table = Table("event", metadata,autoload_with=engine)
 measure_table = Table("measure", metadata, autoload_with=engine)
