@@ -3,17 +3,16 @@ import time
 
 from requests import RequestException
 from sqlalchemy.exc import SQLAlchemyError
-from suggestion.worker import process_new_events
+from suggestion.worker import process_suggestions
 
-SCAN_SECONDS = int(os.environ.get("SUGGESTION_SCAN_SECONDS", "500"))
+SCAN_SECONDS = int(os.environ.get("SUGGESTION_SCAN_SECONDS", str(12 * 60 * 60)))
 
 
 def main() -> None:
     print("suggestion_worker iniciado.", flush=True)
-    last_event_id = None
     while True:
         try:
-            last_event_id = process_new_events(last_event_id)
+            process_suggestions()
         except (RequestException, RuntimeError, SQLAlchemyError, ValueError) as error:
             print(f"Não foi possível gerar a sugestão: {error}", flush=True)
         time.sleep(SCAN_SECONDS)

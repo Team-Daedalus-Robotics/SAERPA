@@ -4,13 +4,9 @@ from collections.abc import Mapping, Sequence
 from typing import Any, Literal
 
 import requests
-from sqlalchemy import select
-from sqlalchemy.orm import joinedload
 from typesafe_sdk import TypeSafeClient
 
-from saerpa_shared.engine import SessionLocal
-from saerpa_shared.models import Event
-from suggestion.confing import API_KEY, BASE_URL, DECIDE_URL, MODEL, QUERY_LIMIT
+from suggestion.confing import API_KEY, BASE_URL, DECIDE_URL, MODEL
 from suggestion.recommendation_repository import save_recommendation
 
 DecisionType = Literal["choice", "score", "noul"]
@@ -51,41 +47,17 @@ def evaluate_choice(
 def evaluate_score(
     question: str,
     answers: ScoreCriteria,
+    state: DecisionState,
     question_id: str = "answer",
     timeout: float = 60,
 ) -> dict[str, Any]:
-    """Load recent events and score them against caller-provided ordered levels."""
+    """Score the caller-provided state against caller-provided ordered levels."""
     if not question.strip():
         raise ValueError("Informe a pergunta para avaliar os eventos.")
     if isinstance(answers, (str, bytes)) or not isinstance(answers, Sequence):
         raise ValueError("Answers must be an ordered sequence of level descriptions.")
     if not 2 <= len(answers) <= 10 or any(not answer.strip() for answer in answers):
         raise ValueError("Score questions require 2 to 10 non-empty answer levels.")
-
-    statement = (
-        select(Event)
-        .options(joinedload(Event.measure))
-        .order_by(Event.timestamp.desc())
-        .limit(QUERY_LIMIT)
-    )
-
-    with SessionLocal() as session:
-        events = session.scalars(statement).all()
-        state = [
-            {
-                "timestamp": event.timestamp.isoformat() if event.timestamp else None,
-                "station_id": event.station_id,
-                "measure_id": event.measure_id,
-                "measure_type": event.measure_type,
-                "sensor_name": event.measure.sensor_name,
-                "measurement_unit": event.measure.measurement_unit,
-                "value": event.value,
-            }
-            for event in events
-        ]
-
-    if not state:
-        raise ValueError("Não há eventos na tabela event para avaliar.")
 
     return _evaluate_decision(
         state=state,
