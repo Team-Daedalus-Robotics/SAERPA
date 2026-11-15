@@ -86,7 +86,9 @@ src/
   `GET|POST /api/properties/{id}/fields`; `PATCH /api/fields/{id}` (renomear; o nome é opcional na interface e
   "Área N" é o padrão); `DELETE /api/fields/{id}`; `PUT /api/fields/{id}/history`
   (substitui o histórico: últimas culturas plantadas, gravadas em `planting`). Sem login: o navegador
-  guarda o id da propriedade por cidade.
+  guarda o id da propriedade por cidade. `property.lat/lng` começa na sede do município e, a partir da
+  primeira área, passa a ser o **centro das áreas** (PostGIS `ST_Centroid`, ponderado pelo tamanho),
+  recalculado ao criar/apagar área; sem áreas restantes, mantém o último ponto.
 - **Clima real (NASA POWER)**: `GET /api/climate?lat=&lng=` calcula a célula da NASA do ponto, busca na NASA o
   que falta (primeira vez: 30 dias, por hora), grava em `event` e responde com umidade do solo, temperaturas,
   umidade do ar e chuva. Cada célula é uma estação virtual `nasa-power-lat<±lat>_lng<±lng>` (medidas
