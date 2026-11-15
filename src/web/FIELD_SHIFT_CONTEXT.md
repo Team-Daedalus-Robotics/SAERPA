@@ -3,7 +3,7 @@
 > `crop_planting_window`, servidas por `GET /api/crops`); áreas e histórico são salvos pela API
 > (`/api/properties`, `/api/fields`); o roteamento usa TanStack Router e os dados do servidor, TanStack Query.
 > Os caminhos `data-raw/`, `scripts/` e `src/data/hortalicas.json` abaixo foram movidos para `src/shared`
-> (ver `README.md` desta pasta). O back end do SMAP (Earth Engine) continua pendente.
+> (ver `README.md` desta pasta). A umidade do solo agora vem da NASA POWER (`GET /api/climate`, `src/services/clima.ts`); o SMAP/Earth Engine e o mock foram abandonados.
 
 # Field Shift — contexto do projeto (NASA Space Apps Challenge 2026)
 

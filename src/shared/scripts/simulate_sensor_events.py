@@ -11,6 +11,8 @@ modelo de sensor produz de fato (faixa, resolução, erro, ruído e falhas):
                                         umidade do ar 20-90 % (resolução 1 %, erro ±5 %)
   DS18B20                               sonda à prova d'água, -55 a 125 °C, resolução de
                                         12 bits = 0,0625 °C, erro ±0,5 °C
+  chuva                                 não há sensor: entra o valor REAL da NASA (PRECTOTCORR, mm/h),
+                                        uma leitura por hora, sem perda de pacote
 
 Premissas (ajuste as constantes abaixo se medirem diferente em campo):
   - a calibração do sensor de umidade (ADC seco/molhado) é típica, não medida;
@@ -70,7 +72,8 @@ SOIL_MOISTURE = SensorSpecification("soil_moisture", "Capacitive Soil Moisture S
 AIR_TEMPERATURE = SensorSpecification("air_temperature", "DHT11", "°C")
 AIR_HUMIDITY = SensorSpecification("air_humidity", "DHT11", "%")
 SOIL_TEMPERATURE = SensorSpecification("soil_temperature", "DS18B20", "°C")
-SENSORS = [SOIL_MOISTURE, AIR_TEMPERATURE, AIR_HUMIDITY, SOIL_TEMPERATURE]
+RAINFALL = SensorSpecification("rainfall", "NASA POWER PRECTOTCORR", "mm/h")
+SENSORS = [SOIL_MOISTURE, AIR_TEMPERATURE, AIR_HUMIDITY, SOIL_TEMPERATURE, RAINFALL]
 
 
 def clamp(value: float, minimum: float, maximum: float) -> float:
@@ -167,6 +170,13 @@ def build_payloads(dataset: dict, interval_minutes: int, seed: int) -> list[dict
     moment = series.first_moment
     while moment <= series.last_moment:
         payload = station.build_payload(moment)
+        if moment.minute == 0:
+            if payload is None:
+                payload = {"unique_identifier": STATION_UNIQUE_IDENTIFIER, "timestamp": int(moment.timestamp()), "measures": []}
+            payload["measures"].append({
+                "type": RAINFALL.type, "sensor_name": RAINFALL.sensor_name, "measurement_unit": RAINFALL.measurement_unit,
+                "value": f"{series.values[moment]['PRECTOTCORR']:.2f}",
+            })
         if payload is not None:
             payloads.append(payload)
         moment += timedelta(minutes=interval_minutes)
@@ -174,7 +184,7 @@ def build_payloads(dataset: dict, interval_minutes: int, seed: int) -> list[dict
 
 
 def print_summary(payloads: list[dict], expected_packets: int) -> None:
-    print(f"pacotes: {len(payloads)} de {expected_packets} previstos ({expected_packets - len(payloads)} perdidos)")
+    print(f"pacotes: {len(payloads)} de {expected_packets} previstos")
     values_by_type: dict[str, list[float]] = {}
     for payload in payloads:
         for measure in payload["measures"]:

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { MoisturePoint } from '../types';
+import type { PontoDaSerie } from '../types';
 import { Icone, type NomeDeIcone } from './icones';
 
 export function Icon({ caminho, children }: { caminho?: string; children?: ReactNode }) {
@@ -37,9 +37,9 @@ export function Segmented<T extends string>({
   );
 }
 
-export function Sparkline({ series }: { series: MoisturePoint[] }) {
+export function Sparkline({ series, rotulo }: { series: PontoDaSerie[]; rotulo: string }) {
   const largura = 160, altura = 48, margem = 4;
-  const valores = series.map((ponto) => ponto.value);
+  const valores = series.map((ponto) => ponto.valor);
   const minimo = Math.min(...valores) - 0.01;
   const maximo = Math.max(...valores) + 0.01;
   const pontos = valores.map((valor, indice) => [
@@ -49,7 +49,7 @@ export function Sparkline({ series }: { series: MoisturePoint[] }) {
   const linha = pontos.map((ponto, indice) => `${indice ? 'L' : 'M'}${ponto[0].toFixed(1)},${ponto[1].toFixed(1)}`).join('');
   const ultimoPonto = pontos[pontos.length - 1];
   return (
-    <svg className="spark" viewBox={`0 0 ${largura} ${altura}`} preserveAspectRatio="none" aria-label="Umidade nos últimos 30 dias">
+    <svg className="spark" viewBox={`0 0 ${largura} ${altura}`} preserveAspectRatio="none" aria-label={rotulo}>
       <path d={`${linha} L${ultimoPonto[0]},${altura} L${pontos[0][0]},${altura} Z`} fill="#2f6b45" opacity=".12" />
       <path d={linha} fill="none" stroke="#2f6b45" strokeWidth="1.8" vectorEffect="non-scaling-stroke" />
       <circle cx={ultimoPonto[0]} cy={ultimoPonto[1]} r="3" fill="#1b7f45" />

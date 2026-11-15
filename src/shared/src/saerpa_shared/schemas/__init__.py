@@ -1,3 +1,10 @@
+from saerpa_shared.schemas.climate import (
+    ClimateCellResponse,
+    ClimateMetricResponse,
+    ClimateResponse,
+    DailyValueResponse,
+    RainfallResponse,
+)
 from saerpa_shared.schemas.crop import CropResponse
 from saerpa_shared.schemas.field import (
     CoordinateRequest,
@@ -18,6 +25,11 @@ from saerpa_shared.schemas.station_data import (
 )
 
 __all__ = [
+    "ClimateCellResponse",
+    "ClimateMetricResponse",
+    "ClimateResponse",
+    "DailyValueResponse",
+    "RainfallResponse",
     "CoordinateRequest",
     "CoordinateResponse",
     "CropResponse",

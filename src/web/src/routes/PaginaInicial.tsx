@@ -2,19 +2,19 @@ import { getRouteApi } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Ajuda from '../components/Ajuda';
 import LocationPicker from '../components/LocationPicker';
-import MapView, { SMAP_ZOOM_MINIMO, type BaseLayer, type MapTarget } from '../components/MapView';
+import MapView, { type BaseLayer, type MapTarget } from '../components/MapView';
 import PlantouCard from '../components/PlantouCard';
 import SugestoesCard from '../components/SugestoesCard';
 import Tour, { PASSOS_TOUR } from '../components/Tour';
 import { Icone, type NomeDeIcone } from '../components/icones';
 import { EmptyState, StepTitle } from '../components/ui';
 import { ESTADOS } from '../data/locations';
-import { useApagarArea, useAreas, useCatalogo, useCriarArea, useMunicipios, useSalvarHistorico, useUmidade } from '../hooks/consultas';
+import { useApagarArea, useAreas, useCatalogo, useClima, useCriarArea, useMunicipios, useSalvarHistorico } from '../hooks/consultas';
 import { gravarArmazenado, lerArmazenado } from '../lib/armazenamento';
 import { formatarNumero } from '../lib/geo';
 import { mensagemDoErro } from '../services/clienteApi';
 import type { Entrada } from '../services/rotacao';
-import { USE_MOCK } from '../services/smap';
+import { COR_DO_TOM, classificarUmidadeDoSolo } from '../services/clima';
 import type { Estado, Historico, LatLng, Municipio, Regiao } from '../types';
 
 const rotaInicial = getRouteApi('/');
@@ -84,7 +84,7 @@ export default function PaginaInicial() {
 
   // ---- mapa ----
   const [base, setBase] = useState<BaseLayer>('satelite');
-  const [showSmap, setShowSmap] = useState(true);
+  const [mostrarCelulaDaNasa, setMostrarCelulaDaNasa] = useState(true);
   const [zoom, setZoom] = useState(4);
   const [drawing, setDrawing] = useState<LatLng[] | null>(null);
 
@@ -97,7 +97,9 @@ export default function PaginaInicial() {
   const criarAreaMutacao = useCriarArea(municipio);
   const apagarAreaMutacao = useApagarArea(municipio);
   const salvarHistoricoMutacao = useSalvarHistorico(municipio);
-  const { data: umidade } = useUmidade(municipio, area);
+  const climaConsulta = useClima(municipio, area);
+  const clima = climaConsulta.data ?? null;
+  const corDaCelula = clima ? COR_DO_TOM[classificarUmidadeDoSolo(clima.umidadeDoSolo.atual).tom] : COR_DO_TOM.ok;
 
   // ---- passo 2: histórico da cidade toda (quando nenhuma área está marcada) ----
   const [historicosDasCidades, setHistoricosDasCidades] = useState<HistoricosDasCidades>(lerHistoricosDasCidades);
@@ -223,7 +225,7 @@ export default function PaginaInicial() {
           </div>
           <div className="map-area" data-tour="mapa">
             <MapView
-              base={base} showSmap={showSmap} target={alvoDoMapa} municipio={municipio}
+              base={base} celula={mostrarCelulaDaNasa && clima ? clima.celula : null} corDaCelula={corDaCelula} target={alvoDoMapa} municipio={municipio}
               areas={areas} selectedId={area?.id ?? null} drawing={drawing}
               onSelectArea={selecionarArea}
               onMapClick={(ponto) => drawing && setDrawing([...drawing, ponto])}
@@ -234,18 +236,17 @@ export default function PaginaInicial() {
               <button className="map-btn" onClick={() => setBase(base === 'satelite' ? 'ruas' : 'satelite')}>
                 <Icone nome="camadas" tamanho={18} /> {base === 'satelite' ? 'Ver mapa' : 'Ver satélite'}
               </button>
-              <button data-tour="umidade" className={`map-btn ${showSmap ? 'on' : ''}`} onClick={() => setShowSmap(!showSmap)}>
+              <button data-tour="umidade" className={`map-btn ${mostrarCelulaDaNasa ? 'on' : ''}`} onClick={() => setMostrarCelulaDaNasa(!mostrarCelulaDaNasa)}>
                 <Icone nome="gota" tamanho={18} /> Umidade da terra
               </button>
             </div>
 
-            {showSmap && !drawing && (
+            {mostrarCelulaDaNasa && clima && !drawing && (
               <div className="legend">
                 <span className="legend-title">Umidade da terra</span>
                 <div className="legend-bar" />
                 <div className="legend-scale"><span>Seca</span><span>Molhada</span></div>
-                <span className="legend-src">Satélite NASA SMAP{USE_MOCK && <em> · dados de teste</em>}</span>
-                {zoom < SMAP_ZOOM_MINIMO && <span className="legend-hint">Aproxime o mapa para ver as cores</span>}
+                <span className="legend-src">Quadrado tracejado: região de cerca de 55 km dos dados da NASA</span>
               </div>
             )}
 
@@ -310,7 +311,7 @@ export default function PaginaInicial() {
               </div>
               {/* ===== Passo 3 ===== */}
               <div id="secao-sugestoes">
-                <SugestoesCard entrada={entrada} umidade={umidade ?? null} mesAtual={MES_ATUAL}
+                <SugestoesCard entrada={entrada} clima={clima} climaCarregando={climaConsulta.isPending && climaConsulta.fetchStatus !== 'idle'} climaComErro={climaConsulta.isError} onTentarClimaDeNovo={() => climaConsulta.refetch()} mesAtual={MES_ATUAL}
                   onMes={setMes} onColherRapido={setColherRapido} />
               </div>
             </>

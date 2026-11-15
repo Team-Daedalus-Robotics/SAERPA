@@ -4,7 +4,6 @@
  *  - "Como cada parte funciona": explicação de cada parte, para ler com calma
  * ========================================================================= */
 import { useState } from 'react';
-import { USE_MOCK } from '../services/smap';
 import { Icone, type NomeDeIcone } from './icones';
 import { Sheet } from './ui';
 
@@ -34,12 +33,12 @@ const PARTES: { icone: NomeDeIcone; titulo: string; texto: React.ReactNode }[] =
     ),
   },
   {
-    icone: 'gota', titulo: 'Umidade da terra',
+    icone: 'gota', titulo: 'Umidade da terra e clima',
     texto: (
       <>
-        <p>Um satélite da NASA (chamado SMAP) mede quanta água tem na terra. No mapa, <b>marrom</b> é terra seca e <b>azul</b> é terra molhada. As cores só aparecem com o mapa aproximado.</p>
-        <p>No passo 3, essa medida vira um conselho simples, por exemplo: “regue bem antes de plantar”.</p>
-        {USE_MOCK && <p className="ajuda-aviso">Nesta versão de teste os valores de umidade ainda são simulados.</p>}
+        <p>A NASA calcula, com um modelo que usa dados de satélites, quanta água tem na terra, quanto choveu e qual é a temperatura. Os números valem para uma região de cerca de 55 km ao redor do local que você escolheu, e não para o seu terreno exato.</p>
+        <p>No mapa, o <b>quadrado tracejado</b> mostra essa região. A cor dele diz se a terra está seca (<b>laranja</b>) ou molhada (<b>azul</b>). Toque em <b>Umidade da terra</b> para mostrar ou esconder o quadrado.</p>
+        <p>No passo 3, você vê a umidade, a chuva dos últimos 7 dias e a temperatura, junto com um conselho simples, por exemplo: “regue bem antes de plantar”.</p>
       </>
     ),
   },
@@ -92,7 +91,7 @@ const PARTES: { icone: NomeDeIcone; titulo: string; texto: React.ReactNode }[] =
   {
     icone: 'livro', titulo: 'De onde vêm as informações',
     texto: (
-      <p>Épocas de plantio, espaçamento e tempo de colheita: tabela de plantio de hortaliças do <b>Sisteminha Embrapa</b>. Umidade da terra: satélite <b>NASA SMAP</b>. Cidades: códigos do <b>IBGE</b>. A família de cada planta e a ordem de rotação foram organizadas pela equipe do projeto.</p>
+      <p>Épocas de plantio, espaçamento e tempo de colheita: tabela de plantio de hortaliças do <b>Sisteminha Embrapa</b>. Umidade da terra, chuva e temperatura: <b>NASA POWER</b> (dados reais de modelo da NASA). Cidades: códigos do <b>IBGE</b>. A família de cada planta e a ordem de rotação foram organizadas pela equipe do projeto.</p>
     ),
   },
 ];

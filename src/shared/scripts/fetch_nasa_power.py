@@ -9,7 +9,7 @@ Variáveis (comunidade AG, hora UTC):
   GWETTOP      umidade do solo na superfície, fração da saturação (0 a 1)
   TSOIL1       temperatura do solo, camada 1 (°C)
 
-Os valores são de modelo (MERRA-2 e IMERG), em grade de aproximadamente 0,5° x 0,625°:
+Os valores são de modelo (MERRA-2; a chuva é corrigida com observações), em grade de 0,5° x 0,625°:
 representam a região, não o ponto exato do sensor.
 
 Uso (dentro de src/shared):

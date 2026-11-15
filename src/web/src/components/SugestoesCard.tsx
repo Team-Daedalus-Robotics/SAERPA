@@ -2,14 +2,17 @@ import { useState } from 'react';
 import { NOMES_MES } from '../data/hortalicas';
 import { formatarNumero } from '../lib/geo';
 import { planoDoAno, recomendar, type Entrada, type Sugestao } from '../services/rotacao';
-import { USE_MOCK, classify } from '../services/smap';
-import type { MoistureStatistics } from '../types';
+import { classificarUmidadeDoSolo } from '../services/clima';
+import type { Clima } from '../types';
 import { Icone, SeloDaCultura, type NomeDeIcone } from './icones';
-import { EmptyState, StepTitle } from './ui';
+import { EmptyState, Sparkline, StepTitle } from './ui';
 
 interface Propriedades {
   entrada: Entrada | null;
-  umidade: MoistureStatistics | null;
+  clima: Clima | null;
+  climaCarregando: boolean;
+  climaComErro: boolean;
+  onTentarClimaDeNovo: () => void;
   mesAtual: number;
   onMes: (mes: number) => void;
   onColherRapido: (ativado: boolean) => void;
@@ -22,7 +25,7 @@ const BADGE = {
   evitar: { texto: 'Evite', classeCss: 'b-bad' },
 } as const;
 
-/** Conselho simples a partir da umidade da terra (satélite NASA SMAP) */
+/** Conselho simples a partir da umidade do solo (NASA POWER) */
 const DICA_UMIDADE = {
   dry: 'A terra está seca. Regue bem antes de plantar e cubra o canteiro com palha para segurar a água.',
   mid: 'A terra está um pouco seca. Regue com frequência nos primeiros dias depois de plantar.',
@@ -34,12 +37,16 @@ const ICONE_DO_MOTIVO: Record<'bom' | 'ruim' | 'info', NomeDeIcone> = { bom: 'su
 
 const PRIMEIROS = 5;
 
-function posicaoNaEscala(valor: number): number {
-  return Math.max(0, Math.min(1, (valor - 0.05) / 0.4)) * 100;
+function posicaoNaEscala(percentual: number): number {
+  return Math.max(0, Math.min(100, percentual));
+}
+
+function formatarDia(instanteIso: string): string {
+  return new Date(instanteIso).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'UTC' });
 }
 
 /** Passo 3 — "O que plantar agora" */
-export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onColherRapido }: Propriedades) {
+export default function SugestoesCard({ entrada, clima, climaCarregando, climaComErro, onTentarClimaDeNovo, mesAtual, onMes, onColherRapido }: Propriedades) {
   const [aberto, setAberto] = useState<string | null>(null);
   const [verMais, setVerMais] = useState(false);
 
@@ -55,7 +62,7 @@ export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onCol
   const resultado = recomendar(entrada);
   const plano = planoDoAno(entrada, 3);
   const lista = verMais ? resultado.agora : resultado.agora.slice(0, PRIMEIROS);
-  const classificacao = umidade ? classify(umidade.mean) : null;
+  const classificacao = clima ? classificarUmidadeDoSolo(clima.umidadeDoSolo.atual) : null;
   const ehAgora = entrada.mes === mesAtual;
   const nomeDoMes = NOMES_MES[entrada.mes - 1];
 
@@ -89,25 +96,42 @@ export default function SugestoesCard({ entrada, umidade, mesAtual, onMes, onCol
         <p className="nudge"><Icone nome="info" tamanho={20} /> Conte no passo 2 o que você plantou por último. Assim a sugestão cuida melhor da sua terra.</p>
       )}
 
-      {umidade && classificacao && (
-        <div className="stat">
-          <div className="stat-head">
-            <span className="stat-titulo"><Icone nome="gota" tamanho={18} /> Umidade da terra</span>
-            {USE_MOCK && <span className="chip-teste">Dados de teste</span>}
-          </div>
-          <div className="stat-valor">
-            <b className={`tom-${classificacao.tone}`}>{classificacao.label}</b>
-            <span>índice {formatarNumero(umidade.mean)} · média de 30 dias</span>
-          </div>
-          <div className="escala" aria-hidden="true">
-            <span className="escala-faixa f-dry" /><span className="escala-faixa f-mid" /><span className="escala-faixa f-ok" /><span className="escala-faixa f-wet" />
-            <span className="escala-marca" style={{ left: `${posicaoNaEscala(umidade.mean)}%` }} />
-          </div>
-          <div className="escala-rotulos"><span>Seca</span><span>Molhada</span></div>
-          <p className="stat-dica">{DICA_UMIDADE[classificacao.tone]}</p>
-          <span className="stat-fonte">{USE_MOCK ? 'Valores simulados enquanto a ligação com o satélite NASA SMAP não está pronta.' : 'Satélite NASA SMAP.'}</span>
+      <div className="stat">
+        <div className="stat-head">
+          <span className="stat-titulo"><Icone nome="gota" tamanho={18} /> Umidade do solo e clima</span>
+          <span className="chip-fonte">NASA</span>
         </div>
-      )}
+        {climaCarregando && !clima && <p className="hint">Buscando os dados da NASA para este local…</p>}
+        {climaComErro && !clima && (
+          <>
+            <p className="hint">Não foi possível buscar os dados da NASA agora.</p>
+            <button className="btn-outline" onClick={onTentarClimaDeNovo}><Icone nome="troca" tamanho={18} /> Tentar de novo</button>
+          </>
+        )}
+        {clima && classificacao && (
+          <>
+            <div className="stat-valor">
+              <b className={`tom-${classificacao.tom}`}>{classificacao.rotulo}</b>
+              <span>{formatarNumero(clima.umidadeDoSolo.atual, 0)}% do máximo de água que o solo segura · média de 30 dias: {formatarNumero(clima.umidadeDoSolo.media, 0)}%</span>
+            </div>
+            <div className="escala" aria-hidden="true">
+              <span className="escala-faixa f-dry" /><span className="escala-faixa f-mid" /><span className="escala-faixa f-ok" /><span className="escala-faixa f-wet" />
+              <span className="escala-marca" style={{ left: `${posicaoNaEscala(clima.umidadeDoSolo.atual)}%` }} />
+            </div>
+            <div className="escala-rotulos"><span>Seco</span><span>Molhado</span></div>
+            <p className="stat-dica">{DICA_UMIDADE[classificacao.tom]}</p>
+            <Sparkline series={clima.umidadeDoSolo.diaria} rotulo="Umidade do solo nos últimos 30 dias" />
+            <span className="spark-legenda">Umidade do solo nos últimos 30 dias</span>
+            <div className="stat-grid">
+              <div className="mini-stat"><span>Chuva em 7 dias</span><b>{formatarNumero(clima.chuva.ultimos7Dias, 1)} mm</b></div>
+              <div className="mini-stat"><span>Ar agora</span><b>{formatarNumero(clima.temperaturaDoAr.atual, 0)} °C</b></div>
+              <div className="mini-stat"><span>Solo agora</span><b>{formatarNumero(clima.temperaturaDoSolo.atual, 0)} °C</b></div>
+              <div className="mini-stat"><span>Umidade do ar</span><b>{formatarNumero(clima.umidadeDoAr.atual, 0)}%</b></div>
+            </div>
+            <span className="stat-fonte">Dados reais da NASA POWER (modelo, região de cerca de 55 km), até {formatarDia(clima.atualizadoAte)}.</span>
+          </>
+        )}
+      </div>
 
       <h3 className="list-title">
         Boas para plantar {ehAgora ? 'agora' : `em ${nomeDoMes}`}

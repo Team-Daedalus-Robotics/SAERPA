@@ -54,12 +54,43 @@ export interface Area {
   historico: Historico;
 }
 
-export interface MoisturePoint {
-  date: string;
-  value: number;
+export interface PontoDaSerie {
+  /** dia no formato AAAA-MM-DD */
+  data: string;
+  valor: number;
 }
 
-export interface MoistureStatistics {
-  mean: number;
-  series: MoisturePoint[];
+export interface Indicador {
+  atual: number;
+  /** média dos últimos 30 dias */
+  media: number;
+  diaria: PontoDaSerie[];
+}
+
+/** Região da grade da NASA (cerca de 55 x 66 km) que contém o ponto escolhido */
+export interface CelulaDaNasa {
+  latitude: number;
+  longitude: number;
+  sul: number;
+  oeste: number;
+  norte: number;
+  leste: number;
+}
+
+export interface Clima {
+  fonte: string;
+  celula: CelulaDaNasa;
+  /** instante da última leitura publicada pela NASA (ISO 8601, UTC) */
+  atualizadoAte: string;
+  /** percentual da saturação do solo na superfície */
+  umidadeDoSolo: Indicador;
+  temperaturaDoSolo: Indicador;
+  temperaturaDoAr: Indicador;
+  umidadeDoAr: Indicador;
+  chuva: {
+    ultimas24Horas: number;
+    ultimos7Dias: number;
+    ultimos30Dias: number;
+    diaria: PontoDaSerie[];
+  };
 }

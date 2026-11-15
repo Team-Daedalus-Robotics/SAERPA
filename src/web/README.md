@@ -49,7 +49,7 @@ Nota ≥ 70 = "Ótima escolha", ≥ 50 = "Boa escolha".
       routes/PaginaInicial.tsx  tela e fluxo dos 3 passos
       components/
         LocationPicker.tsx      estado + cidade
-        MapView.tsx             mapa, umidade SMAP, áreas marcadas
+        MapView.tsx             mapa, região de dados da NASA, áreas marcadas
         PlantouCard.tsx         passo 2
         SugestoesCard.tsx       passo 3
         ui.tsx                  peças reutilizáveis
@@ -63,7 +63,7 @@ Nota ≥ 70 = "Ótima escolha", ≥ 50 = "Boa escolha".
         catalogo.ts             GET /api/crops
         areas.ts                propriedades, áreas e histórico (API + PostGIS)
         rotacao.ts              motor de recomendação
-        smap.ts                 umidade NASA SMAP (hoje SIMULADA: USE_MOCK = true)
+        clima.ts                clima real da NASA POWER por local (GET /api/climate)
 
 O catálogo de hortaliças **não fica mais no frontend**: vem do banco pela API. A planilha da
 Embrapa, o script de importação e a classificação por família ficam em `src/shared`
@@ -93,4 +93,4 @@ navegador (`localStorage`).
   Códigos seguem o IBGE; as coordenadas vêm do repositório (não são publicação oficial do IBGE).
 
 ### Umidade do solo
-- NASA SMAP L3 Enhanced (`NASA/SMAP/SPL3SMP_E/006`) via Google Earth Engine, grade ~9 km. *(No protótipo, simulada.)*
+- **NASA POWER** (https://power.larc.nasa.gov, modelo MERRA-2): umidade do solo na superfície (`GWETTOP`), temperatura do solo (`TSOIL1`), temperatura e umidade do ar (`T2M`, `RH2M`) e chuva (`PRECTOTCORR`), por hora, em células de 0,5° x 0,625° (cerca de 55 x 66 km). A API busca a célula do local escolhido, grava em `event` e responde em `GET /api/climate`. São dados reais de modelo: valem para a região, não para o terreno exato.
