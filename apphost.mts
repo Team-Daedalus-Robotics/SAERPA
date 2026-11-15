@@ -27,8 +27,12 @@ const nasaEventWorker = await builder
   .addPythonApp('nasa-event-worker', './src/nasa_event_worker', 'main.py')
   .withUv();
 const stationDataGateway = await builder
-  .addPythonApp('station-data-gateway', './src/station_data_gateway', 'main.py')
-  .withUv();
+  .addUvicornApp('station-data-gateway', './src/station_data_gateway', 'main:app')
+  .withUv()
+  .withHttpEndpoint({ env: 'PORT' })
+  .withReference(database)
+  .waitFor(database)
+  .withEnvironment('DATABASE_URL', await database.uriExpression());
 const suggestionWorker = await builder
   .addPythonApp('suggestion-worker', './src/suggestion_worker', 'main.py')
   .withUv();
