@@ -96,3 +96,7 @@ export async function salvarHistorico(areaId: number, historico: Historico): Pro
   });
   return converterArea(area);
 }
+
+export async function renomearArea(areaId: number, nome: string): Promise<Area> {
+  return converterArea(await requisitar<AreaDaApi>('PATCH', `/api/fields/${areaId}`, { name: nome }));
+}

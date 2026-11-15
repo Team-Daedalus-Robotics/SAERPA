@@ -12,6 +12,7 @@ from saerpa_shared.schemas import (
     CoordinateResponse,
     FieldHistoryRequest,
     FieldHistoryResponse,
+    FieldRenameRequest,
     FieldRequest,
     FieldResponse,
 )
@@ -92,6 +93,21 @@ def delete_field(session: Session, field_id: int) -> None:
     except SQLAlchemyError:
         session.rollback()
         raise
+
+
+def rename_field(session: Session, field_id: int, payload: FieldRenameRequest) -> FieldResponse:
+    field = field_repository.get_by_id(session, field_id)
+    if field is None:
+        raise NotFoundError("Área não encontrada.")
+
+    try:
+        field.name = payload.name
+        session.commit()
+    except SQLAlchemyError:
+        session.rollback()
+        raise
+
+    return _build_responses(session, [_get_row_or_raise(session, field_id)])[0]
 
 
 def replace_history(session: Session, field_id: int, payload: FieldHistoryRequest) -> FieldResponse:

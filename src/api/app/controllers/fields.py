@@ -3,9 +3,17 @@ from fastapi import APIRouter, HTTPException, status
 from app.deps import SessionDep
 from app.exceptions import NotFoundError
 from app.services import field_service
-from saerpa_shared.schemas import FieldHistoryRequest, FieldResponse
+from saerpa_shared.schemas import FieldHistoryRequest, FieldRenameRequest, FieldResponse
 
 router = APIRouter(prefix="/api/fields", tags=["fields"])
+
+
+@router.patch("/{field_id}")
+def rename_field(field_id: int, payload: FieldRenameRequest, session: SessionDep) -> FieldResponse:
+    try:
+        return field_service.rename_field(session, field_id, payload)
+    except NotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
 
 
 @router.put("/{field_id}/history")

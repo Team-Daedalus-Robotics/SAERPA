@@ -83,7 +83,8 @@ src/
   production_per_square_meter, source); `crop_planting_window` (crop_id, region, month — PK composta)
   guarda as épocas de plantio por região. Culturas sem `slug` (cadastradas à mão) não aparecem na API.
 - Endpoints do Field Shift: `GET /api/crops`; `POST /api/properties`, `GET /api/properties/{id}`;
-  `GET|POST /api/properties/{id}/fields`; `DELETE /api/fields/{id}`; `PUT /api/fields/{id}/history`
+  `GET|POST /api/properties/{id}/fields`; `PATCH /api/fields/{id}` (renomear; o nome é opcional na interface e
+  "Área N" é o padrão); `DELETE /api/fields/{id}`; `PUT /api/fields/{id}/history`
   (substitui o histórico: últimas culturas plantadas, gravadas em `planting`). Sem login: o navegador
   guarda o id da propriedade por cidade.
 - **Clima real (NASA POWER)**: `GET /api/climate?lat=&lng=` calcula a célula da NASA do ponto, busca na NASA o

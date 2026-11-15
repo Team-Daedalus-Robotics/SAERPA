@@ -383,3 +383,13 @@ input[type='search']::-webkit-search-cancel-button { -webkit-appearance: none; a
 .mini-stat { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #f9fafb; }
 .mini-stat span { font-size: 12px; color: var(--muted); }
 .mini-stat b { font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+
+/* ---------- Nome da área ---------- */
+.draw-nome { width: 100%; min-height: 44px; margin-bottom: 10px; padding: 8px 12px; border: 1px solid rgba(255, 255, 255, .28); border-radius: 10px; background: rgba(255, 255, 255, .12); color: #fff; font-size: 16px; }
+.draw-nome::placeholder { color: #b7bdc7; }
+.draw-nome:focus { outline: 3px solid rgba(255, 255, 255, .35); outline-offset: 0; border-color: #fff; }
+.link-acao { border: 0; background: transparent; color: var(--blue); font-size: 14px; font-weight: 600; min-height: 40px; padding: 0 6px; }
+.renomear { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; align-items: center; }
+.renomear input { flex: 1 1 200px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line-strong); border-radius: 10px; background: #fff; font-size: 16px; }
+.renomear input:focus { border-color: var(--green); outline: 3px solid rgba(27, 127, 69, .18); outline-offset: 0; }
+.renomear .btn, .renomear .btn-outline { min-height: 44px; }

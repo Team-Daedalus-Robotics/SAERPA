@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { loadMunicipios } from '../data/locations';
-import { apagarArea, criarArea, listarAreas, salvarHistorico } from '../services/areas';
+import { apagarArea, criarArea, listarAreas, renomearArea, salvarHistorico } from '../services/areas';
 import { buscarCatalogo } from '../services/catalogo';
 import { celulaDaNasa } from '../lib/nasa';
 import { buscarClima } from '../services/clima';
@@ -79,6 +79,26 @@ export function useSalvarHistorico(municipio: Municipio | null) {
       const anteriores = clienteDeConsultas.getQueryData<Area[]>(chave);
       clienteDeConsultas.setQueryData<Area[]>(chave, (areas = []) =>
         areas.map((area) => (area.id === areaId ? { ...area, historico } : area)));
+      return { anteriores };
+    },
+    onError: (_, __, contexto) => {
+      if (contexto?.anteriores) clienteDeConsultas.setQueryData(chave, contexto.anteriores);
+    },
+    onSettled: () => clienteDeConsultas.invalidateQueries({ queryKey: chave }),
+  });
+}
+
+/** Atualiza o nome na tela na hora e desfaz se o servidor recusar. */
+export function useRenomearArea(municipio: Municipio | null) {
+  const clienteDeConsultas = useQueryClient();
+  const chave = CHAVES.areas(municipio?.codigoIbge);
+  return useMutation({
+    mutationFn: ({ areaId, nome }: { areaId: number; nome: string }) => renomearArea(areaId, nome),
+    onMutate: async ({ areaId, nome }) => {
+      await clienteDeConsultas.cancelQueries({ queryKey: chave });
+      const anteriores = clienteDeConsultas.getQueryData<Area[]>(chave);
+      clienteDeConsultas.setQueryData<Area[]>(chave, (areas = []) =>
+        areas.map((area) => (area.id === areaId ? { ...area, nome } : area)));
       return { anteriores };
     },
     onError: (_, __, contexto) => {
