@@ -36,7 +36,7 @@ src/
 │   ├── alembic.ini
 │   ├── data/            # planilha Embrapa + crop_classification.json (fontes do catálogo)
 │   ├── scripts/         # import_embrapa.py → gera seed/crops.json
-│   ├── migrations/      # Alembic (env.py lê DATABASE_URL; 0001_initial ... 0006_climate_cell)
+│   ├── migrations/      # Alembic (env.py lê DATABASE_URL; 0001_initial ... 0007_typed_recommendation_response)
 │   └── src/saerpa_shared/
 │       ├── base.py      # Base(DeclarativeBase)
 │       ├── engine.py    # engine = create_engine(DATABASE_URL); SessionLocal
@@ -173,6 +173,10 @@ uv run alembic upgrade head          # dentro de src/shared
 
 ## Gotchas conhecidos
 
+- Migrations criadas em paralelo com o mesmo número deixam o Alembic com duas cabeças e a API não sobe:
+  antes de enviar, `git pull` e `uv run alembic heads` (dentro de `src/shared`) deve mostrar uma só.
+  Se o seu banco ficou marcado com um número que mudou, rode `uv run alembic stamp <número anterior>` e
+  `uv run alembic upgrade head` (as migrations 0006 e 0007 aceitam rodar sobre tabelas/colunas já existentes).
 - Instaladores dos recursos Python podem falhar se o `.venv` pré-existente não
   satisfizer `requires-python` — recriar com `uv sync` no diretório resolve.
 - `engine.py` importa falhando sem `DATABASE_URL` (o Aspire injeta nos recursos).

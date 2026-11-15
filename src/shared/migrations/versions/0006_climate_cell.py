@@ -15,6 +15,8 @@ depends_on = None
 
 
 def upgrade() -> None:
+    if sa.inspect(op.get_bind()).has_table("climate_cell"):
+        return
     op.create_table(
         "climate_cell",
         sa.Column("id", sa.Integer(), sa.Identity(always=True), primary_key=True),
