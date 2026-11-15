@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import L from 'leaflet';
+import Leaflet from 'leaflet';
 import {
   CircleMarker, MapContainer, Polygon, Rectangle, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents,
 } from 'react-leaflet';
@@ -7,7 +7,7 @@ import { BRAZIL_BOUNDS } from '../lib/geo';
 import { gridCells, type GridCell } from '../services/smap';
 import type { Area, LatLng, Municipio } from '../types';
 
-export type BaseLayer = 'sat' | 'osm';
+export type BaseLayer = 'satelite' | 'ruas';
 
 /** Para onde o mapa deve voar quando o usuário escolhe estado/cidade */
 export type MapTarget =
@@ -15,12 +15,12 @@ export type MapTarget =
   | { kind: 'point'; center: LatLng; zoom: number };
 
 const TILES: Record<BaseLayer, { url: string; attribution: string; maxZoom: number }> = {
-  sat: {
+  satelite: {
     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     attribution: 'Imagery © Esri',
     maxZoom: 18,
   },
-  osm: {
+  ruas: {
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     attribution: '© OpenStreetMap',
     maxZoom: 19,
@@ -28,7 +28,7 @@ const TILES: Record<BaseLayer, { url: string; attribution: string; maxZoom: numb
 };
 
 /** Zoom mínimo para desenhar a grade SMAP de 9 km (abaixo disso seriam milhares de células) */
-export const SMAP_MIN_ZOOM = 8;
+export const SMAP_ZOOM_MINIMO = 8;
 
 function FlyTo({ target }: { target: MapTarget }) {
   const map = useMap();
@@ -43,37 +43,37 @@ function SmapGrid({ visible }: { visible: boolean }) {
   const [cells, setCells] = useState<GridCell[]>([]);
   const map = useMapEvents({ moveend: () => update() });
   function update() {
-    if (!visible || map.getZoom() < SMAP_MIN_ZOOM) return setCells([]);
-    const b = map.getBounds().pad(0.2);
-    setCells(gridCells(b.getSouth(), b.getWest(), b.getNorth(), b.getEast()));
+    if (!visible || map.getZoom() < SMAP_ZOOM_MINIMO) return setCells([]);
+    const limites = map.getBounds().pad(0.2);
+    setCells(gridCells(limites.getSouth(), limites.getWest(), limites.getNorth(), limites.getEast()));
   }
   useEffect(update, [visible]);
   return (
     <>
-      {cells.map((c, i) => (
+      {cells.map((celula, indice) => (
         <Rectangle
-          key={i}
-          bounds={c.bounds}
+          key={indice}
+          bounds={celula.bounds}
           interactive={false}
-          pathOptions={{ color: '#fff', weight: 0.5, opacity: 0.35, fillColor: c.color, fillOpacity: 0.42 }}
+          pathOptions={{ color: '#fff', weight: 0.5, opacity: 0.35, fillColor: celula.color, fillOpacity: 0.42 }}
         />
       ))}
     </>
   );
 }
 
-function ZoomWatcher({ onZoom }: { onZoom: (z: number) => void }) {
+function ZoomWatcher({ onZoom }: { onZoom: (nivelDeZoom: number) => void }) {
   const map = useMapEvents({ zoomend: () => onZoom(map.getZoom()) });
   useEffect(() => onZoom(map.getZoom()), [map, onZoom]);
   return null;
 }
 
-function ClickCatcher({ onClick }: { onClick: (p: LatLng) => void }) {
-  useMapEvents({ click: (e) => onClick([e.latlng.lat, e.latlng.lng]) });
+function ClickCatcher({ onClick }: { onClick: (ponto: LatLng) => void }) {
+  useMapEvents({ click: (evento) => onClick([evento.latlng.lat, evento.latlng.lng]) });
   return null;
 }
 
-interface Props {
+interface Propriedades {
   base: BaseLayer;
   showSmap: boolean;
   target: MapTarget;
@@ -82,62 +82,62 @@ interface Props {
   selectedId: number | null;
   drawing: LatLng[] | null;
   onSelectArea: (id: number) => void;
-  onMapClick: (p: LatLng) => void;
-  onZoom: (z: number) => void;
+  onMapClick: (ponto: LatLng) => void;
+  onZoom: (nivelDeZoom: number) => void;
 }
 
-export default function MapView(p: Props) {
-  const tile = TILES[p.base];
+export default function MapView(propriedades: Propriedades) {
+  const tile = TILES[propriedades.base];
   return (
     <MapContainer bounds={BRAZIL_BOUNDS} zoomControl={false} className="map" minZoom={3}>
-      <TileLayer key={p.base} url={tile.url} attribution={tile.attribution} maxZoom={tile.maxZoom} />
+      <TileLayer key={propriedades.base} url={tile.url} attribution={tile.attribution} maxZoom={tile.maxZoom} />
       <ZoomControl position="bottomright" />
-      <FlyTo target={p.target} />
-      <ZoomWatcher onZoom={p.onZoom} />
-      <ClickCatcher onClick={p.onMapClick} />
-      <SmapGrid visible={p.showSmap} />
+      <FlyTo target={propriedades.target} />
+      <ZoomWatcher onZoom={propriedades.onZoom} />
+      <ClickCatcher onClick={propriedades.onMapClick} />
+      <SmapGrid visible={propriedades.showSmap} />
 
-      {p.municipio && (
+      {propriedades.municipio && (
         <CircleMarker
-          center={[p.municipio.lat, p.municipio.lng]}
+          center={[propriedades.municipio.lat, propriedades.municipio.lng]}
           radius={7}
           pathOptions={{ color: '#fff', weight: 2, fillColor: '#e4572e', fillOpacity: 1 }}
         >
-          <Tooltip direction="top" offset={[0, -8]} className="map-tip">{p.municipio.nome}</Tooltip>
+          <Tooltip direction="top" offset={[0, -8]} className="map-tip">{propriedades.municipio.nome}</Tooltip>
         </CircleMarker>
       )}
 
-      {p.areas.map((a) => {
-        const sel = a.id === p.selectedId;
+      {propriedades.areas.map((area) => {
+        const selecionada = area.id === propriedades.selectedId;
         return (
           <Polygon
-            key={`${a.id}-${sel}`}
-            positions={a.coords}
+            key={`${area.id}-${selecionada}`}
+            positions={area.coordenadas}
             pathOptions={{
-              color: sel ? '#e4572e' : '#fffdf7',
-              weight: sel ? 3.5 : 2,
-              dashArray: sel ? undefined : '5 4',
+              color: selecionada ? '#e4572e' : '#fffdf7',
+              weight: selecionada ? 3.5 : 2,
+              dashArray: selecionada ? undefined : '5 4',
               fillColor: '#6a994e',
-              fillOpacity: sel ? 0.4 : 0.22,
+              fillOpacity: selecionada ? 0.4 : 0.22,
             }}
             eventHandlers={{
-              click: (e) => {
-                if (p.drawing) return; // deixa o clique chegar no mapa para marcar ponto
-                L.DomEvent.stop(e);
-                p.onSelectArea(a.id);
+              click: (evento) => {
+                if (propriedades.drawing) return; // deixa o clique chegar no mapa para marcar ponto
+                Leaflet.DomEvent.stop(evento);
+                propriedades.onSelectArea(area.id);
               },
             }}
           >
-            <Tooltip permanent direction="center" className="map-tip">{a.nome}</Tooltip>
+            <Tooltip permanent direction="center" className="map-tip">{area.nome}</Tooltip>
           </Polygon>
         );
       })}
 
-      {p.drawing && p.drawing.length > 0 && (
+      {propriedades.drawing && propriedades.drawing.length > 0 && (
         <>
-          <Polygon positions={p.drawing} pathOptions={{ color: '#e4572e', weight: 2, dashArray: '4 4', fillOpacity: 0.15 }} />
-          {p.drawing.map((pt, i) => (
-            <CircleMarker key={i} center={pt} radius={5}
+          <Polygon positions={propriedades.drawing} pathOptions={{ color: '#e4572e', weight: 2, dashArray: '4 4', fillOpacity: 0.15 }} />
+          {propriedades.drawing.map((ponto, indice) => (
+            <CircleMarker key={indice} center={ponto} radius={5}
               pathOptions={{ color: '#fff', weight: 2, fillColor: '#e4572e', fillOpacity: 1 }} />
           ))}
         </>

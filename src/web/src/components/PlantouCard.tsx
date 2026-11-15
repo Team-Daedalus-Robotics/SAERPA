@@ -4,10 +4,10 @@ import { POR_ID, daRegiao } from '../data/hortalicas';
 import type { Historico, Regiao } from '../types';
 import { EmptyState, StepTitle } from './ui';
 
-interface Props {
+interface Propriedades {
   regiao: Regiao | null;
   historico: Historico;
-  onChange: (h: Historico) => void;
+  onChange: (historico: Historico) => void;
   /** nome da área em análise ("toda a cidade" ou "Área 1") */
   ondeLabel: string;
 }
@@ -15,21 +15,21 @@ interface Props {
 const LIMITE = 12;
 
 /** Passo 2 — "O que você plantou por último?" */
-export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: Props) {
+export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: Propriedades) {
   const [busca, setBusca] = useState('');
   const [verTodas, setVerTodas] = useState(false);
   const [trocando, setTrocando] = useState(false);
 
   const opcoes = useMemo(() => {
     if (!regiao) return [];
-    const q = normalize(busca);
-    return daRegiao(regiao).filter((h) => !q || normalize(h.nome).includes(q));
+    const consulta = normalizar(busca);
+    return daRegiao(regiao).filter((hortalica) => !consulta || normalizar(hortalica.nome).includes(consulta));
   }, [regiao, busca]);
 
   if (!regiao) {
     return (
       <section className="card step-off" data-tour="plantou">
-        <StepTitle n={2} title="O que você plantou por último?" />
+        <StepTitle numero={2} title="O que você plantou por último?" />
         <EmptyState icon="🌱" title="Primeiro escolha a cidade" text="Assim mostramos as plantas que dão certo na sua região." />
       </section>
     );
@@ -50,7 +50,7 @@ export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: 
 
   return (
     <section className="card" data-tour="plantou">
-      <StepTitle n={2} title="O que você plantou por último?" sub={`Em ${ondeLabel}`} />
+      <StepTitle numero={2} title="O que você plantou por último?" subtitulo={`Em ${ondeLabel}`} />
 
       {!mostrarGrade && (
         <div className="answer">
@@ -70,7 +70,7 @@ export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: 
             type="search"
             placeholder="🔎 Procure: alface, tomate, cenoura…"
             value={busca}
-            onChange={(e) => setBusca(e.target.value)}
+            onChange={(evento) => setBusca(evento.target.value)}
           />
           <div className="tiles">
             {!busca && (
@@ -79,10 +79,10 @@ export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: 
                 <span>Nada / não sei</span>
               </button>
             )}
-            {visiveis.map((h) => (
-              <button key={h.id} className={`tile ${h.id === historico.ultima ? 'active' : ''}`} onClick={() => escolher(h.id)}>
-                <span className="tile-emoji">{h.emoji}</span>
-                <span>{h.nome}</span>
+            {visiveis.map((hortalica) => (
+              <button key={hortalica.id} className={`tile ${hortalica.id === historico.ultima ? 'active' : ''}`} onClick={() => escolher(hortalica.id)}>
+                <span className="tile-emoji">{hortalica.emoji}</span>
+                <span>{hortalica.nome}</span>
               </button>
             ))}
           </div>
@@ -97,21 +97,21 @@ export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: 
         <div className="before">
           <span className="before-label">E antes disso? <small>(se lembrar — melhora a sugestão)</small></span>
           <div className="before-row">
-            {historico.anteriores.map((id, i) => (
-              <span key={i} className="pill-item">
+            {historico.anteriores.map((id, indice) => (
+              <span key={indice} className="pill-item">
                 {POR_ID[id]?.emoji} {POR_ID[id]?.nome}
                 <button aria-label={`Tirar ${POR_ID[id]?.nome}`}
-                  onClick={() => onChange({ ...historico, anteriores: historico.anteriores.filter((_, j) => j !== i) })}>×</button>
+                  onClick={() => onChange({ ...historico, anteriores: historico.anteriores.filter((_, outroIndice) => outroIndice !== indice) })}>×</button>
               </span>
             ))}
             {historico.anteriores.length < 3 && (
               <select
                 className="add-select"
                 value=""
-                onChange={(e) => e.target.value && onChange({ ...historico, anteriores: [...historico.anteriores, e.target.value] })}
+                onChange={(evento) => evento.target.value && onChange({ ...historico, anteriores: [...historico.anteriores, evento.target.value] })}
               >
                 <option value="">+ Adicionar</option>
-                {daRegiao(regiao).map((h) => <option key={h.id} value={h.id}>{h.nome}</option>)}
+                {daRegiao(regiao).map((hortalica) => <option key={hortalica.id} value={hortalica.id}>{hortalica.nome}</option>)}
               </select>
             )}
           </div>
@@ -121,6 +121,6 @@ export default function PlantouCard({ regiao, historico, onChange, ondeLabel }: 
   );
 }
 
-function normalize(s: string) {
-  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+function normalizar(texto: string) {
+  return texto.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 }

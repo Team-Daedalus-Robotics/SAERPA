@@ -7,23 +7,23 @@
  *  fonte da planilha: Amaro et al. 2007; Embrapa Hortaliças e Sebrae 2010).
  * Não edite o JSON à mão: corrija o script e rode de novo.
  * ========================================================================= */
-import raw from './hortalicas.json';
+import dadosBrutos from './hortalicas.json';
 import { CLASSIFICACAO } from './classificacao';
 import type { Hortalica, Regiao } from '../types';
 
-type RawRow = Omit<Hortalica, 'familia' | 'grupo' | 'emoji'>;
+type LinhaBruta = Omit<Hortalica, 'familia' | 'grupo' | 'emoji'>;
 
-export const HORTALICAS: Hortalica[] = (raw as unknown as RawRow[]).map((h) => {
-  const c = CLASSIFICACAO[h.id];
-  if (!c) throw new Error(`Hortaliça sem classificação em classificacao.ts: ${h.id}`);
-  return { ...h, ...c };
+export const HORTALICAS: Hortalica[] = (dadosBrutos as unknown as LinhaBruta[]).map((hortalica) => {
+  const classificacao = CLASSIFICACAO[hortalica.id];
+  if (!classificacao) throw new Error(`Hortaliça sem classificação em classificacao.ts: ${hortalica.id}`);
+  return { ...hortalica, ...classificacao };
 });
 
-export const POR_ID: Record<string, Hortalica> = Object.fromEntries(HORTALICAS.map((h) => [h.id, h]));
+export const POR_ID: Record<string, Hortalica> = Object.fromEntries(HORTALICAS.map((hortalica) => [hortalica.id, hortalica]));
 
 /** Hortaliças que a tabela recomenda em ALGUM mês na região */
 export function daRegiao(regiao: Regiao): Hortalica[] {
-  return HORTALICAS.filter((h) => (h.epocas[regiao]?.length ?? 0) > 0);
+  return HORTALICAS.filter((hortalica) => (hortalica.epocas[regiao]?.length ?? 0) > 0);
 }
 
 export const NOMES_MES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',

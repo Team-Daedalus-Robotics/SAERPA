@@ -1,20 +1,20 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import LocationPicker from './components/LocationPicker';
-import MapView, { SMAP_MIN_ZOOM, type BaseLayer, type MapTarget } from './components/MapView';
+import MapView, { SMAP_ZOOM_MINIMO, type BaseLayer, type MapTarget } from './components/MapView';
 import PlantouCard from './components/PlantouCard';
 import SugestoesCard from './components/SugestoesCard';
 import Ajuda from './components/Ajuda';
 import Tour, { PASSOS_TOUR } from './components/Tour';
 import { Icon, StepTitle } from './components/ui';
-import { areaHa, centroid, fmt } from './lib/geo';
+import { areaEmHectares, centroid, formatarNumero } from './lib/geo';
 import type { Entrada } from './services/rotacao';
-import { USE_MOCK, fieldStats, pointStats } from './services/smap';
-import type { Area, Estado, Historico, LatLng, MoistureStats, Municipio, Regiao } from './types';
+import { USE_MOCK, fieldStatistics, pointStatistics } from './services/smap';
+import type { Area, Estado, Historico, LatLng, MoistureStatistics, Municipio, Regiao } from './types';
 
 /** Zoom mínimo para marcar uma área com precisão */
-const DRAW_MIN_ZOOM = 13;
+const ZOOM_MINIMO_PARA_DESENHAR = 13;
 const MES_ATUAL = new Date().getMonth() + 1;
-const HIST_VAZIO: Historico = { ultima: null, anteriores: [], respondeu: false };
+const HISTORICO_VAZIO: Historico = { ultima: null, anteriores: [], respondeu: false };
 
 export default function App() {
   // ---- passo 1: onde ----
@@ -23,7 +23,7 @@ export default function App() {
   const [target, setTarget] = useState<MapTarget>({ kind: 'brasil' });
 
   // ---- mapa ----
-  const [base, setBase] = useState<BaseLayer>('sat');
+  const [base, setBase] = useState<BaseLayer>('satelite');
   const [showSmap, setShowSmap] = useState(true);
   const [zoom, setZoom] = useState(4);
   const [drawing, setDrawing] = useState<LatLng[] | null>(null);
@@ -33,59 +33,59 @@ export default function App() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   // ---- passo 2: histórico da cidade toda (quando nenhuma área está marcada) ----
-  const [histCidade, setHistCidade] = useState<Historico>(HIST_VAZIO);
+  const [historicoDaCidade, setHistoricoDaCidade] = useState<Historico>(HISTORICO_VAZIO);
 
   // ---- passo 3 ----
   const [mes, setMes] = useState(MES_ATUAL);
   const [colherRapido, setColherRapido] = useState(false);
-  const [umidade, setUmidade] = useState<MoistureStats | null>(null);
+  const [umidade, setUmidade] = useState<MoistureStatistics | null>(null);
 
   // ---- UI ----
   const [ajuda, setAjuda] = useState(false);
   const [tour, setTour] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const toastTimer = useRef<number | undefined>(undefined);
-  const showToast = useCallback((msg: string) => {
-    setToast(msg);
+  const showToast = useCallback((mensagem: string) => {
+    setToast(mensagem);
     window.clearTimeout(toastTimer.current);
     toastTimer.current = window.setTimeout(() => setToast(null), 3000);
   }, []);
 
-  const area = areas.find((a) => a.id === selectedId) ?? null;
-  const historico = area ? area.historico : histCidade;
+  const area = areas.find((candidata) => candidata.id === selectedId) ?? null;
+  const historico = area ? area.historico : historicoDaCidade;
   const regiao = (estado?.regiao ?? null) as Regiao | null;
 
-  function escolherEstado(e: Estado | null) {
-    setEstado(e);
+  function escolherEstado(estadoEscolhido: Estado | null) {
+    setEstado(estadoEscolhido);
     setMunicipio(null);
     setSelectedId(null);
     setDrawing(null);
-    setTarget(e ? { kind: 'point', center: [e.lat, e.lng], zoom: 6 } : { kind: 'brasil' });
+    setTarget(estadoEscolhido ? { kind: 'point', center: [estadoEscolhido.lat, estadoEscolhido.lng], zoom: 6 } : { kind: 'brasil' });
   }
-  function escolherMunicipio(m: Municipio | null) {
-    setMunicipio(m);
+  function escolherMunicipio(municipioEscolhido: Municipio | null) {
+    setMunicipio(municipioEscolhido);
     setSelectedId(null);
-    if (m) setTarget({ kind: 'point', center: [m.lat, m.lng], zoom: 13 });
+    if (municipioEscolhido) setTarget({ kind: 'point', center: [municipioEscolhido.lat, municipioEscolhido.lng], zoom: 13 });
   }
 
   // ---- umidade da terra (NASA SMAP) da área ou da cidade ----
   useEffect(() => {
     let alive = true;
     setUmidade(null);
-    const p = area ? fieldStats(area.coords, area.center)
-      : municipio ? pointStats([municipio.lat, municipio.lng]) : null;
-    p?.then((s) => alive && setUmidade(s));
+    const consulta = area ? fieldStatistics(area.coordenadas, area.center)
+      : municipio ? pointStatistics([municipio.lat, municipio.lng]) : null;
+    consulta?.then((estatisticas) => alive && setUmidade(estatisticas));
     return () => { alive = false; };
   }, [area?.id, municipio]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function mudarHistorico(h: Historico) {
-    if (area) setAreas((as) => as.map((a) => (a.id === area.id ? { ...a, historico: h } : a)));
-    else setHistCidade(h);
+  function mudarHistorico(novoHistorico: Historico) {
+    if (area) setAreas((areasAtuais) => areasAtuais.map((candidata) => (candidata.id === area.id ? { ...candidata, historico: novoHistorico } : candidata)));
+    else setHistoricoDaCidade(novoHistorico);
   }
 
   // ---- marcar área no mapa ----
   function comecarMarcar() {
-    if (zoom < DRAW_MIN_ZOOM) {
+    if (zoom < ZOOM_MINIMO_PARA_DESENHAR) {
       showToast('Aproxime mais o mapa (botão +) até ver bem o seu terreno.');
       return;
     }
@@ -94,17 +94,17 @@ export default function App() {
   function terminarMarcar() {
     if (!drawing || drawing.length < 3) return;
     const id = (areas.at(-1)?.id ?? 0) + 1;
-    const a: Area = {
-      id, nome: `Área ${id}`, coords: drawing, center: centroid(drawing), areaHa: areaHa(drawing),
-      historico: { ...HIST_VAZIO },
+    const novaArea: Area = {
+      id, nome: `Área ${id}`, coordenadas: drawing, center: centroid(drawing), areaEmHectares: areaEmHectares(drawing),
+      historico: { ...HISTORICO_VAZIO },
     };
-    setAreas((as) => [...as, a]);
+    setAreas((areasAtuais) => [...areasAtuais, novaArea]);
     setSelectedId(id);
     setDrawing(null);
-    showToast(`${a.nome} marcada (${fmt(a.areaHa, 2)} hectares). Agora diga o que plantou nela.`);
+    showToast(`${novaArea.nome} marcada (${formatarNumero(novaArea.areaEmHectares, 2)} hectares). Agora diga o que plantou nela.`);
   }
   function apagarArea(id: number) {
-    setAreas((as) => as.filter((a) => a.id !== id));
+    setAreas((areasAtuais) => areasAtuais.filter((candidata) => candidata.id !== id));
     setSelectedId(null);
   }
 
@@ -120,7 +120,7 @@ export default function App() {
       <header className="topbar">
         {estado ? (
           <button className="back-btn" onClick={() => escolherEstado(null)}>
-            <Icon d="M15 5l-7 7 7 7" /> Início
+            <Icon caminho="M15 5l-7 7 7 7" /> Início
           </button>
         ) : <span className="logo">🌱</span>}
         <div className="title">
@@ -136,7 +136,7 @@ export default function App() {
         {/* ===== Passo 1: onde (mapa) ===== */}
         <section className="map-wrap">
           <div className="map-head" data-tour="local">
-            <StepTitle n={1} title="Onde fica sua plantação?" />
+            <StepTitle numero={1} title="Onde fica sua plantação?" />
             <LocationPicker estado={estado} municipio={municipio} onEstado={escolherEstado} onMunicipio={escolherMunicipio} />
           </div>
           <div className="map-area" data-tour="mapa">
@@ -144,13 +144,13 @@ export default function App() {
               base={base} showSmap={showSmap} target={target} municipio={municipio}
               areas={areas} selectedId={selectedId} drawing={drawing}
               onSelectArea={setSelectedId}
-              onMapClick={(pt) => drawing && setDrawing([...drawing, pt])}
+              onMapClick={(ponto) => drawing && setDrawing([...drawing, ponto])}
               onZoom={setZoom}
             />
 
             <div className="map-controls">
-              <button className="map-btn" onClick={() => setBase(base === 'sat' ? 'osm' : 'sat')}>
-                {base === 'sat' ? '🗺️ Ver mapa' : '🛰️ Ver satélite'}
+              <button className="map-btn" onClick={() => setBase(base === 'satelite' ? 'ruas' : 'satelite')}>
+                {base === 'satelite' ? '🗺️ Ver mapa' : '🛰️ Ver satélite'}
               </button>
               <button data-tour="umidade" className={`map-btn ${showSmap ? 'on' : ''}`} onClick={() => setShowSmap(!showSmap)}>
                 💧 Umidade da terra {showSmap ? '✓' : ''}
@@ -163,7 +163,7 @@ export default function App() {
                 <div className="legend-bar" />
                 <div className="legend-scale"><span>Seca</span><span>Molhada</span></div>
                 <span className="legend-src">Satélite NASA SMAP{USE_MOCK && <em> · dados de teste</em>}</span>
-                {zoom < SMAP_MIN_ZOOM && <span className="legend-hint">Aproxime o mapa para ver as cores</span>}
+                {zoom < SMAP_ZOOM_MINIMO && <span className="legend-hint">Aproxime o mapa para ver as cores</span>}
               </div>
             )}
 
@@ -193,9 +193,9 @@ export default function App() {
             <div className="area-bar">
               <span>Ver sugestão para:</span>
               <button className={`tab ${selectedId === null ? 'active' : ''}`} onClick={() => setSelectedId(null)}>🏙️ Cidade toda</button>
-              {areas.map((a) => (
-                <button key={a.id} className={`tab ${a.id === selectedId ? 'active' : ''}`} onClick={() => setSelectedId(a.id)}>
-                  📍 {a.nome} · {fmt(a.areaHa, 1)} ha
+              {areas.map((cadaArea) => (
+                <button key={cadaArea.id} className={`tab ${cadaArea.id === selectedId ? 'active' : ''}`} onClick={() => setSelectedId(cadaArea.id)}>
+                  📍 {cadaArea.nome} · {formatarNumero(cadaArea.areaEmHectares, 1)} hectares
                 </button>
               ))}
               {area && <button className="link-danger" onClick={() => apagarArea(area.id)}>Apagar {area.nome}</button>}

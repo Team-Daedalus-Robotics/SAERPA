@@ -11,11 +11,11 @@ export interface Hortalica {
   nome: string;
   /** meses (1–12) bons para plantar em cada região; [] = inadequado; ausente = sem dado */
   epocas: Partial<Record<Regiao, number[]>>;
-  espacamentoCm: { linhas: number; plantas: number };
+  espacamentoEmCentimetros: { linhas: number; plantas: number };
   tipoPlantio: string;
   /** dias do plantio até a colheita [mínimo, máximo] */
   colheitaDias: [number, number];
-  producaoM2: string | null;
+  producaoPorMetroQuadrado: string | null;
   fonte: 'Brasil' | 'Região sul';
   familia: string;
   grupo: Grupo;
@@ -48,9 +48,9 @@ export interface Historico {
 export interface Area {
   id: number;
   nome: string;
-  coords: LatLng[];
+  coordenadas: LatLng[];
   center: LatLng;
-  areaHa: number;
+  areaEmHectares: number;
   historico: Historico;
 }
 
@@ -59,7 +59,7 @@ export interface MoisturePoint {
   value: number;
 }
 
-export interface MoistureStats {
+export interface MoistureStatistics {
   mean: number;
   series: MoisturePoint[];
 }

@@ -140,9 +140,9 @@ Quando o back end existir, também falta trocar a grade simulada do mapa (`SmapG
 
 ## 9. Convenções do código
 
-- **Não abreviar nomes de variáveis**: usar nomes completos e descritivos (preferência do time).
-  ⚠️ O código atual ainda tem nomes curtos em vários lugares (`h`, `s`, `e`, `p`, `r`, `a`, `f`, `m`).
-  Renomear ao mexer nesses trechos (ex.: `h` → `hortalica`, `s` → `sugestao`, `e` → `entrada`).
+- **Não abreviar nomes** (preferência do time e regra do `AGENTS.md`): usar nomes completos e descritivos, em português
+  (ex.: `hortalica`, `sugestao`, `entrada`, `areaEmHectares`, `formatarNumero`). Já aplicado em todo o código TypeScript.
+  Exceções deliberadas: `id`, `uf`, `lat`/`lng` e siglas (SMAP, IBGE). Classes de CSS e atributos `data-tour` não foram renomeados.
 - Textos da interface em **português simples**, frases curtas, sem termos técnicos.
 - Todo botão tem texto (não só ícone) e altura mínima de 44–48px.
 - `src/data/hortalicas.json` é gerado: para corrigir dados, edite `scripts/import_embrapa.py` (lista `FIXES`) e rode de novo.
