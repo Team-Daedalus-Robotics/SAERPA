@@ -1,9 +1,23 @@
 import { createBuilder } from './.aspire/modules/aspire.mjs';
 
+try {
+  process.loadEnvFile();
+} catch {
+  // .env opcional
+}
+
 const builder = await createBuilder();
 
+const postgresPassword = await builder.addParameter('postgres-password', {
+  value: process.env.POSTGRES_PASSWORD,
+});
+
+const postgresUser = await builder.addParameter('postgres-user', {
+  value: process.env.POSTGRES_USER,
+});
+
 const postgres = await builder
-  .addPostgres('postgres')
+  .addPostgres('postgres', { userName: postgresUser, password: postgresPassword, port: 5432 })
   .withImage('postgis/postgis', { tag: '18-3.6' })
   .withPersistentLifetime()
   .withDataVolume({ name: 'saerpa-postgres-data' });
@@ -34,6 +48,7 @@ const api = await builder
 await builder
   .addViteApp('web', './src/web')
   .withNpm()
+  .withHttpEndpoint({ env: 'PORT', port: 4200 })
   .withReference(api)
   .waitFor(api)
   .withEnvironment('BROWSER', 'none')
