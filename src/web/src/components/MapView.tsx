@@ -101,7 +101,7 @@ export default function MapView(propriedades: Propriedades) {
         <CircleMarker
           center={[propriedades.municipio.lat, propriedades.municipio.lng]}
           radius={7}
-          pathOptions={{ color: '#fff', weight: 2, fillColor: '#e4572e', fillOpacity: 1 }}
+          pathOptions={{ color: '#fff', weight: 2, fillColor: '#1570ef', fillOpacity: 1 }}
         >
           <Tooltip direction="top" offset={[0, -8]} className="map-tip">{propriedades.municipio.nome}</Tooltip>
         </CircleMarker>
@@ -114,10 +114,10 @@ export default function MapView(propriedades: Propriedades) {
             key={`${area.id}-${selecionada}`}
             positions={area.coordenadas}
             pathOptions={{
-              color: selecionada ? '#e4572e' : '#fffdf7',
+              color: selecionada ? '#ffd43b' : '#ffffff',
               weight: selecionada ? 3.5 : 2,
               dashArray: selecionada ? undefined : '5 4',
-              fillColor: '#6a994e',
+              fillColor: '#2e9e5b',
               fillOpacity: selecionada ? 0.4 : 0.22,
             }}
             eventHandlers={{
@@ -135,10 +135,10 @@ export default function MapView(propriedades: Propriedades) {
 
       {propriedades.drawing && propriedades.drawing.length > 0 && (
         <>
-          <Polygon positions={propriedades.drawing} pathOptions={{ color: '#e4572e', weight: 2, dashArray: '4 4', fillOpacity: 0.15 }} />
+          <Polygon positions={propriedades.drawing} pathOptions={{ color: '#ffd43b', weight: 2, dashArray: '4 4', fillOpacity: 0.15 }} />
           {propriedades.drawing.map((ponto, indice) => (
             <CircleMarker key={indice} center={ponto} radius={5}
-              pathOptions={{ color: '#fff', weight: 2, fillColor: '#e4572e', fillOpacity: 1 }} />
+              pathOptions={{ color: '#fff', weight: 2, fillColor: '#ffd43b', fillOpacity: 1 }} />
           ))}
         </>
       )}

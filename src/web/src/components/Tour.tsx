@@ -7,11 +7,12 @@
  * cidade), o balão aparece no meio da tela com um aviso.
  * ========================================================================= */
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Icone, type NomeDeIcone } from './icones';
 
 export interface TourStep {
   /** valor do atributo data-tour do elemento destacado (vazio = balão no centro) */
   alvo?: string;
-  icone: string;
+  icone: NomeDeIcone;
   titulo: string;
   texto: string;
   /** frase mostrada quando o alvo ainda não está na tela */
@@ -20,47 +21,47 @@ export interface TourStep {
 
 export const PASSOS_TOUR: TourStep[] = [
   {
-    icone: '👋', titulo: 'Bem-vindo ao Field Shift!',
+    icone: 'broto', titulo: 'Bem-vindo ao Field Shift!',
     texto: 'Este app ajuda você a escolher o que plantar depois, no mesmo lugar, para a terra continuar forte e produzindo. São só 3 passos. Vamos ver cada parte?',
   },
   {
-    alvo: 'local', icone: '📍', titulo: 'Passo 1 · Onde fica sua plantação',
+    alvo: 'local', icone: 'local', titulo: 'Passo 1 · Onde fica sua plantação',
     texto: 'Escolha o seu estado e depois digite o nome da cidade. É com isso que sabemos a época certa de plantar na sua região.',
   },
   {
-    alvo: 'mapa', icone: '🗺️', titulo: 'O mapa',
+    alvo: 'mapa', icone: 'mapa', titulo: 'O mapa',
     texto: 'Depois que você escolhe a cidade, o mapa vai até ela. Para aproximar, use os botões + e −, ou abra e feche dois dedos na tela. Para mover, arraste com o dedo.',
   },
   {
-    alvo: 'umidade', icone: '💧', titulo: 'Umidade da terra',
+    alvo: 'umidade', icone: 'gota', titulo: 'Umidade da terra',
     texto: 'As cores mostram se a terra está seca (marrom) ou molhada (azul), medidas por um satélite da NASA. Toque no botão para mostrar ou esconder as cores.',
   },
   {
-    alvo: 'marcar', icone: '✏️', titulo: 'Marcar sua área (opcional)',
+    alvo: 'marcar', icone: 'lapis', titulo: 'Marcar sua área (opcional)',
     texto: 'Aproxime o mapa até ver seu terreno, toque aqui e depois toque nos cantos dele. Assim o app guarda o que foi plantado em cada canteiro ou roça. Se errar um toque, use "Desfazer".',
     seAusente: 'Este botão aparece depois que você escolhe a cidade, logo abaixo do mapa.',
   },
   {
-    alvo: 'plantou', icone: '🥬', titulo: 'Passo 2 · O que você plantou por último',
-    texto: 'Toque na figura da planta que você colheu por último. Se não lembrar ou se for a primeira vez, toque em "Nada / não sei". Se quiser, adicione também o que plantou antes disso.',
+    alvo: 'plantou', icone: 'broto', titulo: 'Passo 2 · O que você plantou por último',
+    texto: 'Toque na planta que você colheu por último. Se não lembrar ou se for a primeira vez, toque em "Nada / não sei". Se quiser, adicione também o que plantou antes disso.',
   },
   {
-    alvo: 'quando', icone: '📅', titulo: 'Passo 3 · Quando vai plantar',
+    alvo: 'quando', icone: 'calendario', titulo: 'Passo 3 · Quando vai plantar',
     texto: 'Já vem marcado o mês de hoje. Se for plantar mais para frente, troque o mês. Toque em "Quero colher rápido" para ver primeiro as plantas que ficam prontas mais cedo.',
     seAusente: 'Esta parte aparece depois que você escolhe a cidade.',
   },
   {
-    alvo: 'sugestoes', icone: '✅', titulo: 'As sugestões',
+    alvo: 'sugestoes', icone: 'lista', titulo: 'As sugestões',
     texto: 'A primeira da lista é a melhor escolha. Toque em uma planta para ver por que ela é boa e como plantar: espaço entre as plantas, jeito de plantar e quantos dias até a colheita.',
     seAusente: 'A lista aparece depois que você escolhe a cidade.',
   },
   {
-    alvo: 'evitar', icone: '⚠️', titulo: 'O que evitar',
+    alvo: 'evitar', icone: 'alerta', titulo: 'O que evitar',
     texto: 'Estas plantas são da mesma família do que você plantou. Plantar uma atrás da outra no mesmo lugar junta pragas e doenças na terra.',
     seAusente: 'Esta lista aparece depois que você conta, no passo 2, o que plantou por último.',
   },
   {
-    alvo: 'ajuda', icone: '❓', titulo: 'Pronto!',
+    alvo: 'ajuda', icone: 'ajuda', titulo: 'Pronto!',
     texto: 'Sempre que tiver dúvida, toque em "Ajuda" para ver este passo a passo de novo ou ler a explicação de cada parte.',
   },
 ];
@@ -154,23 +155,23 @@ export default function Tour({ passos, onFim }: { passos: TourStep[]; onFim: () 
       <div className="tour-balao" ref={balaoRef} style={estilo}>
         {seta && <span className={`tour-seta ${seta}`} style={{ left: setaEsquerda }} />}
         <div className="tour-top">
-          <span className="tour-icone">{passo.icone}</span>
+          <span className="tour-icone"><Icone nome={passo.icone} tamanho={22} /></span>
           <span className="tour-cont">{indiceDoPasso + 1} de {passos.length}</span>
-          <button className="tour-x" onClick={onFim} aria-label="Fechar o passo a passo">✕</button>
+          <button className="tour-x" onClick={onFim} aria-label="Fechar o passo a passo"><Icone nome="fechar" tamanho={18} /></button>
         </div>
         <h3 id="tour-titulo">{passo.titulo}</h3>
         <p>{passo.texto}</p>
-        {ausente && passo.seAusente && <p className="tour-aviso">ℹ️ {passo.seAusente}</p>}
+        {ausente && passo.seAusente && <p className="tour-aviso"><Icone nome="info" tamanho={18} /> {passo.seAusente}</p>}
 
         <div className="tour-dots" aria-hidden="true">
           {passos.map((_, numero) => <span key={numero} className={numero === indiceDoPasso ? 'on' : ''} />)}
         </div>
         <div className="tour-acoes">
           {indiceDoPasso > 0
-            ? <button className="tour-btn sec" onClick={() => setIndiceDoPasso(indiceDoPasso - 1)}>← Voltar</button>
+            ? <button className="tour-btn sec" onClick={() => setIndiceDoPasso(indiceDoPasso - 1)}><Icone nome="voltar" tamanho={18} /> Voltar</button>
             : <button className="tour-btn sec" onClick={onFim}>Pular</button>}
           <button className="tour-btn" onClick={() => (ultimo ? onFim() : setIndiceDoPasso(indiceDoPasso + 1))} autoFocus>
-            {ultimo ? 'Entendi!' : 'Próximo →'}
+            {ultimo ? 'Entendi' : <>Próximo <Icone nome="direita" tamanho={18} /></>}
           </button>
         </div>
       </div>
