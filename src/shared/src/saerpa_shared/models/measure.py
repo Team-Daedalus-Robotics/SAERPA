@@ -15,3 +15,4 @@ class Measure(Base):
     data_type = Column(String(32), nullable=False)
 
     station = relationship("Station", back_populates="measures")
+    recommendations = relationship("Recommendation", secondary="recommendation_observation", back_populates="observation")
