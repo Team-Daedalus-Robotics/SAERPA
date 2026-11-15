@@ -30,7 +30,36 @@ const database = await postgres.addDatabase('saerpa');
 
 const nasaEventWorker = await builder
   .addPythonApp('nasa-event-worker', './src/nasa_event_worker', 'main.py')
-  .withUv();
+  .withUv()
+  .withReference(database)
+  .waitFor(database)
+  .withEnvironment('DATABASE_URL', await database.uriExpression())
+  .withEnvironment(
+    'EARTHDATA_USER',
+    await builder.addParameter('earthdata-user', {
+      value: process.env.EARTHDATA_USER,
+      secret: true,
+    }),
+  )
+  .withEnvironment(
+    'EARTHDATA_PASS',
+    await builder.addParameter('earthdata-pass', {
+      value: process.env.EARTHDATA_PASS,
+      secret: true,
+    }),
+  )
+  .withEnvironment(
+    'NASA_EVENT_POLL_SECONDS',
+    await builder.addParameter('nasa-event-poll-seconds', {
+      value: process.env.NASA_EVENT_POLL_SECONDS ?? '900',
+    }),
+  )
+  .withEnvironment(
+    'NASA_EVENT_BACKFILL_DAYS',
+    await builder.addParameter('nasa-event-backfill-days', {
+      value: process.env.NASA_EVENT_BACKFILL_DAYS ?? '365',
+    }),
+  );
 const stationDataGateway = await builder
   .addUvicornApp('station-data-gateway', './src/station_data_gateway', 'main:app')
   .withUv()
