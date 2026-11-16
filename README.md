@@ -238,6 +238,7 @@ Architecture notes, code conventions and known issues for contributors are in [A
 
 ## Documentation
 
+- [`docs/SAERPA_NASA_Space_Apps_2026.pdf`](docs/SAERPA_NASA_Space_Apps_2026.pdf): project presentation (7 slides).
 - [`docs/SAERPA_funcionamento.pdf`](docs/SAERPA_funcionamento.pdf): how the system works (in Portuguese).
 - [`src/web/README.md`](src/web/README.md): front-end structure, data sources and import steps.
 - [`docs/historico/`](docs/historico/): historical documents kept as a record.
