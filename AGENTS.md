@@ -18,11 +18,15 @@ Python e frontend React/Vite, sobre PostgreSQL com volume persistente.
 ## Estrutura
 
 ```
+README.md                # visão geral e como rodar
+docs/                    # PDF de funcionamento e documentos históricos
+.github/workflows/ci.yml # CI: pytest da API, uma só cabeça do Alembic, tipos/build do web, lint do AppHost
 apphost.mts              # grafo de recursos (postgres, api, 3 workers, web)
 aspire.config.json       # config do AppHost (language: typescript/nodejs)
 src/
 ├── api/                 # FastAPI (uvicorn main:app)
-│   ├── pyproject.toml   # fastapi, uvicorn, sqlalchemy via saerpa-shared
+│   ├── pyproject.toml   # fastapi, uvicorn, sqlalchemy via saerpa-shared; grupo dev: pytest, httpx
+│   ├── tests/           # pytest (TestClient + PostgreSQL/PostGIS real via DATABASE_URL)
 │   ├── main.py          # re-exporta app.main.app (entrypoint do uvicorn)
 │   └── app/
 │       ├── main.py      # FastAPI() + include_routers (lifespan aplica migrations)
@@ -162,6 +166,9 @@ aspire describe --format Json --non-interactive
 uv sync
 uv add --editable ../shared        # usar saerpa-shared num serviço
 python -m py_compile <arquivos>
+
+# Testes da API (PostgreSQL com PostGIS vazio em DATABASE_URL)
+uv run --group dev pytest           # dentro de src/api
 
 # Aplicar DDL manual (com DATABASE_URL do painel exportado)
 uv run alembic upgrade head          # dentro de src/shared

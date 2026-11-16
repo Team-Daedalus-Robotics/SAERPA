@@ -1,6 +1,0 @@
-main.py
-pyproject.toml
-saerpa_suggestion_worker.egg-info/PKG-INFO
-saerpa_suggestion_worker.egg-info/SOURCES.txt
-saerpa_suggestion_worker.egg-info/dependency_links.txt
-saerpa_suggestion_worker.egg-info/top_level.txt

@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  api:
+    name: API (pytest + migrations)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: saerpa_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/saerpa_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Alembic must have a single head
+        working-directory: src/shared
+        run: |
+          uv sync
+          heads=$(uv run alembic heads | grep -c "(head)")
+          echo "heads: $heads"
+          test "$heads" -eq 1
+      - name: API tests
+        working-directory: src/api
+        run: |
+          uv sync --group dev
+          uv run --group dev pytest
+
+  web:
+    name: Web (types + build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+        working-directory: src/web
+      - run: npx tsc --noEmit
+        working-directory: src/web
+      - run: npx vite build
+        working-directory: src/web
+
+  apphost:
+    name: AppHost (lint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npx eslint apphost.mts

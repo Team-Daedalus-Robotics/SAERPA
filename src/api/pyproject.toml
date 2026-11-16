@@ -11,3 +11,12 @@ dependencies = [
 
 [tool.uv.sources]
 saerpa-shared = { path = "../shared", editable = true }
+
+[dependency-groups]
+dev = [
+    "httpx>=0.27,<1",
+    "pytest>=8,<10",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

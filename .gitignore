@@ -9,3 +9,7 @@ __pycache__/
 .env
 .env.*
 !.env.example
+
+*.egg-info/
+*.tsbuildinfo
+.pytest_cache/

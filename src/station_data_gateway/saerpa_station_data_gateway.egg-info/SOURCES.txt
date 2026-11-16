@@ -1,6 +1,0 @@
-main.py
-pyproject.toml
-saerpa_station_data_gateway.egg-info/PKG-INFO
-saerpa_station_data_gateway.egg-info/SOURCES.txt
-saerpa_station_data_gateway.egg-info/dependency_links.txt
-saerpa_station_data_gateway.egg-info/top_level.txt

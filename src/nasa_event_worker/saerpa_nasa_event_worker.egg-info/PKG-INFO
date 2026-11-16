@@ -1,5 +1,0 @@
-Metadata-Version: 2.4
-Name: saerpa-nasa-event-worker
-Version: 0.1.0
-Summary: Worker de eventos da NASA do SAERPA
-Requires-Python: >=3.13
