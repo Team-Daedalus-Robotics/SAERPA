@@ -117,18 +117,73 @@ The app has two separate recommendation systems, shown separately on purpose:
 
 ## Getting started
 
-Requirements: Docker running, Node 22 (or 20.19+), [uv](https://docs.astral.sh/uv/) and the Aspire CLI.
+### Requirements
+
+| Tool | Version | Notes |
+|---|---|---|
+| Docker | Desktop or Engine, running | Runs PostgreSQL with PostGIS. The first start downloads the image. |
+| Node.js | 20.19+, 22.13+ or 24+ | Runs the AppHost and the web app. |
+| [uv](https://docs.astral.sh/uv/) | 0.11+ | Creates the Python environments. It also installs Python 3.13 if you do not have it. |
+| Aspire CLI | 13.6 | `npm install -g @microsoft/aspire-cli` |
+
+### Run
+
+1. Create your environment file and set `POSTGRES_PASSWORD` (the other values are optional, see
+   [Optional integrations](#optional-integrations)):
+
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Install the dependencies and start everything:
+
+   ```bash
+   npm install
+   npm --prefix src/web install
+   npm run aspire:start
+   ```
+
+3. Wait for the resources to become healthy in the Aspire dashboard. The terminal prints its link (by default
+   `https://localhost:17273`). The first start can take a few minutes because it downloads the PostGIS image and
+   builds the Python environments. The API applies the database migrations and seeds the crop catalog on its own.
+4. Open the app at **http://localhost:4200**.
+
+To stop everything, press `Ctrl+C` in the terminal.
+
+### Load the demo data
+
+A fresh database has no sensor readings, so the analyses card starts empty. The repository includes real NASA data
+for Navegantes, Brazil, and a script that turns it into the readings that the DHT11, DS18B20 and capacitive soil
+moisture sensors would send. It posts them to the `station-data-gateway`, exactly as a real sensor would. Copy the
+gateway URL from the Aspire dashboard (use `--insecure` only if the URL is `https`):
 
 ```bash
-cp .env.example .env        # set the database password and, optionally, the Earthdata and Laya settings
-npm install
-npm --prefix src/web install
-npm run aspire:start        # opens the Aspire dashboard; the `web` link is in the URLs column
+cd src/shared
+uv sync
+uv run python scripts/simulate_sensor_events.py --gateway-url <station-data-gateway URL> --insecure
 ```
 
-The API applies the migrations and seeds the crop catalog on startup. The satellite (SMAP) job needs
-`EARTHDATA_USER` and `EARTHDATA_PASS`; without them the worker skips it and everything else keeps working.
-The AI analyses need the Ollaya CLI. See `.env.example` for all settings.
+Run it once: the gateway does not remove duplicates. If you export the API's `DATABASE_URL` (shown in the dashboard),
+the script refuses to send the same data twice; `--dry-run` only prints a summary.
+
+### Optional integrations
+
+The app works without these.
+
+- **Satellite soil moisture (SMAP).** Create a free account at [NASA Earthdata](https://urs.earthdata.nasa.gov/) and
+  set `EARTHDATA_USER` and `EARTHDATA_PASS` in `.env`. Without them the worker skips the satellite job and
+  everything else keeps working.
+- **AI analyses.** They need the Ollaya CLI on your `PATH` and a Laya service. The `LAYA_*`, `API_KEY` and `MODEL`
+  values in `.env.example` point to a local service by default.
+
+### Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| Port `5432` or `4200` is already in use | These ports are fixed in `apphost.mts`. Stop the other PostgreSQL or web process, or change the port there. |
+| PostgreSQL rejects the password after you changed it in `.env` | The data volume keeps the old password. Stop the app, run `docker volume rm saerpa-postgres-data` (this deletes the local data) and start again. |
+| A Python resource fails with a `requires-python` error | Run `uv sync` inside that service folder, for example `src/api`. |
+| The API does not start and mentions migrations | Run `uv run alembic heads` inside `src/shared`. It must show a single head. |
 
 ## Tests and continuous integration
 
