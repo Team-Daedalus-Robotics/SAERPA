@@ -96,6 +96,25 @@ Scores go from 0 to 100.
 
 A score of 70 or more is shown as a great choice, and 50 or more as a good choice.
 
+## How the AI analyses work
+
+The app has two separate recommendation systems, shown separately on purpose:
+
+| | Rotation score | AI analyses |
+|---|---|---|
+| Where it runs | In the browser | In the `suggestion_worker`, stored in the database |
+| Method | Fixed, transparent rules (table above) | A decision model (Laya) that answers typed questions |
+| Inputs | Previous crops, Embrapa season, harvest time | Sensor readings, NASA hourly data, SMAP daily observations, crop and planting history |
+| Output | A 0 to 100 score with the reasons | A choice or a 1 to 5 score, with confidence and probabilities |
+
+1. **Collect.** The worker gathers the latest sensor readings, NASA hourly data and SMAP observations.
+2. **Ask.** It sends the Laya decision endpoint those readings, plus the candidate crops for the rotation question,
+   and a typed question with its answer options (for example *Does the soil need irrigation?* or *Which crop
+   should be planted next?*).
+3. **Store.** The answer is saved in the `recommendation` table with the measurements that were used.
+4. **Show.** The app displays each analysis with those measurements and where each came from: field sensor, NASA
+   hourly data or satellite daily data.
+
 ## Getting started
 
 Requirements: Docker running, Node 22 (or 20.19+), [uv](https://docs.astral.sh/uv/) and the Aspire CLI.
