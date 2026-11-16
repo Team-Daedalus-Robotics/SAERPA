@@ -1,52 +1,52 @@
 # SAERPA
 
-Aplicativo para o pequeno produtor decidir **o que plantar depois** no mesmo lugar, cuidando da terra.
-Projeto do time **Team Daedalus Robotics** (NASA Space Apps 2026).
+An app for small farmers to decide **what to plant next** in the same place while taking care of the soil.
+Built by **Team Daedalus Robotics** (NASA Space Apps 2026). The user interface is in Brazilian Portuguese.
 
-A pessoa escolhe a cidade, marca no mapa as áreas da propriedade e informa o que plantou por último.
-O app sugere a próxima cultura (rotação de culturas, época de plantio da Embrapa) e mostra o clima e a
-umidade do solo vindos da NASA, além de análises feitas por IA e dados de sensores.
+The user picks a city, draws the areas of the property on the map and tells what was planted last.
+The app suggests the next crop (crop rotation plus the Embrapa planting calendar), shows the climate and
+soil moisture from NASA, and displays AI analyses and sensor data.
 
-## Como funciona
+## How it works
 
-| Parte | O que faz |
+| Part | What it does |
 |---|---|
-| `src/web` | App React 19 + Vite (mapa com Leaflet, TanStack Query/Router). Funciona sem login e guarda uma propriedade por navegador. |
-| `src/api` | API FastAPI (propriedades, áreas, histórico, catálogo de culturas, clima, recomendações). |
-| `src/shared` | Pacote `saerpa_shared`: modelos, migrations (Alembic), schemas e clientes compartilhados. |
-| `src/nasa_event_worker` | Busca na NASA POWER o clima das regiões pedidas e as observações de satélite. |
-| `src/station_data_gateway` | Recebe os dados dos sensores e grava em `event`. |
-| `src/suggestion_worker` | Gera as recomendações de IA (Laya) a partir dos eventos. |
-| `apphost.mts` | Aspire (AppHost TypeScript): sobe PostgreSQL/PostGIS, API, workers e o app. |
+| `src/web` | React 19 + Vite app (Leaflet map, TanStack Query/Router). No login: each browser keeps a single property. |
+| `src/api` | FastAPI API (properties, areas, planting history, crop catalog, climate, recommendations). |
+| `src/shared` | The `saerpa_shared` package: models, migrations (Alembic), schemas and shared clients. |
+| `src/nasa_event_worker` | Fetches NASA POWER climate for the requested regions and the satellite observations. |
+| `src/station_data_gateway` | Receives sensor data and writes it to `event`. |
+| `src/suggestion_worker` | Generates the AI recommendations (Laya) from the events. |
+| `apphost.mts` | Aspire (TypeScript AppHost): starts PostgreSQL/PostGIS, the API, the workers and the app. |
 
-Só o `station_data_gateway` e os workers gravam na tabela `event`. A API apenas lê.
+Only the `station_data_gateway` and the workers write to the `event` table. The API only reads it.
 
-## Como rodar
+## Running
 
-Requisitos: Docker rodando, Node 22 (ou 20.19+), [uv](https://docs.astral.sh/uv/) e o Aspire CLI.
+Requirements: Docker running, Node 22 (or 20.19+), [uv](https://docs.astral.sh/uv/) and the Aspire CLI.
 
 ```bash
-cp .env.example .env        # ajuste as senhas
+cp .env.example .env        # adjust the passwords
 npm install
 npm --prefix src/web install
-npm run aspire:start        # abre o painel do Aspire; o link do `web` fica na coluna URLs
+npm run aspire:start        # opens the Aspire dashboard; the `web` link is in the URLs column
 ```
 
-A API aplica as migrations e o catálogo de culturas sozinha na subida. Detalhes de arquitetura, convenções
-de código, banco de dados e problemas conhecidos estão no [AGENTS.md](AGENTS.md).
+The API applies the migrations and seeds the crop catalog on startup. Architecture, code conventions,
+database details and known issues are documented in [AGENTS.md](AGENTS.md) (in Portuguese).
 
-## Testes
+## Tests
 
 ```bash
 cd src/api
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/saerpa_test uv run --group dev pytest
 ```
 
-Precisa de um PostgreSQL com PostGIS vazio. O GitHub Actions (`.github/workflows/ci.yml`) roda os testes da
-API, a checagem de migrations (uma só cabeça), os tipos e o build do app e o lint do AppHost a cada envio.
+It needs an empty PostgreSQL database with PostGIS. GitHub Actions (`.github/workflows/ci.yml`) runs the API
+tests, the Alembic single-head check, the web type check and build, and the AppHost lint on every push.
 
-## Documentos
+## Documents
 
-- [`docs/SAERPA_funcionamento.pdf`](docs/SAERPA_funcionamento.pdf) — explicação do funcionamento.
-- [`docs/historico/`](docs/historico/) — documentos antigos, mantidos só como registro.
-- [`src/web/README.md`](src/web/README.md) — detalhes do front.
+- [`docs/SAERPA_funcionamento.pdf`](docs/SAERPA_funcionamento.pdf): how the system works (in Portuguese).
+- [`docs/historico/`](docs/historico/): old documents, kept only as a record.
+- [`src/web/README.md`](src/web/README.md): front-end details.

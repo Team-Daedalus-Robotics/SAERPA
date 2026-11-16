@@ -1,96 +1,116 @@
 # SAERPA — front end (NASA Space Apps 2026)
 
-App para o pequeno produtor decidir **o que plantar depois** no mesmo lugar, cuidando da terra.
-Feito para ser simples: 3 passos numerados, botões grandes com texto, sem login, sem termos técnicos.
+An app for small farmers to decide **what to plant next** in the same place while taking care of the soil.
+Designed to be simple: 3 numbered steps, large buttons with text, no login, no technical terms.
+The interface text is in Brazilian Portuguese.
 
-1. **Onde fica sua plantação?** — estado e cidade (todo o Brasil).
-2. **O que você plantou por último?** — toque na planta (ou "Nada / não sei").
-3. **O que plantar agora** — sugestões com o porquê e *como plantar* (espaçamento, jeito de plantar, dias até a colheita, produção por m²).
+1. **Onde fica sua plantação?** (Where is your farm?): state and city (all of Brazil).
+2. **O que você plantou por último?** (What did you plant last?): tap the plant, or "Nada / não sei" (Nothing / don't know).
+3. **O que plantar agora** (What to plant now): suggestions with the reasons and *how to plant* (spacing, planting method, days to harvest, yield per m²).
 
-Opcional: marcar a área no mapa para guardar o histórico de cada canteiro ou roça.
+Optional: draw the area on the map to keep the history of each plot.
 
-**Ajuda** (botão no alto da tela):
-- *Me mostre como usar* — passo a passo guiado com balões que destacam cada parte da tela (`components/Tour.tsx`).
-  Para incluir uma parte nova no tour: coloque `data-tour="nome"` no elemento e adicione um item em `PASSOS_TOUR`.
-- *Como cada parte funciona* — explicação de cada parte para ler com calma (`components/Ajuda.tsx`).
+**One property per browser.** The app always reopens on the last property the user chose. Switching to another
+city asks for confirmation and really deletes the old property (areas and history included) through
+`DELETE /api/properties/{id}`.
 
-React 19 + TypeScript + Vite · mapa com Leaflet (react-leaflet).
+**Help** (button at the top of the screen):
+- *Me mostre como usar* (Show me how to use it): a guided tour with balloons highlighting each part of the screen (`components/Tour.tsx`).
+  To add a new part to the tour, put `data-tour="name"` on the element and add an item to `PASSOS_TOUR`.
+- *Como cada parte funciona* (How each part works): an explanation of every part, to read calmly (`components/Ajuda.tsx`).
 
-## Rodar
+React 19 + TypeScript + Vite, with a Leaflet map (react-leaflet).
 
-O frontend roda junto com a API e o banco pelo Aspire. Na raiz do repositório:
+## Running
+
+The front end runs together with the API and the database through Aspire. From the repository root:
 
     npm install
     npm --prefix src/web install
-    npm run aspire:start    # abre o painel do Aspire; o link do `web` fica na coluna URLs
+    npm run aspire:start    # opens the Aspire dashboard; the `web` link is in the URLs column
 
-Só para checar tipos e gerar o build do frontend (dentro de `src/web`):
+To only type-check and build the front end (inside `src/web`):
 
     npm run build
 
-## Como a sugestão é calculada (`src/services/rotacao.ts`)
+## Offline map
 
-| Critério | Origem | Efeito |
+Without clicking anything, the app saves in the background (Cache API, at most 100 MB) the satellite and street
+images around the property (radius of 2 to 20 km, zoom 8 to 16, chosen to fit the budget). A service worker
+(`public/sw.js`, production only) serves those images and the app itself without a connection, and a
+"Sem internet" banner appears when the connection drops. The map zoom stops at level 16 because Esri has no
+satellite imagery above it in rural areas. The saved map lives only in the user's browser, never in the backend.
+
+## How the suggestion is calculated (`src/services/rotacao.ts`)
+
+| Criterion | Source | Effect |
 |---|---|---|
-| Época de plantio na região, no mês escolhido | Tabela Embrapa | +35 se é a época; +15 se começa no mês seguinte |
-| Mesma família botânica da última planta | classificação no banco (`crop`) | **Evitar** (pragas e doenças em comum) |
-| Ordem folha → fruto → raiz → leguminosa → folha | `classificacao.ts` | +45 se é o próximo grupo ideal |
-| Leguminosa depois de folha/fruto | `classificacao.ts` | +35 (devolve nitrogênio) |
-| Mesma família nas 2 safras anteriores | classificação no banco (`crop`) | −15 |
-| "Quero colher rápido" | Tabela Embrapa (dias até a colheita) | até +20 |
+| Planting season in the region, in the chosen month | Embrapa table | +35 if it is the season; +15 if it starts next month |
+| Same botanical family as the last plant | classification in the database (`crop`) | **Avoid** (shared pests and diseases) |
+| Order leaf → fruit → root → legume → leaf | `classificacao.ts` | +45 if it is the ideal next group |
+| Legume after leaf/fruit | `classificacao.ts` | +35 (returns nitrogen to the soil) |
+| Same family in the 2 previous seasons | classification in the database (`crop`) | −15 |
+| "Quero colher rápido" (I want a quick harvest) | Embrapa table (days to harvest) | up to +20 |
 
-Nota ≥ 70 = "Ótima escolha", ≥ 50 = "Boa escolha".
+Score ≥ 70 = "Ótima escolha" (great choice), ≥ 50 = "Boa escolha" (good choice).
 
-## Estrutura
+## Structure
 
     src/
-      main.tsx                  provedores: TanStack Query + TanStack Router
-      router.tsx                rotas (a cidade, o estado e a área ficam na URL)
-      routes/PaginaInicial.tsx  tela e fluxo dos 3 passos
+      main.tsx                  providers: TanStack Query + TanStack Router
+      router.tsx                routes (city, state and area live in the URL)
+      routes/PaginaInicial.tsx  the screen and the flow of the 3 steps
       components/
-        LocationPicker.tsx      estado + cidade
-        MapView.tsx             mapa, região de dados da NASA, áreas marcadas
-        PlantouCard.tsx         passo 2
-        SugestoesCard.tsx       passo 3
-        ui.tsx                  peças reutilizáveis
-      hooks/consultas.ts        TanStack Query: catálogo, áreas, histórico, umidade
+        LocationPicker.tsx      state + city
+        TrocaDePropriedade.tsx  current property card and the swap warning
+        MapView.tsx             map, NASA data region, drawn areas
+        PlantouCard.tsx         step 2
+        SugestoesCard.tsx       step 3
+        ui.tsx                  reusable pieces
+      hooks/
+        consultas.ts            TanStack Query: catalog, areas, history, moisture
+        mapaOffline.ts          connection status and automatic offline map saving
+      lib/
+        propriedadeAtual.ts     the single property kept in the browser
+        mapaOffline.ts          offline map download (100 MB cap)
+        camadasDoMapa.ts        map layers and zoom limit
       data/
-        hortalicas.ts           funções sobre o catálogo (vem da API)
-        classificacao.ts        grupos e ordem da rotação (folha → fruto → raiz → leguminosa)
+        hortalicas.ts           functions over the catalog (it comes from the API)
+        classificacao.ts        rotation groups and order (leaf → fruit → root → legume)
         estados.json, municipios.json, locations.ts
       services/
-        clienteApi.ts           fetch com erros em português
+        clienteApi.ts           fetch with error messages in Portuguese
         catalogo.ts             GET /api/crops
-        areas.ts                propriedades, áreas e histórico (API + PostGIS)
-        rotacao.ts              motor de recomendação
-        clima.ts                clima real da NASA POWER por local (GET /api/climate)
+        areas.ts                properties, areas and history (API + PostGIS)
+        rotacao.ts              recommendation engine
+        clima.ts                real NASA POWER climate per place (GET /api/climate)
 
-O catálogo de hortaliças **não fica mais no frontend**: vem do banco pela API. A planilha da
-Embrapa, o script de importação e a classificação por família ficam em `src/shared`
+The vegetable catalog **is no longer in the front end**: it comes from the database through the API. The
+Embrapa spreadsheet, the import script and the classification by family live in `src/shared`
 (`data/`, `scripts/import_embrapa.py`, `src/saerpa_shared/seed/crops.json`).
-Para atualizar a tabela, dentro de `src/shared`: edite `data/*` e rode
-`uv run --with openpyxl python scripts/import_embrapa.py`; a API grava no banco ao iniciar.
-Áreas marcadas e histórico por área ficam no banco; o histórico "cidade toda" fica no
-navegador (`localStorage`).
+To update the table, inside `src/shared`: edit `data/*` and run
+`uv run --with openpyxl python scripts/import_embrapa.py`; the API writes it to the database on startup.
+Drawn areas and the per-area history live in the database; the "whole city" history is kept in the
+browser (`localStorage`).
 
-## Fontes de dados
+## Data sources
 
-### Épocas de plantio, espaçamento, tipo de plantio, colheita e produção
-- **Sisteminha Embrapa — "Informações gerais sobre o plantio de hortaliças"**
-  (https://www.sisteminhaembrapa.org/tabela-de-plantio). Abas "Brasil" (5 regiões, 48 culturas) e "Região sul" (+9 culturas só para o Sul).
-- Fonte citada na planilha: adaptado de Amaro et al. (2007) e Embrapa Hortaliças e Sebrae (2010).
-- O site do Sisteminha informa que é uma iniciativa pessoal, sem fins lucrativos e não oficial. Informações oficiais: embrapa.br.
-- Correções feitas na importação (erros de digitação da planilha):
+### Planting seasons, spacing, planting type, harvest and yield
+- **Sisteminha Embrapa, "Informações gerais sobre o plantio de hortaliças"**
+  (https://www.sisteminhaembrapa.org/tabela-de-plantio). Tabs "Brasil" (5 regions, 48 crops) and "Região sul" (+9 crops for the South only).
+- Source cited in the spreadsheet: adapted from Amaro et al. (2007) and Embrapa Hortaliças and Sebrae (2010).
+- The Sisteminha website states that it is a personal, non-profit and unofficial initiative. Official information: embrapa.br.
+- Fixes made during the import (typos in the spreadsheet):
   - "Batata-doc e" → "Batata-doce"
-  - Agrião, Sudeste: "Fev/ju" → lido como "Fev/jul"
-  - Couve-flor de verão: espaçamento 9 × 5 cm → 90 × 50 cm (igual à aba Sul e à couve-flor de inverno)
+  - Watercress (Agrião), Southeast: "Fev/ju" → read as "Fev/jul"
+  - Summer cauliflower: spacing 9 × 5 cm → 90 × 50 cm (same as the South tab and winter cauliflower)
 
-### Família botânica e grupo (folha/fruto/raiz/leguminosa)
-- Classificação feita pelo time (`src/shared/data/crop_classification.json`), não faz parte da tabela da Embrapa.
+### Botanical family and group (leaf/fruit/root/legume)
+- Classification made by the team (`src/shared/data/crop_classification.json`); it is not part of the Embrapa table.
 
-### Estados e municípios
-- [kelvins/municipios-brasileiros](https://github.com/kelvins/municipios-brasileiros) — Kelvin S. do Prado, licença MIT (© 2016).
-  Códigos seguem o IBGE; as coordenadas vêm do repositório (não são publicação oficial do IBGE).
+### States and municipalities
+- [kelvins/municipios-brasileiros](https://github.com/kelvins/municipios-brasileiros): Kelvin S. do Prado, MIT license (© 2016).
+  Codes follow IBGE; the coordinates come from that repository (they are not an official IBGE publication).
 
-### Umidade do solo
-- **NASA POWER** (https://power.larc.nasa.gov, modelo MERRA-2): umidade do solo na superfície (`GWETTOP`), temperatura do solo (`TSOIL1`), temperatura e umidade do ar (`T2M`, `RH2M`) e chuva (`PRECTOTCORR`), por hora, em células de 0,5° x 0,625° (cerca de 55 x 66 km). O `nasa_event_worker` busca a célula do local escolhido e grava em `event`; a API só lê e responde em `GET /api/climate` (enquanto o worker busca, o app mostra "Buscando os dados da NASA…"). São dados reais de modelo: valem para a região, não para o terreno exato.
+### Soil moisture
+- **NASA POWER** (https://power.larc.nasa.gov, MERRA-2 model): surface soil moisture (`GWETTOP`), soil temperature (`TSOIL1`), air temperature and humidity (`T2M`, `RH2M`) and rainfall (`PRECTOTCORR`), hourly, in cells of 0.5° x 0.625° (about 55 x 66 km). The `nasa_event_worker` fetches the cell of the chosen place and writes it to `event`; the API only reads it and answers at `GET /api/climate` (while the worker is fetching, the app shows "Buscando os dados da NASA…"). This is real model data: it is valid for the region, not for the exact plot.
